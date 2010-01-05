@@ -3439,3 +3439,78 @@ DEBUG - 2010-01-05 07:53:09 --> Form Validation Class Initialized
 DEBUG - 2010-01-05 07:53:09 --> File loaded: /var/www/actasone/trunk/src/system/application/views/register_user.php
 DEBUG - 2010-01-05 07:53:09 --> Final output sent to browser
 DEBUG - 2010-01-05 07:53:09 --> Total execution time: 0.0101
+DEBUG - 2010-01-05 23:39:36 --> Config Class Initialized
+DEBUG - 2010-01-05 23:39:36 --> Hooks Class Initialized
+DEBUG - 2010-01-05 23:39:36 --> URI Class Initialized
+ERROR - 2010-01-05 23:39:36 --> 404 Page Not Found --> login
+DEBUG - 2010-01-05 23:39:37 --> Config Class Initialized
+DEBUG - 2010-01-05 23:39:37 --> Hooks Class Initialized
+DEBUG - 2010-01-05 23:39:37 --> URI Class Initialized
+ERROR - 2010-01-05 23:39:37 --> 404 Page Not Found --> login
+DEBUG - 2010-01-05 23:39:38 --> Config Class Initialized
+DEBUG - 2010-01-05 23:39:38 --> Hooks Class Initialized
+DEBUG - 2010-01-05 23:39:38 --> URI Class Initialized
+ERROR - 2010-01-05 23:39:38 --> 404 Page Not Found --> login
+DEBUG - 2010-01-05 23:39:47 --> Config Class Initialized
+DEBUG - 2010-01-05 23:39:47 --> Hooks Class Initialized
+DEBUG - 2010-01-05 23:39:47 --> URI Class Initialized
+ERROR - 2010-01-05 23:39:47 --> 404 Page Not Found --> login
+DEBUG - 2010-01-05 23:39:50 --> Config Class Initialized
+DEBUG - 2010-01-05 23:39:50 --> Hooks Class Initialized
+DEBUG - 2010-01-05 23:39:50 --> URI Class Initialized
+ERROR - 2010-01-05 23:39:50 --> 404 Page Not Found --> login
+DEBUG - 2010-01-05 23:40:04 --> Config Class Initialized
+DEBUG - 2010-01-05 23:40:04 --> Hooks Class Initialized
+DEBUG - 2010-01-05 23:40:04 --> URI Class Initialized
+ERROR - 2010-01-05 23:40:04 --> 404 Page Not Found --> login
+DEBUG - 2010-01-05 23:45:00 --> Config Class Initialized
+DEBUG - 2010-01-05 23:45:00 --> Hooks Class Initialized
+DEBUG - 2010-01-05 23:45:00 --> URI Class Initialized
+DEBUG - 2010-01-05 23:45:00 --> No URI present. Default controller set.
+DEBUG - 2010-01-05 23:45:00 --> Router Class Initialized
+DEBUG - 2010-01-05 23:45:00 --> Output Class Initialized
+DEBUG - 2010-01-05 23:45:00 --> Input Class Initialized
+DEBUG - 2010-01-05 23:45:00 --> Global POST and COOKIE data sanitized
+DEBUG - 2010-01-05 23:45:00 --> Language Class Initialized
+DEBUG - 2010-01-05 23:45:00 --> Loader Class Initialized
+DEBUG - 2010-01-05 23:45:00 --> Helper loaded: html_helper
+DEBUG - 2010-01-05 23:45:00 --> Helper loaded: form_helper
+DEBUG - 2010-01-05 23:45:00 --> Helper loaded: url_helper
+DEBUG - 2010-01-05 23:45:00 --> Controller Class Initialized
+DEBUG - 2010-01-05 23:45:00 --> File loaded: /var/www/actasone/trunk/src/system/application/views/welcome_message.php
+DEBUG - 2010-01-05 23:45:00 --> Final output sent to browser
+DEBUG - 2010-01-05 23:45:00 --> Total execution time: 0.0086
+DEBUG - 2010-01-05 23:45:48 --> Config Class Initialized
+DEBUG - 2010-01-05 23:45:48 --> Hooks Class Initialized
+DEBUG - 2010-01-05 23:45:48 --> URI Class Initialized
+DEBUG - 2010-01-05 23:45:48 --> No URI present. Default controller set.
+DEBUG - 2010-01-05 23:45:48 --> Router Class Initialized
+DEBUG - 2010-01-05 23:45:48 --> Output Class Initialized
+DEBUG - 2010-01-05 23:45:48 --> Input Class Initialized
+DEBUG - 2010-01-05 23:45:48 --> Global POST and COOKIE data sanitized
+DEBUG - 2010-01-05 23:45:48 --> Language Class Initialized
+DEBUG - 2010-01-05 23:45:48 --> Loader Class Initialized
+DEBUG - 2010-01-05 23:45:48 --> Helper loaded: html_helper
+DEBUG - 2010-01-05 23:45:48 --> Helper loaded: form_helper
+DEBUG - 2010-01-05 23:45:48 --> Helper loaded: url_helper
+DEBUG - 2010-01-05 23:45:48 --> Controller Class Initialized
+DEBUG - 2010-01-05 23:45:48 --> File loaded: /var/www/actasone/trunk/src/system/application/views/welcome_message.php
+DEBUG - 2010-01-05 23:45:48 --> Final output sent to browser
+DEBUG - 2010-01-05 23:45:48 --> Total execution time: 0.0087
+DEBUG - 2010-01-05 23:45:52 --> Config Class Initialized
+DEBUG - 2010-01-05 23:45:52 --> Hooks Class Initialized
+DEBUG - 2010-01-05 23:45:52 --> URI Class Initialized
+DEBUG - 2010-01-05 23:45:52 --> No URI present. Default controller set.
+DEBUG - 2010-01-05 23:45:52 --> Router Class Initialized
+DEBUG - 2010-01-05 23:45:52 --> Output Class Initialized
+DEBUG - 2010-01-05 23:45:52 --> Input Class Initialized
+DEBUG - 2010-01-05 23:45:52 --> Global POST and COOKIE data sanitized
+DEBUG - 2010-01-05 23:45:52 --> Language Class Initialized
+DEBUG - 2010-01-05 23:45:52 --> Loader Class Initialized
+DEBUG - 2010-01-05 23:45:52 --> Helper loaded: html_helper
+DEBUG - 2010-01-05 23:45:52 --> Helper loaded: form_helper
+DEBUG - 2010-01-05 23:45:52 --> Helper loaded: url_helper
+DEBUG - 2010-01-05 23:45:52 --> Controller Class Initialized
+DEBUG - 2010-01-05 23:45:52 --> File loaded: /var/www/actasone/trunk/src/system/application/views/welcome_message.php
+DEBUG - 2010-01-05 23:45:52 --> Final output sent to browser
+DEBUG - 2010-01-05 23:45:52 --> Total execution time: 0.0089
