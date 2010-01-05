@@ -5,7 +5,6 @@
 @import url("/mainstyle.css");
 </style>
 <script language="javascript" src="/jquery-1.3.2.min.js" ></script>
-<script type="javascript" src="http://dev.jquery.com/view/trunk/plugins/validate/jquery.validate.js"></script>
 <script language="javascript">
 $(document).ready(function() {
    $("#username").focus( function(){ 
@@ -38,20 +37,18 @@ $(document).ready(function() {
 <body>
 
 <?php
-//if(isset($errmsg) {
-//   echo $errmsg;
-//}
-$attr = array('id'=>'loginform');
+$attr = array('id'=>'loginform','method'=>'GET');
 echo form_open('Login/auth',$attr);
-$attr = array('id'=>'username','value'=>'Username');
+$attr = array('id'=>'username','name'=>'username','value'=>'Username');
 echo form_input($attr);
 echo br();
-$attr = array('id'=>'password','value'=>'Password');
+$attr = array('id'=>'password','name'=>'password','value'=>'Password');
 echo form_password($attr);
 $attr = array('value'=>'Login','id'=>'submit');
 echo br();
 echo form_submit($attr);
 echo br();
+echo isset($errmsg) ? $errmsg : '';
 ?>
 <p>If you don't have a login, you may sign-up for one <a href="/RegisterUser">here</a>.
 <?php

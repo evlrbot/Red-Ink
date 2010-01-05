@@ -14,15 +14,23 @@ class Login extends Controller {
 	
 	function auth()
 	{
-		if($_POST) {
+		if($_SERVER['REQUEST_METHOD'] == "GET") {
 		     // check l/p
 		     // return cookie if valid
 		     // return error if invalid
-		     $data['errmsg'] = "<div class='error'>Invalid login / password combo</div>";
-		     $this->load_view('welcome_message',$data);
+		     print_r($_GET);
+		     print_r($_POST);
+		     if($_POST['username'] == $_POST['password1']) {
+		             $data['errmsg'] = "<div class='error'>Login successful.</div>";
+		     }
+		     else {
+		     	     $data['errmsg'] = "<div class='error'>Invalid login / password.</div>";
+		     }
+		     $this->load->view('welcome_message',$data);
 		}
 		else {
-		     $this->load_view('welcome_message');
+		     redirect('Login');
 		}
+
 	}
 }
