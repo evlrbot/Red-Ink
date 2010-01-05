@@ -38,8 +38,11 @@ $(document).ready(function() {
 <body>
 
 <?php
+//if(isset($errmsg) {
+//   echo $errmsg;
+//}
 $attr = array('id'=>'loginform');
-echo form_open('#',$attr);
+echo form_open('Login/auth',$attr);
 $attr = array('id'=>'username','value'=>'Username');
 echo form_input($attr);
 echo br();
