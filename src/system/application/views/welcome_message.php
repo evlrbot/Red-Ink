@@ -27,6 +27,9 @@ $(document).ready(function() {
          $(password).val("Password");
       }   
    });
+   $("#submit").click( function(){
+      $("#loginform").validate();
+   });
 
 });
 </script>
@@ -48,11 +51,6 @@ echo br();
 echo isset($errmsg) ? $errmsg : '';
 ?>
 <p>If you don't have a login, you may sign-up for one <a href="/RegisterUser">here</a>.
-<<<<<<< .mine
-<p>Here is britton's edit</p>
-=======
-<p>h3ll0</p>
->>>>>>> .r5
 <?php
 echo form_close();
 ?>
