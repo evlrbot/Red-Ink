@@ -51,6 +51,7 @@ echo br();
 echo isset($errmsg) ? $errmsg : '';
 ?>
 <p>If you don't have a login, you may sign-up for one <a href="/RegisterUser">here</a>.
+<p>h3ll0</p>
 <?php
 echo form_close();
 ?>
