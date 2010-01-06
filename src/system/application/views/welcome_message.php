@@ -5,6 +5,7 @@
 @import url("/mainstyle.css");
 </style>
 <script language="javascript" src="/jquery-1.3.2.min.js" ></script>
+<script type="text/javascript" src="/jshash-2.2/md5-min.js"></script>
 <script language="javascript">
 $(document).ready(function() {
    $("#username").focus( function(){ 
@@ -29,6 +30,10 @@ $(document).ready(function() {
    });
    $("#submit").click( function(){
       $("#loginform").validate();
+      var hash = hex_md5($(password).val());
+      $.post("login/auth", { 'username':$(username).val(),'password':hash}, function {
+
+      })
    });
 
 });
@@ -37,8 +42,8 @@ $(document).ready(function() {
 <body>
 
 <?php
-$attr = array('id'=>'loginform','method'=>'GET');
-echo form_open('Login/auth',$attr);
+$attr = array('id'=>'loginform');
+echo form_open('#',$attr);
 $attr = array('id'=>'username','name'=>'username','value'=>'Username');
 echo form_input($attr);
 echo br();
@@ -49,6 +54,7 @@ echo br();
 echo form_submit($attr);
 echo br();
 echo isset($errmsg) ? $errmsg : '';
+echo isset($msg) ? $msg : '';
 ?>
 <p>If you don't have a login, you may sign-up for one <a href="/RegisterUser">here</a>.
 <?php

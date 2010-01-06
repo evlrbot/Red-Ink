@@ -1,4 +1,6 @@
 body { font-family: Arial; font-size:18px; }
+a { color:#4680FF; text-decoration:none; }
+a:hover { background-color:#4680FF; color:white; }
 #rendertime { position:absolute; bottom:10px; font-size:0.5em; }
 input { font-size:1.5em; margin:15px 0px; }
 label.error { color:red; }
@@ -7,4 +9,5 @@ label.error { color:red; }
 #registrationform { border:0px solid red; width:700px; }
 #registrationform p { margin:0px; }
 div.error { text-align:center; color:red; font-size:bold; }
+#loginform p em {  font-weight:bold; }
 

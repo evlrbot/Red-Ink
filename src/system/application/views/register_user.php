@@ -21,7 +21,7 @@
 <?= form_password(array('id'=>'password2','name'=>'password2')); ?>
 <br/>
 <?= form_submit(array('id'=>'submit','value'=>'Register')); ?>
-<p>If you already have a login, then you may sign-in <a href="<?=site_url('Login');?>">here</a>.</p>
+<p>If you already have a login, then you may sign-in <a href="<?=site_url('login');?>">here</a>.</p>
 <?= form_close(); ?>
 <p id="rendertime">Page rendered in {elapsed_time} seconds.</p>
 
