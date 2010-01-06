@@ -13,29 +13,45 @@ class Login extends Controller
     $this->load->view('welcome_message');
   }
   
-  function auth()
-  {
+  function auth() {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
-      // check l/p
-      // return cookie if valid
-      // return error if invalid
-      if($_POST['username'] == "Username" && $_POST['password'] == "Password") { }
-      else {
-	// check database for username and encrypted password
-	$this->load->database();
-	$query = "SELECT * FROM public.user WHERE userid = '$_POST[username]' LIMIT 1";
-	$result = $this->db->query($query);
-	if(count($result->result()) == 1) {
-	  $query = "INSERT INTO public.session (userid,password,email) VALUES ('$email','$passwd','$email')";
-	  $result = $this->db->query($query);
-	}
-
+      $this->load->library('form_validation');   
+      $rules = array(
+		     array('field'=>'username','label'=>'Username','rules'=>'required'),
+		     array('field'=>'password','label'=>'Password','rules'=>'required')
+		     );
+      $this->form_validation->set_rules($rules);
+      $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+      if($this->form_validation->run() == FALSE) {
+	$this->load->view('welcome_message');   
       }
-      $this->load->view('welcome_message',$data);
+      else {
+	// CHECK IF USER EXISTS
+	$uname = $_POST['username'];
+	$passwd = md5($_POST['password']);
+	$this->load->database();
+	$query = "SELECT * FROM public.user WHERE userid = '$uname' AND password = '$passwd' LIMIT 1";
+	$result = $this->db->query($query);
+	// IF EXISTS... AUTHORIZE THEM
+	if($result->num_rows == 1) {
+	  $row = $result->row();
+	  $rand = rand(0,getrandmax());
+	  $query = "INSERT INTO public.session (userid, sessionid) VALUES ('$row->id', '$rand')";
+	  $result = $this->db->query($query);
+	  session_start();
+	  $_SESSION['token'] = $rand;
+	  $_SESSION['userid'] = $row->id;
+	  redirect('me');
+	}
+	// IF NOT EXISTS... DISPLAY ERROR 
+	else {
+	  $data = array('msg'=>'<p><span class="error">The username or password for that user was incorrect.</span></p>');
+	  $this->load->view('welcome_message',$data);
+	}
+      }
     }
     else {
-      redirect('Login');
-    }
-    
+      redirect('login');
+    } 
   }
 }

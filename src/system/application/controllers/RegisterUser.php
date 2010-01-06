@@ -10,8 +10,7 @@ class RegisterUser extends Controller
   
   function index()
   {
-    $this->load->library('form_validation');
-    
+    $this->load->library('form_validation');   
     $rules = array(
 		   array('field'=>'email','label'=>'E-Mail','rules'=>'required|valid_email'),
 		   array('field'=>'password1','label'=>'Password','rules'=>'required|matches[password2]'),

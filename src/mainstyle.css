@@ -1,13 +1,13 @@
 body { font-family: Arial; font-size:18px; }
 a { color:#4680FF; text-decoration:none; }
 a:hover { background-color:#4680FF; color:white; }
-#rendertime { position:absolute; bottom:10px; font-size:0.5em; }
-input { font-size:1.5em; margin:15px 0px; }
-label.error { color:red; }
-#registrationform label { clear:right; display:block; }
-#registrationform,#loginform { margin:100px auto 0px auto; text-align:center;}
-#registrationform { border:0px solid red; width:700px; }
-#registrationform p { margin:0px; }
-div.error { text-align:center; color:red; font-size:bold; }
-#loginform p em {  font-weight:bold; }
+.error { text-align:center; color:red; font-weight:normal; }
 
+#registrationform,#loginform { margin:100px auto 0px auto; text-align:center;}
+#registrationform label,#loginform label { clear:right; display:block; }
+#registrationform input,#loginform input { font-size:1.5em; margin:15px 0px; }
+#registrationform { width:700px; }
+#registrationform p,#loginform p { margin:0px; }
+#registrationform p em, #loginform p em { font-weight:bold; }
+
+#rendertime { position:absolute; bottom:10px; font-size:0.5em; }
