@@ -7,9 +7,8 @@ class Me extends Controller
   {
     parent::Controller();	
   }
-  
-  function index()
-  {
+
+  function auth() {
     // ACCESS CONTROL NOTE: MOVE INTO OWN METHOD
     session_start();
     if(isset($_SESSION['userid']) && isset($_SESSION['token'])) {
@@ -24,12 +23,28 @@ class Me extends Controller
       redirect('/login'); 
     }
     // END ACCESS CONTROL
+  }
 
+  function index()
+  {
+    $this->auth();
     $query = "SELECT * FROM public.user WHERE id='$_SESSION[userid]' LIMIT 1";
     $result = $this->db->query($query);
     $user_data = $result->row_array();
     $this->load->view('site_nav',$user_data);
+    $this->load->view('user_nav');
     $this->load->view('me');
+    $this->load->view('site_foot');
+  }
+
+  function AccountInfo() {
+    $this->auth();
+    $query = "SELECT * FROM public.user WHERE id='$_SESSION[userid]' LIMIT 1";
+    $result = $this->db->query($query);
+    $user_data = $result->row_array();
+    $this->load->view('site_nav',$user_data);
+    $this->load->view('user_nav');
+    $this->load->view('account_info');
     $this->load->view('site_foot');
   }
 }
