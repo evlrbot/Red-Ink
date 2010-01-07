@@ -1,7 +1,9 @@
-body { font-family: Arial; font-size:18px; }
+body { font-family: Arial; font-size:18px; margin:0px; padding:0px; }
 a { color:#4680FF; text-decoration:none; }
 a:hover { background-color:#4680FF; color:white; }
 .error { text-align:center; color:red; font-weight:normal; }
+
+#rendertime { position:absolute; bottom:10px; font-size:0.5em; }
 
 #registrationform,#loginform { margin:100px auto 0px auto; text-align:center;}
 #registrationform label,#loginform label { clear:right; display:block; }
@@ -10,4 +12,11 @@ a:hover { background-color:#4680FF; color:white; }
 #registrationform p,#loginform p { margin:0px; }
 #registrationform p em, #loginform p em { font-weight:bold; }
 
-#rendertime { position:absolute; bottom:10px; font-size:0.5em; }
+#site_nav { margin-bottom:30px; padding:5px; border-bottom:1px solid #AAA; text-align:left;}
+#site_nav em { font-style:normal; font-weight:bold; }
+#site_nav .logout { float:right; }
+#site_nav .sitelinks a { margin:0px 10px; }
+
+#user_nav { border:0px solid black; float:left; padding:5px; width:150px;margin-right:20px; }
+#user_body { width:90%; margin:0px auto; border:0px solid black; }
+#user_body h1 {  color:#4680FF; text-align:center; }

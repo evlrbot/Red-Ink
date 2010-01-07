@@ -22,19 +22,17 @@ class RegisterUser extends Controller
       $this->load->view('register_user');   
     }
     else {
-      // encrypt password
       $email = $_POST['email'];
-      $passwd = md5($_POST['password1']);
-
-      // update database with user credentials
+      // CHECK IF USER ALREADY EXISTS
       $this->load->database();
-      $query = "SELECT * FROM public.user WHERE userid = '$email' LIMIT 1";
+      $query = "SELECT * FROM public.user WHERE email='$email' LIMIT 1";
       $result = $this->db->query($query);
+      // IF NOT... ADD USER
       if(count($result->result()) == 0) {
-	$query = "INSERT INTO public.user (userid,password,email) VALUES ('$email','$passwd','$email')";
+	$passwd = md5($_POST['password1']); // MOVE THIS TO JQUERY FORM PRE PROCESSING
+	$query = "INSERT INTO public.user (password,email,date_activated) VALUES ('$passwd','$email',current_timestamp)";
 	$result = $this->db->query($query);
       }
-
       $data = array('msg'=>'<p><em>You may now login with your new user credentials.</em</p>');
       $this->load->view('welcome_message.php',$data);   
     }		

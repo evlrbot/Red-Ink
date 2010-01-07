@@ -30,13 +30,14 @@ class Login extends Controller
 	$uname = $_POST['username'];
 	$passwd = md5($_POST['password']);
 	$this->load->database();
-	$query = "SELECT * FROM public.user WHERE userid = '$uname' AND password = '$passwd' LIMIT 1";
+	$query = "SELECT * FROM public.user WHERE email='$uname' AND password='$passwd' LIMIT 1";
 	$result = $this->db->query($query);
 	// IF EXISTS... AUTHORIZE THEM
 	if($result->num_rows == 1) {
 	  $row = $result->row();
 	  $rand = rand(0,getrandmax());
-	  $query = "INSERT INTO public.session (userid, sessionid) VALUES ('$row->id', '$rand')";
+	  $time = time();
+	  $query = "INSERT INTO public.session (userid,token,start_time) VALUES ('$row->id','$rand',current_timestamp)";
 	  $result = $this->db->query($query);
 	  session_start();
 	  $_SESSION['token'] = $rand;
