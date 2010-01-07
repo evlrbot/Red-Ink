@@ -2,10 +2,10 @@
 <head>
 <title>Login</title>
 <style type="text/css" media="all">
-@import url("/mainstyle.css");
+@import url("/system/application/css/mainstyle.css");
 </style>
-<script language="javascript" src="/jquery-1.3.2.min.js" ></script>
-<script type="text/javascript" src="/jshash-2.2/md5-min.js"></script>
+<script language="javascript" src="/system/application/js/jquery-1.3.2.min.js" ></script>
+<script type="text/javascript" src="/system/apllication/js/jshash-2.2/md5-min.js"></script>
 <script language="javascript">
 $(document).ready(function() {
    $("#loginform").submit( function(){
@@ -28,7 +28,7 @@ $(document).ready(function() {
 <?=form_submit(array('value'=>'Login','id'=>'submit'));?>
 <?=br();?>
 <?=isset($msg) ? $msg : '';?>
-<p>If you don't have a login, you may sign-up for one <a href="/RegisterUser">here</a>.
+<p>If you don't have a login, you may sign-up for one <a href="/registeruser">here</a>.
 <?=form_close();?>
 <p id="rendertime">Page rendered in {elapsed_time} seconds.</p>
 </body>

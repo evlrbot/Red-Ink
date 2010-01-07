@@ -2,12 +2,12 @@
 <head>
 <title>User Registration</title>
 <style type="text/css" media="all">
-@import url("/mainstyle.css");
+@import url("/system/application/css/mainstyle.css");
 </style>
-<script language="javascript" src="/jquery-1.3.2.min.js" ></script>
+<script language="javascript" src="/system/application/js/jquery-1.3.2.min.js"></script>
 </head>
 <body>
-<?= form_open(site_url('RegisterUser'),array('id'=>'registrationform')); ?>
+<?= form_open(site_url('registeruser'),array('id'=>'registrationform')); ?>
 <p><?= form_label('E-Mail','email'); ?></p>
 <?= form_error('email'); ?>
 <?= form_input(array('id'=>'email','name'=>'email')); ?>
