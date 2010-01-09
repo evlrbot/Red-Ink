@@ -2,7 +2,7 @@
 <li>Profile</li>
 <ul>
 <li><a href='/me'>Profile Page</a></li>
-<li><a href='/me/accountinfo'>Account Info</a></li>
+<li><a href='/me/account'>Account Info</a></li>
 <li><a href='#'>Friends</a></li>
 <li><a href='#'>Groups</a></li>
 </ul>

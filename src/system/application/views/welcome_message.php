@@ -4,19 +4,8 @@
 <style type="text/css" media="all">
 @import url("/system/application/css/mainstyle.css");
 </style>
-<script language="javascript" src="/system/application/js/jquery-1.3.2.min.js" ></script>
-<script type="text/javascript" src="/system/apllication/js/jshash-2.2/md5-min.js"></script>
-<script language="javascript">
-$(document).ready(function() {
-   $("#loginform").submit( function(){
-     $(password).val(hex_md5($(password).val()));
-     
-     //$.post("login/auth",{'username':$(username).val(),'password':hash},function(data){alert('success');},'json');
-   });
-});
-</script>
 </head>
-<body>
+<body id="login">
 <?=form_open('login/auth',array('id'=>'loginform'));?>
 <?=form_label('<p>Username</p>','username');?>
 <?= form_error('username'); ?>

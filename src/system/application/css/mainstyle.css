@@ -5,7 +5,9 @@ a:hover { background-color:#4680FF; color:white; }
 
 #rendertime { position:absolute; bottom:10px; right:10px; font-size:0.7em; }
 
-#registrationform,#loginform,#accountinfoform { margin:100px auto 0px auto; text-align:center;}
+#login { padding-top:100px; }
+
+#registrationform,#loginform,#accountinfoform { margin:0px auto 0px auto; text-align:center;}
 #registrationform label,#loginform label, #accountinfoform label { clear:right; display:block; }
 #registrationform input,#loginform input, #accountinfoform input { font-size:1.5em; margin:15px 0px; }
 #registrationform { width:700px; }
@@ -17,7 +19,7 @@ a:hover { background-color:#4680FF; color:white; }
 #site_nav .logout { float:right; }
 #site_nav .sitelinks a { margin:0px 10px; }
 
-#user_nav { float:left; padding:0px; width:210px; margin:20px 50px 0px 0px; }
+#user_nav { position:absolute; padding:0px; width:210px; top:55px; }
 #user_nav a:hover { background-color:white; font-style:italic; color:#4680FF; }
 #user_nav em {  font-style:italic; font-weight:normal; color:#999; }
 #user_nav ul { padding-left:10px; margin-bottom:20px; }

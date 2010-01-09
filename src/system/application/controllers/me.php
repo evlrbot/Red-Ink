@@ -8,6 +8,7 @@ class Me extends Controller
     parent::Controller();
     $this->load->model("auth");
     $this->auth->access();
+    $this->load->model("user");
   }
 
   function index()
@@ -21,13 +22,11 @@ class Me extends Controller
     $this->load->view('site_foot');
   }
 
-  function AccountInfo() {
-    $query = "SELECT * FROM public.user WHERE id='$_SESSION[userid]' LIMIT 1";
-    $result = $this->db->query($query);
-    $user_data = $result->row_array();
+  function account() {
+    $user_data = $this->user->account_info();
     $this->load->view('site_nav',$user_data);
     $this->load->view('user_nav');
-    $this->load->view('account_info');
+    $this->load->view('account_info',$user_data);
     $this->load->view('site_foot');
   }
 }

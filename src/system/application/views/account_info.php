@@ -1,18 +1,38 @@
 <div id="user_body">
-<h1>Account Info</h1>
 <?= form_open(site_url('me/accountinfo'),array('id'=>'accountinfoform')); ?>
+
+<h1>Account Info</h1>
 <p><?= form_label('E-Mail','email'); ?></p>
 <?= form_error('email'); ?>
-<?= form_input(array('id'=>'email','name'=>'email')); ?>
+<?= form_input(array('id'=>'email','name'=>'email','value'=>"$email")); ?>
 
-<p><?= form_label('Password','password1'); ?></p>
+<p><?= form_label('Reset Password','password1'); ?></p>
 <?= form_error('password1'); ?>
 <?= form_password(array('id'=>'password1','name'=>'password1')); ?>
 
 <p><?= form_label('Verify Password','password2'); ?></p>
 <?= form_error('password2'); ?>
 <?= form_password(array('id'=>'password2','name'=>'password2')); ?>
-<br/>
-<?= form_submit(array('id'=>'submit','value'=>'Submit')); ?>
+
+<h1>Expensify Account</h1>
+<p><?= form_label('Login','expensify_login'); ?></p>
+<?= form_error('expensify_login'); ?>
+<?= form_input(array('id'=>'expensify_login','name'=>'expensify_login')); ?>
+
+<p><?= form_label('Password','expensify_password'); ?></p>
+<?= form_error('expensify_password'); ?>
+<?= form_password(array('id'=>'expensify_password','name'=>'expensify_password')); ?>
+
+<h1>Wesabe Account</h1>
+<p><?= form_label('Login','wesabe_login'); ?></p>
+<?= form_error('wesabe_login'); ?>
+<?= form_input(array('id'=>'wesabe_login','name'=>'wesabe_login')); ?>
+
+<p><?= form_label('Password','wesabe_password'); ?></p>
+<?= form_error('wesabe_password'); ?>
+<?= form_password(array('id'=>'wesabe_password','name'=>'wesabe_password')); ?>
+
+<p><?= form_submit(array('id'=>'submit','value'=>'Submit')); ?></p>
+
 <?= form_close(); ?>
 </div>
