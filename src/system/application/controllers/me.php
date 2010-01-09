@@ -5,29 +5,13 @@ class Me extends Controller
  
   function Me()
   {
-    parent::Controller();	
-  }
-
-  function auth() {
-    // ACCESS CONTROL NOTE: MOVE INTO OWN METHOD
-    session_start();
-    if(isset($_SESSION['userid']) && isset($_SESSION['token'])) {
-      $this->load->database();
-      $query = "SELECT * FROM public.session WHERE userid='$_SESSION[userid]' AND token='$_SESSION[token]' LIMIT 1";
-      $result = $this->db->query($query);
-      if($result->num_rows() == 0) {
-	redirect('/login');
-      } 
-    }
-    else { 
-      redirect('/login'); 
-    }
-    // END ACCESS CONTROL
+    parent::Controller();
+    $this->load->model("auth");
+    $this->auth->access();
   }
 
   function index()
   {
-    $this->auth();
     $query = "SELECT * FROM public.user WHERE id='$_SESSION[userid]' LIMIT 1";
     $result = $this->db->query($query);
     $user_data = $result->row_array();
@@ -38,7 +22,6 @@ class Me extends Controller
   }
 
   function AccountInfo() {
-    $this->auth();
     $query = "SELECT * FROM public.user WHERE id='$_SESSION[userid]' LIMIT 1";
     $result = $this->db->query($query);
     $user_data = $result->row_array();
