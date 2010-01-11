@@ -5,7 +5,8 @@ class RegisterUser extends Controller
   
   function RegisterUser()
   {
-    parent::Controller();	
+    parent::Controller();
+    $this->load->model("user");
   }
   
   function index()
@@ -22,19 +23,15 @@ class RegisterUser extends Controller
       $this->load->view('register_user');   
     }
     else {
-      $email = $_POST['email'];
-      // CHECK IF USER ALREADY EXISTS
-      $this->load->database();
-      $query = "SELECT * FROM public.user WHERE email='$email' LIMIT 1";
-      $result = $this->db->query($query);
-      // IF NOT... ADD USER
-      if(count($result->result()) == 0) {
-	$passwd = md5($_POST['password1']); // MOVE THIS TO JQUERY FORM PRE PROCESSING
-	$query = "INSERT INTO public.user (password,email,date_activated) VALUES ('$passwd','$email',current_timestamp)";
-	$result = $this->db->query($query);
+      $user_data = array('email'=>$this->input->post('email'),'password'=>$this->input->post('password1'));
+      if($this->user->account_create(&$user_data)) {
+	$data = array('msg'=>'<p><em>You may now login with your new user credentials.</em</p>');
+	$this->load->view('welcome_message.php',$data);   
       }
-      $data = array('msg'=>'<p><em>You may now login with your new user credentials.</em</p>');
-      $this->load->view('welcome_message.php',$data);   
+      else {
+	$data = array('msg'=>'<p class="error">That email address is already assigned to a user account.</p>');
+	$this->load->view('register_user.php',$data);         
+      }
     }		
   }
 }

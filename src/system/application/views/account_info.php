@@ -1,5 +1,5 @@
 <div id="user_body">
-<?= form_open(site_url('me/accountinfo'),array('id'=>'accountinfoform')); ?>
+<?= form_open(site_url('me/account_update'),array('id'=>'accountinfoform')); ?>
 
 <h1>Account Info</h1>
 <p><?= form_label('E-Mail','email'); ?></p>
@@ -14,6 +14,8 @@
 <?= form_error('password2'); ?>
 <?= form_password(array('id'=>'password2','name'=>'password2')); ?>
 
+<p><?= form_submit(array('id'=>'submit','value'=>'Update')); ?></p>
+
 <h1>Expensify Account</h1>
 <p><?= form_label('Login','expensify_login'); ?></p>
 <?= form_error('expensify_login'); ?>
@@ -22,6 +24,8 @@
 <p><?= form_label('Password','expensify_password'); ?></p>
 <?= form_error('expensify_password'); ?>
 <?= form_password(array('id'=>'expensify_password','name'=>'expensify_password')); ?>
+
+<p><?= form_submit(array('id'=>'submit','value'=>'Update')); ?></p>
 
 <h1>Wesabe Account</h1>
 <p><?= form_label('Login','wesabe_login'); ?></p>
@@ -32,7 +36,7 @@
 <?= form_error('wesabe_password'); ?>
 <?= form_password(array('id'=>'wesabe_password','name'=>'wesabe_password')); ?>
 
-<p><?= form_submit(array('id'=>'submit','value'=>'Submit')); ?></p>
+<p><?= form_submit(array('id'=>'submit','value'=>'Update')); ?></p>
 
 <?= form_close(); ?>
 </div>
