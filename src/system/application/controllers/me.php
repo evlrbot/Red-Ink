@@ -30,6 +30,7 @@ class Me extends Controller
 
   function account_update() {
     if($_SERVER['REQUEST_METHOD']=="POST") {
+      // VALIDATE SUBMITTED DATA
       $this->load->library('form_validation');   
       $rules = array(
 		     array('field'=>'email','label'=>'E-Mail','rules'=>'required|valid_email'),
@@ -45,7 +46,7 @@ class Me extends Controller
 	$this->load->view('site_foot');
       }
       else {
-	// UPDATE THE USER'S PROFILE DATA
+	// UPDATE USER PROFILE
 	$user_data = array(
 			   'userid'=>$_SESSION['userid'],
 			   'email'=>$this->input->post('email'),
@@ -53,15 +54,18 @@ class Me extends Controller
 			   );
 	$this->user->account_update($user_data);
 
-	// UPDATE THE USER'S API LOGINS
-	$user_data = array(
-			   'expensify_username'=>$this->input->post('expensify_username'),
-			   'expensify_password'=>$this->input->post('expensify_password'),
-			   'wesabe_username'=>$this->input->post('wesabe_username'),
-			   'wesabe_password'=>$this->input->post('wesabe_password')
-			   );
-	//$this->user->account_api_update($user_data);
-
+	// UPDATE API LOGINS
+	$apis = $this->user->list_apis();
+	foreach($apis as $api) {
+	  $user_data = array(
+			     'userid'=>$_SESSION['userid'],
+			     'name'=>$api['name'],
+			     'apiid'=>$api['id'],
+			     'username'=>$this->input->post($api['name'].'_login'),
+			     'password'=>$this->input->post($api['name'].'_password')
+			     );
+	  $this->user->account_api_update($user_data);
+	}
 	// SEND 'EM BACK
 	redirect('me/account');
       }
