@@ -46,14 +46,9 @@ class User extends Model {
     $this->db->query($query);
   }
 
-  function list_apis() {
-    $result = $this->db->query("SELECT * FROM public.api");
-    return $result->result_array();
-  }
-
-  function account_api_info($userid) {
-    $result = $this->db->query("SELECT * FROM public.api_login WHERE userid='$userid'");
-    return $result->result_array();
+  function account_api_info($userid,$apiid) {
+    $result = $this->db->query("SELECT username,password FROM public.api_login WHERE userid='$userid' AND apiid='$apiid' LIMIT 1");
+    return $result->row_array();
   }
   
   function account_api_update($user_data) {

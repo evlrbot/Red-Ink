@@ -9,6 +9,7 @@ class Me extends Controller
     $this->load->model("auth");
     $this->auth->access();
     $this->load->model("user");
+    $this->load->model("api");
   }
 
   function index()
@@ -22,6 +23,12 @@ class Me extends Controller
 
   function account() {
     $user_data = $this->user->account_info($_SESSION['userid']);
+    $apis = $this->api->list_apis();
+    foreach($apis AS $api) {
+      $api_login = $this->user->account_api_info($_SESSION['userid'],$api['id']);
+      $user_data[$api['name'].'_username'] = $api_login['username'];
+      $user_data[$api['name'].'_password'] = $api_login['password'];
+    }
     $this->load->view('site_nav',$user_data);
     $this->load->view('user_nav');
     $this->load->view('account_info',$user_data);
@@ -55,7 +62,8 @@ class Me extends Controller
 	$this->user->account_update($user_data);
 
 	// UPDATE API LOGINS
-	$apis = $this->user->list_apis();
+	$this->load->model("api");
+	$apis = $this->api->list_apis();
 	foreach($apis as $api) {
 	  $user_data = array(
 			     'userid'=>$_SESSION['userid'],
