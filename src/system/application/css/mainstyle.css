@@ -28,3 +28,5 @@ a:hover { background-color:#4680FF; color:white; }
 
 #user_body { width:90%; margin:0px auto; border:0px solid black; }
 #user_body h1 {  color:#4680FF; text-align:center; }
+
+#individual_transactions { margin:0px auto; }

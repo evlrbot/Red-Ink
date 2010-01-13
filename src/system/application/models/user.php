@@ -70,4 +70,10 @@ class User extends Model {
     }
     return $this->db->query($query);
   }
+  
+  function list_transactions($userid) {
+    $query = "SELECT * FROM public.transaction WHERE userid='$userid'";
+    $result = $this->db->query($query);
+    return $result->result_array();
+  }
 }

@@ -17,7 +17,8 @@ class Me extends Controller
     $user_data = $this->user->account_info($_SESSION['userid']);
     $this->load->view('site_nav',$user_data);
     $this->load->view('user_nav');
-    $this->load->view('me');
+    $user_data['transactions'] = $this->user->list_transactions($_SESSION['userid']);
+    $this->load->view('me',$user_data);    
     $this->load->view('site_foot');
   }
 
