@@ -16,12 +16,12 @@ class Me extends Controller {
     $user_data = $this->user->get_account($_SESSION['userid']);
     $this->load->view('site_nav',$user_data);
     $this->load->view('user_nav');
-    $user_data['transactions'] = $this->user->get_transactions($_SESSION['userid']);
+    $this->load->view('user_body_start');
     $modules = $this->user->get_modules($_SESSION['userid']);
     foreach($modules AS $mod) {
-      print_r($this->module->get_view_data($mod['viewid']));      
+      $this->module->load($mod['viewid'],$_SESSION['userid']);
     }
-    $this->load->view('me',$user_data);    
+    $this->load->view('user_body_stop');
     $this->load->view('site_foot');
   }
 
