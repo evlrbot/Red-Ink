@@ -1,3 +1,63 @@
+<<<<<<< .mine
+body { font-family: Arial; font-size:18px; margin:0px; padding:0px; }
+a { color:#4680FF; text-decoration:none; }
+a:hover { background-color:#4680FF; color:white; }
+.error { text-align:center; color:red; font-weight:normal; }
+
+#rendertime { position:absolute; bottom:10px; right:10px; font-size:0.7em; }
+
+#login { padding-top:100px; }
+
+#registrationform,#loginform,#accountinfoform { margin:0px auto 0px auto; text-align:center;}
+#registrationform label,#loginform label, #accountinfoform label { clear:right; display:block; }
+#registrationform input,#loginform input, #accountinfoform input { font-size:1.5em; margin:15px 0px; }
+#registrationform { width:700px; }
+#registrationform p,#loginform p,#accountinfoform p { margin:0px; }
+#registrationform p em, #loginform p em, #accountinfoform p em { font-weight:bold; }
+
+#site_nav { 
+	margin-bottom:20px; 
+	padding:5px; 
+	border-bottom:1px solid #AAA; 
+	text-align:left;
+}
+
+#site_nav em { font-style:normal; font-weight:bold; }
+#site_nav .logout { float:right; }
+#site_nav .sitelinks a { margin:0px 10px; }
+
+#user_nav { 
+	margin: 0 0 0 10px;
+	padding:0px; 
+	width:210px; 
+	border: 1px solid black;	
+	-webkit-border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	float: left;
+	height: 600px;		
+	background: url("/system/application/css/img/menu.jpg");
+}
+
+#user_nav a:hover { background-color:white; color:#0E2964; }
+#user_nav em {  font-style:italic; font-weight:normal; color:#999; }
+#user_nav ul { padding-left:10px; margin-bottom:20px; }
+#user_nav li { list-style-type:none; margin:5px 0px; }
+#user_nav > li { font-weight:bold; margin:0px 0px 0px 0px; background-color:#4680FF; color:white; text-align:right; padding:0px 10px; font-size:1.1em; }
+
+#user_body { 
+	width: 800px; 
+	margin:10px 0 0 230px; 
+	border: 1px solid black; 
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-bottomleft: 10px; 
+}
+
+#user_body h1 {  color:#4680FF; text-align:center; }
+
+#individual_transactions { margin:0px auto; }
+=======
 body { font-family: Arial; font-size:18px; margin:0px; padding:0px; }
 a { color:#4680FF; text-decoration:none; }
 a:hover { background-color:#4680FF; color:white; }
@@ -30,3 +90,4 @@ a:hover { background-color:#4680FF; color:white; }
 #user_body h1 {  color:#4680FF; text-align:center; }
 
 #individual_transactions { margin:0px auto; }
+>>>>>>> .r25
