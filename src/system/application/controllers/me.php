@@ -1,7 +1,5 @@
 <?php
-
-class Me extends Controller 
-{
+class Me extends Controller {
  
   function Me()
   {
@@ -10,23 +8,28 @@ class Me extends Controller
     $this->auth->access();
     $this->load->model("user");
     $this->load->model("api");
+    $this->load->model("module");
   }
 
   function index()
   {
-    $user_data = $this->user->account_info($_SESSION['userid']);
+    $user_data = $this->user->get_account($_SESSION['userid']);
     $this->load->view('site_nav',$user_data);
     $this->load->view('user_nav');
-    $user_data['transactions'] = $this->user->list_transactions($_SESSION['userid']);
+    $user_data['transactions'] = $this->user->get_transactions($_SESSION['userid']);
+    $modules = $this->user->get_modules($_SESSION['userid']);
+    foreach($modules AS $mod) {
+      print_r($this->module->get_view_data($mod['viewid']));      
+    }
     $this->load->view('me',$user_data);    
     $this->load->view('site_foot');
   }
 
   function account() {
-    $user_data = $this->user->account_info($_SESSION['userid']);
+    $user_data = $this->user->get_account($_SESSION['userid']);
     $apis = $this->api->list_apis();
     foreach($apis AS $api) {
-      $api_login = $this->user->account_api_info($_SESSION['userid'],$api['id']);
+      $api_login = $this->user->get_api_login($_SESSION['userid'],$api['id']);
       $user_data[$api['name'].'_username'] = $api_login['username'];
       $user_data[$api['name'].'_password'] = $api_login['password'];
     }
@@ -47,7 +50,7 @@ class Me extends Controller
       $this->form_validation->set_rules($rules);
       $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
       if($this->form_validation->run() == FALSE) {
-	$user_data = $this->user->account_info($_SESSION['userid']);
+	$user_data = $this->user->get_account($_SESSION['userid']);
 	$this->load->view('site_nav',$user_data);
 	$this->load->view('user_nav');
 	$this->load->view('account_info',$user_data);
@@ -60,7 +63,7 @@ class Me extends Controller
 			   'email'=>$this->input->post('email'),
 			   'password'=>$this->input->post('password1'),
 			   );
-	$this->user->account_update($user_data);
+	$this->user->update($user_data);
 
 	// UPDATE API LOGINS
 	$this->load->model("api");
@@ -73,7 +76,7 @@ class Me extends Controller
 			     'username'=>$this->input->post($api['name'].'_login'),
 			     'password'=>$this->input->post($api['name'].'_password')
 			     );
-	  $this->user->account_api_update($user_data);
+	  $this->user->update_api_login($user_data);
 	}
 	// SEND 'EM BACK
 	redirect('me/account');

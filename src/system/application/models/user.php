@@ -1,11 +1,22 @@
 <?php
 class User extends Model {
 
+/************************************************************************
+ *                            CONSTRUCTOR METHODS
+ ************************************************************************/
+  /* METHOD: User
+   * PARAMS: void
+   * DESCRP: constructor
+   */
   function User() {
     parent::Model();
     $this->load->database();
   }
 
+  /* METHOD: account_create
+   * PARAMS: $user_data - array of user data key=>values
+   * DESCRP: checks if an account exists, if not creates it.
+   */
   function account_create($user_data) {
     // CHECK IF USER ALREADY EXISTS
     $query = "SELECT * FROM public.user WHERE email='$user_data[email]' LIMIT 1";
@@ -21,14 +32,51 @@ class User extends Model {
       return false;
     }
   }
-  
-  function account_info($userid) {
+
+/************************************************************************
+ *                           ACCESSOR METHODS
+ ************************************************************************/
+
+  /* PARAMS: userid - account to lookup
+   * DESCRP: returns a hash of account information
+   */
+  function get_account($userid) {
     $query = "SELECT * FROM public.user WHERE id='$userid' LIMIT 1";
     $result = $this->db->query($query);
     return $result->row_array();
   }
 
-  function account_update($user_data) {
+  /* PARAMS: $userid - account to lookup
+   *         $apiid - API to lookup
+   * DESCRP: return the user's login for the given API
+   */
+  function get_api_login($userid,$apiid) {
+    $result = $this->db->query("SELECT username,password FROM public.api_login WHERE userid='$userid' AND apiid='$apiid' LIMIT 1");
+    return $result->row_array();
+  }
+
+  /* PARAMS: $userid - account to lookup
+   * DESCRP: return a complete list of the user's transactions
+   */
+  function get_transactions($userid) {
+    $query = "SELECT * FROM public.transaction WHERE userid='$userid'";
+    $result = $this->db->query($query);
+    return $result->result_array();
+  }
+
+  function get_modules($userid) {
+    $query = "SELECT * FROM public.user_module WHERE userid='$userid'";
+    $result = $this->db->query($query);
+    return $result->result_array();
+  }
+
+/************************************************************************
+ *                               WRITE METHODS
+ ************************************************************************/
+  /* PARAMS: $user_data - array of user data to update
+   * DESCRP: Update's the user's account profile
+   */
+  function update($user_data) {
     $userid = $user_data['userid'];
     unset($user_data['userid']); // LEAVE JUST THE KEYS TO BE UPDATED
     if(empty($user_data['password'])) {
@@ -46,12 +94,10 @@ class User extends Model {
     $this->db->query($query);
   }
 
-  function account_api_info($userid,$apiid) {
-    $result = $this->db->query("SELECT username,password FROM public.api_login WHERE userid='$userid' AND apiid='$apiid' LIMIT 1");
-    return $result->row_array();
-  }
-  
-  function account_api_update($user_data) {
+  /* PARAMS: $user_data - the user's login data for a given API
+   * DESCRP: update the user's API login data
+   */
+  function update_api_login($user_data) {
     $query = "SELECT * FROM public.api_login WHERE userid='$user_data[userid]' AND apiid='$user_data[apiid]'";
     $result = $this->db->query($query);
     if($result->num_rows()) {
@@ -69,11 +115,5 @@ class User extends Model {
                         '$user_data[apiid]')";
     }
     return $this->db->query($query);
-  }
-  
-  function list_transactions($userid) {
-    $query = "SELECT * FROM public.transaction WHERE userid='$userid'";
-    $result = $this->db->query($query);
-    return $result->result_array();
   }
 }
