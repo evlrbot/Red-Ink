@@ -42,4 +42,14 @@ class Campaign extends Controller {
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');
   }
+
+  function add($modid) {
+    $this->module->add_user($_SESSION['userid'],$modid);    
+    redirect('campaign/index');
+  }
+
+  function remove($modid) {
+    $this->module->remove_user($_SESSION['userid'],$modid);        
+    redirect('campaign/index');
+  }
 }

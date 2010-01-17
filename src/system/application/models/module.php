@@ -26,7 +26,16 @@ class Module extends Model {
    * DESCRP: add module to user account
    */
   function add_user($userid,$modid) {
-    $query = "INSERT INTO public.user_module (userid,modid) VALUES ($userid,$modid)";
+    $query = "INSERT INTO public.user_module (userid,modid,viewid) VALUES ($userid,$modid,1)";
+    $this->db->query($query);
+  }
+
+  /* PARAMS: $userid - user to lookup
+   *         $modid - module to lookup
+   * DESCRP: rm user user from module
+   */
+  function remove_user($userid,$modid) {
+    $query = "DELETE FROM public.user_module WHERE userid='$userid' AND modid='$modid'";
     $this->db->query($query);
   }
 
