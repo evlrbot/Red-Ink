@@ -31,7 +31,7 @@ class Campaign extends Controller {
 
   function create() {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
-      // insert model calls here
+      $this->module->create_module(array($this->input->post('name'),$this->input->post('description')));
     }
 
     $user_data = $this->user->get_account($_SESSION['userid']);
