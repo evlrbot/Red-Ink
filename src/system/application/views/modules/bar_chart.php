@@ -12,9 +12,9 @@ $xml.="</categories>";
 
 $i = 0;
 foreach($keys AS $index) {
-  $xml.= "<dataset seriesName='$index'>";
+  $xml.= "<dataset seriesName='$index' color='$colors[$i]'>";
   foreach($data[$index] AS $d) {
-    $xml.= "<set value='".abs($d['value']/10.0)."' color='$colors[$i]'/>";
+    $xml.= "<set value='".abs($d['value'])."'/>";
   }
   $xml.="</dataset>";
   $i++;
@@ -25,7 +25,7 @@ $xml.= "</chart>";
 
 <div id="module">
 <?php
-echo renderChartHTML("./system/application/libraries/StackedColumn3D.swf", "", $xml, "myNext", 800, 400, false, false);
+echo renderChartHTML("./system/application/libraries/MSColumn3D.swf", "", $xml, "myNext", 700, 300, false, false);
 ?>
 
 </div>
