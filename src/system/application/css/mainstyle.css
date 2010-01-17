@@ -26,7 +26,7 @@ a:hover { background-color:#4680FF; color:white; }
 #user_nav li { list-style-type:none; margin:5px 0px; }
 #user_nav > li { font-weight:bold; margin:0px 0px 0px 0px; background-color:#4680FF; color:white; text-align:right; padding:0px 10px; font-size:1.1em; }
 
-#user_body { width:800px; margin:10px 0px 0px 230px; border:0px solid black; }
+#user_body { width:700px; margin:10px 100px 0px 230px; border:0px solid black; }
 #user_body h1 {  color:#4680FF; text-align:center; }
 #user_body object, 
 #user_body embed { margin:25px auto; }

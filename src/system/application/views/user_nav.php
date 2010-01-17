@@ -1,12 +1,9 @@
 <ul id='user_nav'>
-<li>Profile</li>
+<li>Account Profile</li>
 <ul>
-<li><a href='/me'>Profile Page</a></li>
+<li><a href='/me'>My Dashboard</a></li>
 <li><a href='/me/account'>Account Info</a></li>
-<li><a href='#'>Friends</a></li>
-<li><a href='#'>Groups</a></li>
 <li><a href='#'>Badges</a></li>
-<li><a href='#'>Goals</a></li>
 </ul>
 <li>Campaign Manager</li>
 <ul>

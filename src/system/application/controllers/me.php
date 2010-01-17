@@ -15,7 +15,7 @@ class Me extends Controller {
   {
     $user_data = $this->user->get_account($_SESSION['userid']);
     $this->load->view('site_nav',$user_data);
-    $this->load->view('user_nav');
+    $this->user->load_nav($_SESSION['userid']);
     $this->load->view('user_body_start');
     $modules = $this->user->get_modules($_SESSION['userid']);
     foreach($modules AS $mod) {
@@ -34,7 +34,7 @@ class Me extends Controller {
       $user_data[$api['name'].'_password'] = $api_login['password'];
     }
     $this->load->view('site_nav',$user_data);
-    $this->load->view('user_nav');
+    $this->user->load_nav($_SESSION['userid']);
     $this->load->view('account_info',$user_data);
     $this->load->view('site_foot');
   }

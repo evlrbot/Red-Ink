@@ -11,6 +11,7 @@ class User extends Model {
   function User() {
     parent::Model();
     $this->load->database();
+    $this->load->model('module');
   }
 
   /* METHOD: account_create
@@ -68,6 +69,15 @@ class User extends Model {
     $query = "SELECT * FROM public.user_module WHERE userid='$userid'";
     $result = $this->db->query($query);
     return $result->result_array();
+  }
+
+  function load_nav($userid) {
+    $data['modules'] = array();
+    $mods = $this->user->get_modules($userid);
+    foreach($mods AS $mod) {
+      array_push($data['modules'],$this->module->get_module($mod['modid']));
+    }
+    $this->load->view('user_nav',$data);
   }
 
 /************************************************************************
