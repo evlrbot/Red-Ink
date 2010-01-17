@@ -32,6 +32,7 @@ a:hover { background-color:#4680FF; color:white; }
 #user_body embed { margin:25px auto; }
 #user_body #module { border:0px solid fuchsia; text-align:center; }
 #user_body #modulelist em { font-weight:bold;  }
+#user_body #modulelist li { margin:15px 0px; }
 
 #individual_transactions { margin:0px auto; }
 

@@ -1,2 +1,2 @@
-<h1><?=$mod[name]?></h1>
-<p><?=$mod[description]?></p>
+<h1><?=$data['name']?></h1>
+<p><?=$data['description']?></p>
