@@ -8,8 +8,8 @@
 </ul>
 <li>Campaign Manager</li>
 <ul>
-<li><a href='#'>Start New Campaign</a></li>
-<li><a href='#'>Search Campaigns</a></li>
+<li><a href='campaign/create'>Start New Campaign</a></li>
+<li><a href='campaign/index'>Search Campaigns</a></li>
 <li><a href='#'>Goals</a></li>
 <li><em>Organizer:</em></li>
 <ul>

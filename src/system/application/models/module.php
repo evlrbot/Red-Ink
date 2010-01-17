@@ -1,9 +1,24 @@
 <?php
 class Module extends Model {
-
+/********************************************************************************
+ *                                 CONSTRUCTOR
+ ********************************************************************************/
   function Module() {
     parent::Model();
     $this->load->database();
+  }
+
+/********************************************************************************
+ *                                WRITE METHODS
+ ********************************************************************************/
+  /* PARAMS: 
+   * DESCRP: 
+   */
+  function create_module($data) {
+    // clean insertion strings
+    list($name,$description) = $data;
+    $query = "INSERT INTO public.module (name,description) VALUES ('$name','$description')";
+    $this->db->query($query);
   }
 
   /* PARAMS: $userid - user to lookup
@@ -14,18 +29,45 @@ class Module extends Model {
     $query = "INSERT INTO public.user_module (userid,modid) VALUES ($userid,$modid)";
     $this->db->query($query);
   }
-  
+
+/********************************************************************************
+ *                               ACCESSOR METHODS
+ ********************************************************************************/
+  /* PARAMS: 
+   * DESCRP: 
+   */
   function load($viewid,$userid) {
     $data['data'] = $this->get_view_data($viewid,$userid);
     $template = $this->get_template($viewid);
     $this->load->view("modules/$template",$data);
   }
 
+  /* PARAMS: 
+   * DESCRP: 
+   */
   function get_template($viewid) {
     $query = "SELECT template FROM view WHERE id=$viewid LIMIT 1";
     $result = $this->db->query($query);
     $tmp = $result->row_array();
     return $tmp['template'];
+  }
+
+  /* PARAMS: 
+   * DESCRP: 
+   */
+  function get_modules() {
+    $query = "SELECT * FROM public.module";
+    $result = $this->db->query($query);
+    return $result->result_array();
+  }
+
+  /* PARAMS: 
+   * DESCRP: 
+   */
+  function get_module($id) {
+    $query = "SELECT * FROM public.module WHERE id=$id LIMIT 1";
+    $result = $this->db->query($query);
+    return $result->row_array();
   }
   
   /* PARAMS: $viewid
@@ -44,5 +86,5 @@ class Module extends Model {
       $tmp[$data['name']] = $result->result_array();
     }
     return $tmp;
-  }
+  }  
 }
