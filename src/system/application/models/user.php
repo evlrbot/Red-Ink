@@ -71,6 +71,12 @@ class User extends Model {
     return $result->result_array();
   }
 
+  function load_modules($userid) {
+    foreach($this->get_modules($userid) AS $mod) {
+      $this->module->load($mod['modid'],$mod['viewid'],$_SESSION['userid']);
+    }
+  }
+  
   function load_nav($userid) {
     $data['modules'] = array();
     $mods = $this->user->get_modules($userid);

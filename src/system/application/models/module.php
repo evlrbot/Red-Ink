@@ -45,10 +45,13 @@ class Module extends Model {
   /* PARAMS: 
    * DESCRP: 
    */
-  function load($viewid,$userid) {
-    $data['data'] = $this->get_view_data($viewid,$userid);
-    $template = $this->get_template($viewid);
-    $this->load->view("modules/$template",$data);
+  function load($modid,$viewid,$userid) {
+    $data['mod'] = $this->get_module($modid);
+    $data['data'] = $this->get_view_data($modid,$viewid,$userid);
+    if(count($data['data']) > 0) {
+      $template = $this->get_template($viewid);
+      $this->load->view("modules/$template",$data);
+    }
   }
 
   /* PARAMS: 
@@ -82,8 +85,8 @@ class Module extends Model {
   /* PARAMS: $viewid
    * DESCRP: return an array of data for the view
    */
-  function get_view_data($viewid,$userid) {
-    $query = "SELECT dataid,name FROM public.view_data AS t1, public.data AS t2 WHERE t1.viewid='$viewid' AND t2.id=dataid";
+  function get_view_data($modid,$viewid,$userid) {
+    $query = "SELECT dataid,name FROM public.view_data AS t1, public.data AS t2 WHERE t1.viewid='$viewid' AND t1.modid='$modid' AND t2.id=dataid";
     $result = $this->db->query($query);
     $datas = $result->result_array();
     $tmp = array();
