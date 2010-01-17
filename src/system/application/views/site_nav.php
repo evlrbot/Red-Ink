@@ -1,3 +1,9 @@
+<?php
+
+   include("./system/application/libraries/FusionCharts.php");
+?>
+
+
 <html>
 <head>
 <title>Dynamic Page Name</title>
