@@ -33,6 +33,7 @@ a:hover { background-color:#4680FF; color:white; }
 #user_body #module { border:0px solid fuchsia; text-align:center; }
 #user_body #modulelist em { font-weight:bold;  }
 #user_body #modulelist li { margin:15px 0px; }
-
+#user_body #dataset { border-bottom:2px dotted grey; margin:10px; padding-bottom:20px; padding-top:20px; }
+#user_body h1 a.small { font-size:14px; vertical-align:middle; }
 #individual_transactions { margin:0px auto; }
 

@@ -11,13 +11,63 @@ class Module extends Model {
 /********************************************************************************
  *                                WRITE METHODS
  ********************************************************************************/
-  /* PARAMS: 
-   * DESCRP: 
+  /* PARAMS: $data
+   * DESCRP: create a new module with the provided meta data
    */
-  function create_module($data) {
-    // clean insertion strings
-    list($name,$description) = $data;
-    $query = "INSERT INTO public.module (name,description) VALUES ('$name','$description')";
+  function create_module($userid,$data) {
+    // ESCAPE INSERTION STRINGS, 
+    // NEED TO ADD ADDITIONAL CHECKS FOR MALICIOUS CODE INSERTIONS
+    for($i=0;$i<count($data);$i++) {
+      $data[$i] = $this->db->escape($data[$i]);
+    }
+    // ADD MODULE
+    $query = "INSERT INTO public.module (name,description) VALUES (".implode(",",$data).")";
+    $this->db->query($query);
+    $modid = $this->db->insert_id();
+    // ADD OWNER
+    $query = "INSERT INTO public.owner (userid,modid) VALUES ($userid,$modid)";
+    $this->db->query($query);
+  }
+
+  /* PARAMS: $modid - module to update
+   *         $data - array of data to update
+   * DESCRP: update the module with the data
+   */
+  function update_module($modid,$data) {
+    // NEED TO ADD ADDITIONAL CHECKS FOR MALICIOUS CODE INSERTIONS
+    $values = array();
+    foreach($data AS $key=>$value) {
+      array_push($values,"$key=".$this->db->escape($data[$key]));
+    }
+    $values = implode(", ",$values);
+    $query = "UPDATE public.module SET $values WHERE id=$modid";
+    $this->db->query($query);
+  }
+
+  /* PARAMS: $modid - module to delete
+   * DESCRP: remove referrences to this module
+   *         in the appropriate tabels
+   */
+  function delete_module($modid) {
+    $query = "DELETE FROM public.module WHERE id=$modid";
+    $this->db->query($query);
+    $query = "DELETE FROM public.owner WHERE modid=$modid";
+    $this->db->query($query);
+  }
+
+  /* PARAMS: $modid - module to deactivate
+   * DESCRP: Flag module as deactivated.
+   */
+  function deactivate_module($modid) {
+    $query = "UPDATE public.module SET active=0 WHERE id=$modid";
+    $this->db->query($query);
+  }
+
+  /* PARAMS: $modid - module to activate
+   * DESCRP: Flag module as active.
+   */
+  function activate_module($modid) {
+    $query = "UPDATE public.module SET active=1 WHERE id=$modid";
     $this->db->query($query);
   }
 
@@ -42,8 +92,10 @@ class Module extends Model {
 /********************************************************************************
  *                               ACCESSOR METHODS
  ********************************************************************************/
-  /* PARAMS: 
-   * DESCRP: 
+  /* PARAMS: $modid - id of the module to load
+   *         $viewid - id of the view to load
+   *         $userid - id of the user loading the module/view
+   * DESCRP: Loads the appropriate module/view/data given the above params
    */
   function load($modid,$viewid,$userid) {
     $data['mod'] = $this->get_module($modid);
@@ -54,8 +106,8 @@ class Module extends Model {
     }
   }
 
-  /* PARAMS: 
-   * DESCRP: 
+  /* PARAMS: $viewid
+   * DESCRP: For a given view returns the view's associate template file path
    */
   function get_template($viewid) {
     $query = "SELECT template FROM view WHERE id=$viewid LIMIT 1";
@@ -64,8 +116,8 @@ class Module extends Model {
     return $tmp['template'];
   }
 
-  /* PARAMS: 
-   * DESCRP: 
+  /* PARAMS: void
+   * DESCRP: return list of all modules
    */
   function get_modules() {
     $query = "SELECT * FROM public.module";
@@ -73,15 +125,33 @@ class Module extends Model {
     return $result->result_array();
   }
 
-  /* PARAMS: 
-   * DESCRP: 
+  /* PARAMS: $modid
+   * DESCRP: return info on the given module
    */
-  function get_module($id) {
-    $query = "SELECT * FROM public.module WHERE id=$id LIMIT 1";
+  function get_module($modid) {
+    $query = "SELECT * FROM public.module WHERE id=$modid LIMIT 1";
     $result = $this->db->query($query);
     return $result->row_array();
   }
-  
+
+  /* PARAMS: $modid
+   * DESCRP: 
+   */
+  function get_data_sets($modid) {
+    $query = "SELECT t2.name, t2.id AS dataid, t2.query FROM public.module_data AS t1, public.data AS t2 WHERE modid=$modid AND t1.dataid = t2.id";
+    $result = $this->db->query($query);
+    return $result->result_array();
+  }
+
+  /* PARAMS: $dataid
+   * DESCRP: return the constraint strings for the given data
+   */
+  function get_constraints($dataid) {
+    $query = "SELECT t2.constraint FROM public.data_constraint AS t1, public.constraint AS t2 WHERE t1.dataid=$dataid AND t2.id = t1.constraintid";
+    $result = $this->db->query($query);
+    return $result->result_array();    
+  }
+
   /* PARAMS: $viewid
    * DESCRP: return an array of data for the view
    */

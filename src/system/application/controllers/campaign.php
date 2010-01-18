@@ -31,7 +31,7 @@ class Campaign extends Controller {
 
   function create() {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
-      $this->module->create_module(array($this->input->post('name'),$this->input->post('description')));
+      $this->module->create_module($_SESSION['userid'],array($this->input->post('name'),$this->input->post('description')));
     }
 
     $user_data = $this->user->get_account($_SESSION['userid']);
@@ -41,6 +41,32 @@ class Campaign extends Controller {
     $this->load->view('create_module');
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');
+  }
+
+  function edit($modid) {
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
+      // update module info
+      $this->module->update_module($modid,array('name'=>$this->input->post('name'),'description'=>$this->input->post('description')));
+      // update data info
+      // insert new data
+    }
+    $user_data = $this->user->get_account($_SESSION['userid']);
+    $this->load->view('site_nav',$user_data);
+    $this->user->load_nav($_SESSION['userid']);
+    $this->load->view('user_body_start');
+    $mod = $this->module->get_module($modid);
+    $mod['data'] = $this->module->get_data_sets($modid);
+    for($i=0;$i<count($mod['data']);$i++) {
+      $mod['data'][$i]['constraints'] = $this->module->get_constraints($mod['data'][$i]['dataid']);
+    }
+    $this->load->view('edit_module',$mod);
+    $this->load->view('user_body_stop');
+    $this->load->view('site_foot');
+  }
+  
+  function delete($modid) {
+    $this->module->delete_module($modid);
+    redirect("campaign/index");
   }
 
   function add($modid) {
