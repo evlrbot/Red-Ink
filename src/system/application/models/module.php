@@ -89,6 +89,19 @@ class Module extends Model {
     $this->db->query($query);
   }
 
+  /* PARAMS: $dataid - dataset id
+   *         $name - dataset name
+   *         $query - dataset query
+   * DESCRP: update the dataset with new data
+   */
+  function update_data_set($dataid,$name,$query) {
+    $name = $this->db->escape($name);
+    $query = $this->db->escape($query);
+    $q = "UPDATE public.data SET name=$name, query=$query WHERE id=$dataid";
+    $this->db->query($q);
+  }
+
+  
 /********************************************************************************
  *                               ACCESSOR METHODS
  ********************************************************************************/
@@ -99,11 +112,32 @@ class Module extends Model {
    */
   function load($modid,$viewid,$userid) {
     $data['mod'] = $this->get_module($modid);
-    $data['data'] = $this->get_view_data($modid,$viewid,$userid);
+    $data['data'] = $this->get_data_sets_results($this->get_data_sets($modid),$userid);  
     if(count($data['data']) > 0) {
       $template = $this->get_template($viewid);
       $this->load->view("modules/$template",$data);
     }
+  }
+
+ /* PARAMS: $modid
+   * DESCRP: return associative array of data ids, labels and query strings
+   */
+  function get_data_sets($modid) {
+    $query = "SELECT t2.name, t2.id AS dataid, t2.query FROM public.module_data AS t1, public.data AS t2 WHERE modid=$modid AND t1.dataid = t2.id";
+    $result = $this->db->query($query);
+    return $result->result_array();
+  }
+
+  /* PARAMS: $modid
+   * DESCRP: return associative array of data labels and data result arrays
+   */
+  function get_data_sets_results($datasets,$userid) {
+    $data = array();
+    foreach($datasets AS $ds) {
+      $result = $this->db->query($ds['query'],array($userid));
+      $data[$ds['name']] = $result->result_array();
+    }
+    return $data;
   }
 
   /* PARAMS: $viewid
@@ -133,16 +167,7 @@ class Module extends Model {
     $result = $this->db->query($query);
     return $result->row_array();
   }
-
-  /* PARAMS: $modid
-   * DESCRP: 
-   */
-  function get_data_sets($modid) {
-    $query = "SELECT t2.name, t2.id AS dataid, t2.query FROM public.module_data AS t1, public.data AS t2 WHERE modid=$modid AND t1.dataid = t2.id";
-    $result = $this->db->query($query);
-    return $result->result_array();
-  }
-
+ 
   /* PARAMS: $dataid
    * DESCRP: return the constraint strings for the given data
    */
@@ -155,6 +180,7 @@ class Module extends Model {
   /* PARAMS: $viewid
    * DESCRP: return an array of data for the view
    */
+/*
   function get_view_data($modid,$viewid,$userid) {
     $query = "SELECT dataid,name FROM public.view_data AS t1, public.data AS t2 WHERE t1.viewid='$viewid' AND t1.modid='$modid' AND t2.id=dataid";
     $result = $this->db->query($query);
@@ -168,5 +194,6 @@ class Module extends Model {
       $tmp[$data['name']] = $result->result_array();
     }
     return $tmp;
-  }  
+  }
+*/  
 }

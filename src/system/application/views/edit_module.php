@@ -19,12 +19,9 @@ foreach($data AS $d) {
   echo "<p>".form_label('Label',"$d[dataid]_label")."</p>";
   echo form_error("$d[dataid]_label");
   echo form_input(array('id'=>"$d[dataid]_label",'name'=>"$d[dataid]_label",'value'=>"$d[name]"));
-
-  foreach($d['constraints'] as $c) {
-    echo "<p>".form_label('Query',"$d[dataid]_query")."</p>";
-    echo form_error("$d[dataid]_query");
-    echo form_textarea(array('id'=>"$d[dataid]_query",'name'=>"$d[dataid]_query",'value'=>"$c[constraint]",'cols'=>50,'rows'=>10));
-  }
+  echo "<p>".form_label('Query',"$d[dataid]_query")."</p>";
+  echo form_error("$d[dataid]_query");
+  echo form_textarea(array('id'=>"$d[dataid]_query",'name'=>"$d[dataid]_query",'value'=>"$d[query]",'cols'=>50,'rows'=>10));
   echo "</div>";
 }
 ?>

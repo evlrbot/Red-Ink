@@ -47,7 +47,18 @@ class Campaign extends Controller {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
       // update module info
       $this->module->update_module($modid,array('name'=>$this->input->post('name'),'description'=>$this->input->post('description')));
-      // update data info
+      // delete the removed datasets
+      // get ids of remaining datasets
+      $datasets = $this->module->get_data_sets($modid);
+      foreach($datasets AS $ds) {
+	$label = $this->input->post("$ds[dataid]_label");
+	$query = $this->input->post("$ds[dataid]_query");
+	$this->module->update_data_set($ds['dataid'],$label,$query);
+      }
+      // look for their data in the post
+      // update what is found
+      // if an index is not found, then its been removed (?)
+      // find new indexes in the post
       // insert new data
     }
     $user_data = $this->user->get_account($_SESSION['userid']);
@@ -56,9 +67,6 @@ class Campaign extends Controller {
     $this->load->view('user_body_start');
     $mod = $this->module->get_module($modid);
     $mod['data'] = $this->module->get_data_sets($modid);
-    for($i=0;$i<count($mod['data']);$i++) {
-      $mod['data'][$i]['constraints'] = $this->module->get_constraints($mod['data'][$i]['dataid']);
-    }
     $this->load->view('edit_module',$mod);
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');
