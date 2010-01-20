@@ -30,6 +30,15 @@ class Data extends Model {
   /* PARAMS: $dataid
    * DESCRP: return array of data's fields for given id
    */
+  function get_data_sets() {
+    $query = "SELECT * FROM public.data";
+    $result = $this->db->query($query);
+    return $result->result_array();
+  }
+
+  /* PARAMS: $dataid
+   * DESCRP: return array of data's fields for given id
+   */
   function get_data_set($dataid) {
     $query = "SELECT * FROM public.data WHERE id=$dataid LIMIT 1";
     $result = $this->db->query($query);

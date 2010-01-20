@@ -19,7 +19,7 @@ class Dataset extends Controller {
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');
   }
-  
+    
   function edit($dataid) {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
       $name = $this->db->escape($this->input->post("name"));
@@ -30,14 +30,40 @@ class Dataset extends Controller {
     redirect("dataset/index/$dataid");
   }
 
-  function create() {
+  function create($modid) {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
       $name = $this->db->escape($this->input->post("name"));
       $query = $this->db->escape($this->input->post("query"));
       $q = "INSERT INTO public.data (name,query) VALUES ($name,$query)";
       $this->db->query($q);
       $dataid = $this->db->insert_id();
+      $q = "INSERT INTO public.module_data (modid,dataid) VALUES ($modid,$dataid)";
+      $this->db->query($q);
+      redirect("campaign/edit/$modid");
     }
-    redirect("dataset/index/$dataid");
+    $user_data = $this->user->get_account($_SESSION['userid']);
+    $this->load->view('site_nav',$user_data);
+    $this->user->load_nav($_SESSION['userid']);
+    $this->load->view('user_body_start');
+    $this->load->view('create_dataset',array('modid'=>$modid));
+    $this->load->view('user_body_stop');
+    $this->load->view('site_foot');
+  }
+
+  function add() {
+    $user_data = $this->user->get_account($_SESSION['userid']);
+    $this->load->view('site_nav',$user_data);
+    $this->user->load_nav($_SESSION['userid']);
+    $this->load->view('user_body_start');
+    $data['datasets'] = $this->data->get_data_sets();
+    $this->load->view('list_datasets',$data);
+    $this->load->view('user_body_stop');
+    $this->load->view('site_foot');   
+  }
+
+  function remove($modid,$dataid) {
+    $query = "DELETE FROM public.module_data WHERE dataid=$dataid AND modid=$modid";
+    $this->db->query($query);
+    redirect("campaign/edit/$modid");
   }
 }

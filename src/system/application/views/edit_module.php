@@ -11,7 +11,7 @@
 
 <p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
 
-<h1>Data Sets <a href='/data/add' class='small'>add</a></h1>
+<h1>Data Sets <a href='/dataset/create/<?=$id?>' class='small'>add</a></h1>
 
 <?php 
 echo "<table id='dataset' border='0' cellpadding='10' cellspacing='2'>";
@@ -20,7 +20,7 @@ $count = 0;
 foreach($data AS $d) {
   $rowclass = $count % 2 == 0 ? "c1" : "c2";
   $count++;
-  echo "<tr class='$rowclass'><td>$d[name]</td><td>$d[query]</td><td><a href='/dataset/edit/$d[dataid]'>edit</a> &nbsp;&nbsp;<a href='/dataset/remove/$d[dataid]/$id'>remove</a></td></tr>";
+  echo "<tr class='$rowclass'><td>$d[name]</td><td>$d[query]</td><td><a href='/dataset/edit/$d[dataid]'>edit</a> &nbsp;&nbsp;<a href='/dataset/remove/$id/$d[dataid]'>remove</a></td></tr>";
 }
 echo "</tbody></table>";
 ?>
