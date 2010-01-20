@@ -1,6 +1,6 @@
-<?= form_open(site_url("campaign/edit/$id"),array('id'=>'accountinfoform')); ?>
+<?= form_open(site_url("campaign/edit/$id"),array('id'=>'registrationform')); ?>
 
-<h1>Edit Campaign </h1>
+<h1>Edit Campaign</h1>
 <p><?= form_label('Name','name'); ?></p>
 <?= form_error('name'); ?>
 <?= form_input(array('id'=>'name','name'=>'name','value'=>"$name")); ?>
@@ -11,19 +11,18 @@
 
 <p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
 
-<h1>Data Sets</h1>
+<h1>Data Sets <a href='/data/add' class='small'>add</a></h1>
 
 <?php 
+echo "<table id='dataset' border='0' cellpadding='10' cellspacing='2'>";
+echo "<thead><tr><td>Label</td><td>Query</td><td width='100px'>Actions</td></tr></thead><tbody>";
+$count = 0;
 foreach($data AS $d) {
-  echo "<div id='dataset'>";
-  echo "<p>".form_label('Label',"$d[dataid]_label")."</p>";
-  echo form_error("$d[dataid]_label");
-  echo form_input(array('id'=>"$d[dataid]_label",'name'=>"$d[dataid]_label",'value'=>"$d[name]"));
-  echo "<p>".form_label('Query',"$d[dataid]_query")."</p>";
-  echo form_error("$d[dataid]_query");
-  echo form_textarea(array('id'=>"$d[dataid]_query",'name'=>"$d[dataid]_query",'value'=>"$d[query]",'cols'=>50,'rows'=>10));
-  echo "</div>";
+  $rowclass = $count % 2 == 0 ? "c1" : "c2";
+  $count++;
+  echo "<tr class='$rowclass'><td>$d[name]</td><td>$d[query]</td><td><a href='/dataset/edit/$d[dataid]'>edit</a> &nbsp;&nbsp;<a href='/dataset/remove/$d[dataid]/$id'>remove</a></td></tr>";
 }
+echo "</tbody></table>";
 ?>
 <p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
 <?= form_close(); ?>
