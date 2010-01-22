@@ -76,7 +76,7 @@ class Module extends Model {
    * DESCRP: add module to user account
    */
   function add_user($userid,$modid) {
-    $query = "INSERT INTO public.user_module (userid,modid,viewid) VALUES ($userid,$modid,1)";
+    $query = "INSERT INTO public.user_module (userid,modid,viewid) VALUES ($userid,$modid,13)";
     $this->db->query($query);
   }
 
@@ -123,7 +123,7 @@ class Module extends Model {
    * DESCRP: return associative array of data ids, labels and query strings
    */
   function get_data_sets($modid) {
-    $query = "SELECT t2.name, t2.id AS dataid, t2.query FROM public.module_data AS t1, public.data AS t2 WHERE modid=$modid AND t1.dataid = t2.id";
+    $query = "SELECT t2.name, t2.id AS dataid, t2.query FROM public.module_data AS t1, public.data AS t2 WHERE modid=$modid AND t1.dataid = t2.id ORDER BY t1.order ASC";
     $result = $this->db->query($query);
     return $result->result_array();
   }

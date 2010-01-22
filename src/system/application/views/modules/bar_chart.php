@@ -1,6 +1,6 @@
 <?php
 $xml= "<chart caption='".htmlentities($mod['name'])."' xAxisName='Month' yAxisName='$' showValues='0' numberPrefix='$' canvasbgColor='FFFFFF' canvasBorderColor='000000' canvasBorderThickness='2'>";
-$colors = array("FF0000","0E2964","AA0000","0000FF");
+$colors = array("FF0000","AA0000","0000FF","0E2964");
 date_default_timezone_set('America/New_York');
 $keys = array_keys($data);
 $xml.= "<categories>";
