@@ -103,7 +103,8 @@ class User extends Model {
     }
     $values = array();
     foreach($user_data AS $key=>$value) {
-      array_push($values,"$key='$value'");
+ 	  $value = $this->db->escape($value);
+      array_push($values,"$key=$value");
     }
     $values = implode(", ",$values);
     $query = "UPDATE public.user SET $values WHERE id=$userid";

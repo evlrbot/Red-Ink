@@ -47,11 +47,11 @@ class Me extends Controller {
       $this->form_validation->set_rules($rules);
       $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
       if($this->form_validation->run() == FALSE) {
-	$user_data = $this->user->get_account($_SESSION['userid']);
-	$this->load->view('site_nav',$user_data);
-	$this->load->view('user_nav');
-	$this->load->view('account_info',$user_data);
-	$this->load->view('site_foot');
+		$user_data = $this->user->get_account($_SESSION['userid']);
+		$this->load->view('site_nav',$user_data);
+		$this->load->view('user_nav');
+		$this->load->view('account_info',$user_data);
+		$this->load->view('site_foot');
       }
       else {
 	// UPDATE USER PROFILE
@@ -59,6 +59,8 @@ class Me extends Controller {
 			   'userid'=>$_SESSION['userid'],
 			   'email'=>$this->input->post('email'),
 			   'password'=>$this->input->post('password1'),
+			   'fname'=>$this->input->post('fname'),
+			   'lname'=>$this->input->post('lname')
 			   );
 	$this->user->update($user_data);
 

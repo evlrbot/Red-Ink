@@ -14,6 +14,14 @@
 <?= form_error('password2'); ?>
 <?= form_password(array('id'=>'password2','name'=>'password2')); ?>
 
+<p><?= form_label('First Name','fname'); ?></p>
+<?= form_error('fname'); ?>
+ <?= form_input(array('id'=>'fname','name'=>'fname','value'=>"$fname")); ?>
+
+<p><?= form_label('Last Name','lname'); ?></p>
+<?= form_error('lname'); ?>
+ <?= form_input(array('id'=>'lname','name'=>'lname','value'=>"$lname")); ?>
+
 <p><?= form_submit(array('id'=>'submit','value'=>'Update')); ?></p>
 
 <h1>Expensify Account</h1>

@@ -1,7 +1,4 @@
-<?php
-
-   include("./system/application/libraries/FusionCharts.php");
-?>
+<?php include("./system/application/libraries/FusionCharts.php"); ?>
 
 
 <html>
