@@ -25,19 +25,4 @@ foreach($data AS $d) {
 echo "</tbody></table>";
 ?>
 <p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
-
-<h1>Visualizations</h1>
-<?php 
-echo "<table id='dataset' cellpadding='10' cellspacing='2' border='0'";
-echo "<tr><td>Name</td><td>Template</td><td>multi-data (t/f)</td></tr>";
-$count=0;
-foreach($vis AS $v) {
-  $rowclass = $count % 2 == 0 ? "c1" : "c2";
-  $count++;
-  echo "<tr class='$rowclass'><td>$v[name]</td><td>$v[template]</td><td>$v[multidata]</td></tr>";
-}
-echo "</table>";
-?>
-
-
 <?= form_close(); ?>

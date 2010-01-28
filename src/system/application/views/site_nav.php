@@ -21,6 +21,7 @@ $(document).ready(function(){});
 <a href="http://www.make-them-think.org/Blog/Index" target="_blank">Blog</a>
 <a href="/campaigns">Campaigns</a>
 <a href="/consumers">Consumers</a>
+<a href="/organization/account">Organizations</a>
 <a href="http://www.make-them-think.org/Help/Index" target="_blank">Help</a>  
 </span>
 <span class="logout">
