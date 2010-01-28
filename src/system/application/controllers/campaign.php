@@ -7,6 +7,7 @@ class Campaign extends Controller {
     $this->auth->access();
     $this->load->model("module");
     $this->load->model("user");
+    $this->load->model("visualization");
   }
   
   function index() {
@@ -55,6 +56,7 @@ class Campaign extends Controller {
 	$query = $this->input->post("$ds[dataid]_query");
 	$this->module->update_data_set($ds['dataid'],$label,$query);
       }
+      
       // look for their data in the post
       // update what is found
       // if an index is not found, then its been removed (?)
@@ -67,6 +69,7 @@ class Campaign extends Controller {
     $this->load->view('user_body_start');
     $mod = $this->module->get_module($modid);
     $mod['data'] = $this->module->get_data_sets($modid);
+    $mod['vis'] = $this->visualization->get_visualizations();
     $this->load->view('edit_module',$mod);
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');
