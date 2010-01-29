@@ -47,6 +47,15 @@ class User extends Model {
     return $result->row_array();
   }
 
+  /* PARAMS: void
+   * DESCRP: returns hash of data for all user accounts
+   */
+  function get_accounts() {
+    $query = "SELECT * FROM public.user ORDER BY email ASC";
+    $result = $this->db->query($query);
+    return $result->result_array();
+  }
+
   /* PARAMS: $userid - account to lookup
    *         $apiid - API to lookup
    * DESCRP: return the user's login for the given API

@@ -11,21 +11,20 @@ class Org extends Model {
   function Org() {
     parent::Model();
     $this->load->database();
-    $this->load->model('module');
   }
 
   /* METHOD: account_create
    * PARAMS: $user_data - array of user data key=>values
    * DESCRP: checks if an account exists, if not creates it.
    */
-  function account_create(org_data) {
-    // CHECK IF USER ALREADY EXISTS
-    $query = "SELECT * FROM public.org WHERE email='$org_data[email]' LIMIT 1";
+  function create($data) {
+    // CHECK IF ALREADY EXISTS
+    $query = "SELECT * FROM public.org WHERE address1='$data[address1]' AND address2='$data[address2]' AND name='$data[name]' AND city='$data[city]' AND state='$data[state]' AND zip='$data[zip]' LIMIT 1";
     $result = $this->db->query($query);
-    // IF NOT... ADD ORGANIZATION
+    // IF NOT ADD
     if($result->num_rows() == 0) {
       $password = md5($org_data['password']); // MOVE MD5 TO JQUERY FORM PRE PROCESSING
-      $query = "INSERT INTO public.org (password,email,date_activated) VALUES ('$password','$org_data[email]',current_timestamp)";
+      $query = "INSERT INTO public.org (name,address1,address2,city,state,zip,date_activated) VALUES ('$password','$org_data[email]',current_timestamp)";
       $result = $this->db->query($query);
       return true;
     }

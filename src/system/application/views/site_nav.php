@@ -1,6 +1,4 @@
 <?php include("./system/application/libraries/FusionCharts.php"); ?>
-
-
 <html>
 <head>
 <title>Dynamic Page Name</title>
@@ -19,8 +17,8 @@ $(document).ready(function(){});
 <em>Act As One</em> |
 <a href="/home">Home</a>
 <a href="http://www.make-them-think.org/Blog/Index" target="_blank">Blog</a>
-<a href="/campaigns">Campaigns</a>
-<a href="/consumers">Consumers</a>
+<a href="/campaign/index">Campaigns</a>
+<a href="/consumer/index">Consumers</a>
 <a href="/organization/account">Organizations</a>
 <a href="http://www.make-them-think.org/Help/Index" target="_blank">Help</a>  
 </span>
