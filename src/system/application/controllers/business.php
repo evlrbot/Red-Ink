@@ -17,7 +17,7 @@ class Business extends Controller {
     $this->user->load_nav($_SESSION['userid']);
     $this->load->view('user_body_start');
     $data['bizs'] = $this->biz->get_bizs();
-    $this->load->view('list_orgs',$data);
+    $this->load->view('list_bizs',$data);
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');
   }
