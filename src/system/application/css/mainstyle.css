@@ -5,12 +5,12 @@ a:hover { background-color:#4680FF; color:white; }
 #rendertime { position:absolute; bottom:10px; right:10px; font-size:0.7em; }
 #login { padding-top:100px; }
 
-#registrationform,#loginform,#accountinfoform { margin:0px auto 0px auto; text-align:center;}
-#registrationform label,#loginform label, #accountinfoform label { clear:right; display:block; }
-#registrationform input,#loginform input, #accountinfoform input { font-size:1.5em; margin:15px 0px; }
+#registrationform,#loginform,#accountinfoform,#businessinfoform { margin:0px auto 0px auto; text-align:center;}
+#registrationform label,#loginform label, #accountinfoform label, #businessinfoform label { clear:right; display:block; }
+#registrationform input,#loginform input, #accountinfoform input, #businessinfoform input { font-size:1.5em; margin:15px 0px; }
 #registrationform { width:700px; }
-#registrationform p,#loginform p,#accountinfoform p { margin:0px; }
-#registrationform p em, #loginform p em, #accountinfoform p em { font-weight:bold; }
+#registrationform p,#loginform p,#accountinfoform p, #businessinfoform p { margin:0px; }
+#registrationform p em, #loginform p em, #accountinfoform p em, #businessinfoform p em { font-weight:bold; }
 
 #site_nav { margin-bottom:20px; padding:5px; border-bottom:1px solid #AAA; text-align:left; }
 
