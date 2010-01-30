@@ -1,5 +1,5 @@
 <?php
-class Business extends Model {
+class Biz extends Model {
 
 /************************************************************************
  *                            CONSTRUCTOR METHODS
@@ -7,7 +7,7 @@ class Business extends Model {
   /* PARAMS: void
    * DESCRP: constructor
    */
-  function Business() {
+  function Biz() {
     parent::Model();
     $this->load->database();
   }

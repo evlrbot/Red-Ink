@@ -7,7 +7,7 @@ class Business extends Controller {
     $this->load->model("auth");
     $this->auth->access();
     $this->load->model("user");
-    $this->load->model("business");
+    $this->load->model("biz");
   }
 
   function index()
@@ -16,7 +16,7 @@ class Business extends Controller {
     $this->load->view('site_nav',$data);
     $this->user->load_nav($_SESSION['userid']);
     $this->load->view('user_body_start');
-    $data['bizs'] = $this->business->get_bizs();
+    $data['bizs'] = $this->biz->get_bizs();
     $this->load->view('list_orgs',$data);
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');
