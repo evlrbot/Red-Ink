@@ -1,14 +1,12 @@
 <?php
-
 class RegisterOrg extends Controller 
 {
-  
   function RegisterOrg()
   {
     parent::Controller();
     $this->load->model("user");
-    //$this->load->library('form_validation');
-    //$this->load->helper('form');
+    $this->load->library('form_validation');
+    $this->load->helper('form');
   }
   
   function index()

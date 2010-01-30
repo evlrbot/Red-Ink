@@ -17,10 +17,10 @@ $(document).ready(function(){});
 <em>Act As One</em> |
 <a href="/home">Home</a>
 <a href="http://www.make-them-think.org/Blog/Index" target="_blank">Blog</a>
+<a href="http://www.make-them-think.org/Help/Index" target="_blank">Help</a>  
 <a href="/campaign/index">Campaigns</a>
 <a href="/consumer/index">Consumers</a>
-<a href="/organization/account">Organizations</a>
-<a href="http://www.make-them-think.org/Help/Index" target="_blank">Help</a>  
+<a href="/business/index">Businesses</a>
 </span>
 <span class="logout">
 <?=$email;?> |
