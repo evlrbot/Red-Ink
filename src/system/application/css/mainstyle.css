@@ -2,6 +2,7 @@ body { font-family: Arial; font-size:18px; margin:0px; padding:0px; }
 a { color:#4680FF; text-decoration:none; }
 a:hover { background-color:#4680FF; color:white; }
 .error { text-align:center; color:red; font-weight:normal; }
+.success { text-algin:center; font-weight:bold; }
 #rendertime { position:absolute; bottom:10px; right:10px; font-size:0.7em; }
 #login { padding-top:100px; }
 
@@ -11,6 +12,7 @@ a:hover { background-color:#4680FF; color:white; }
 #registrationform { width:700px; }
 #registrationform p,#loginform p,#accountinfoform p, #businessinfoform p { margin:0px; }
 #registrationform p em, #loginform p em, #accountinfoform p em, #businessinfoform p em { font-weight:bold; }
+#businessinfoform select { font-size:1.5em; padding:5px;  }
 
 #site_nav { margin-bottom:20px; padding:5px; border-bottom:1px solid #AAA; text-align:left; }
 
@@ -41,3 +43,5 @@ a:hover { background-color:#4680FF; color:white; }
 
 #individual_transactions { margin:0px auto; }
 
+#bizlist li { margin: 10px 0px; }
+#bizlist li a { margin:0px 15px 0px 0px; }

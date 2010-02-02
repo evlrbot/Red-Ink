@@ -45,6 +45,7 @@ class Campaign extends Controller {
 
   function edit($modid) {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
+      // add validation stuff
       // update module info
       $this->module->update_module($modid,array('name'=>$this->input->post('name'),'description'=>$this->input->post('description')));
       // delete the removed datasets
