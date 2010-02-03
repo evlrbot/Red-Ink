@@ -16,14 +16,24 @@ class Memo extends Model {
    * DESCRP: add a memo string to the system
    */
   function create($memo) {
-    $query = "INSERT INTO public.memo (memo) VALUES ($memo)";
-    $this->db->query($query);
+    $memo = $this->db->escape($memo);
+    $query = "SELECT * FROM public.memo WHERE memo=$memo";
+    $result = $this->db->query($query);
+    if($result->num_rows()) {
+      return false;
+    }
+    else {
+      $query = "INSERT INTO public.memo (memo) VALUES ($memo)";
+      $this->db->query($query);
+      return true;
+    }
   }
 
   /* PARAMS: $id - memo id
    * DESCRP: remove a memo string from the system
    */
   function delete($id) {
+    $id = $this->db->escape($id);
     $query = "DELETE FROM public.business WHERE id=$id";
     $this->db->query($query);
   }

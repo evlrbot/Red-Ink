@@ -66,7 +66,7 @@ class Biz extends Model {
    * DESCRP: returns hash of memo strings for the given business
    */
   function get_memos($bizid) {
-    $query = "SELECT t2.memo,t2.id FROM public.business_memo AS t1, public.memo AS t2 WHERE t1.bizid = $bizid";
+    $query = "SELECT t2.memo,t2.id AS id FROM public.business_memo AS t1, public.memo AS t2 WHERE t1.bizid = $bizid AND t2.id = t1.memoid";
     $result = $this->db->query($query);
     return $result->result_array();
   }

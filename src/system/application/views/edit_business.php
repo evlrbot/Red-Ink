@@ -86,12 +86,15 @@ $state_list = array('AL'=>"Alabama",
 <?= form_hidden(array('bizid'=>"$biz[id]"));?>
 <p><?= form_submit(array('id'=>'submit','value'=>'Update')); ?></p>
 
-<h1>Memo Strings <a href='/memo/add/<?=$biz['id']?>' class='small'>add</a></h1>
+<h1>Memo Strings <a href='/memos/add/<?=$biz['id']?>' class='small'>add</a></h1>
 <?php if(count($memo)) { ?>
-<table cellpadding="0" cellspacing="0" border="0" id="dataset"><thead><tr><td>memo</td><td width='100px'>Action</td></tr></thead>
+<table cellpadding="3" cellspacing="2" border="0" id="list"><thead><tr><td width='400px'>Memo</td><td width='100px'>Action</td></tr></thead>
 <?php
+$count=0;
 foreach($memo AS $m) {
-      echo "<tr><td>$m[memo]</td><td><a href='/memo/remove/$biz[id]/$memo[id]'>delete</a></td></tr>";
+  $count++;
+  $style = $count % 2 ? "c1":"c2";
+  echo "<tr class='$style'><td>$m[memo]</td><td align='center'><a href='/memo/remove/$biz[id]/$m[id]'>delete</a></td></tr>";
 }
 ?>
 </table>
