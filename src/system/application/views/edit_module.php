@@ -1,4 +1,4 @@
-<?= form_open(site_url("campaign/edit/$id"),array('id'=>'registrationform')); ?>
+<?= form_open(site_url("campaign/edit/$id"),array('id'=>'bigform')); ?>
 
 <h1>Edit Campaign</h1>
 <p><?= form_label('Name','name'); ?></p>

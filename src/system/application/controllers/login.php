@@ -10,7 +10,7 @@ class Login extends Controller
   
   function index()
   {
-    $this->load->view('welcome_message');
+    $this->load->view('login');
   }
   
   function auth() {
@@ -25,7 +25,7 @@ class Login extends Controller
       $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
       // FORM DID NOT VALIDATE RE-PROMPT
       if($this->form_validation->run() == FALSE) {
-	$this->load->view('welcome_message');   
+	$this->load->view('login');   
       }
       else {
 	// CHECK IF USER EXISTS
@@ -37,7 +37,7 @@ class Login extends Controller
 	// IF NOT EXISTS... DISPLAY ERROR 
 	else {
 	  $data = array('msg'=>'<p><span class="error">The username or password for that user was incorrect.</span></p>');
-	  $this->load->view('welcome_message',$data);
+	  $this->load->view('login',$data);
 	}
       }
     }

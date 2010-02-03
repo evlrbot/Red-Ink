@@ -1,4 +1,4 @@
-<?= form_open(site_url("dataset/edit/$id"),array('id'=>'registrationform')); ?>
+<?= form_open(site_url("dataset/edit/$id"),array('id'=>'bigform')); ?>
 
 <h1>Edit Dataset</h1>
 <p><?= form_label('Name','name'); ?></p>

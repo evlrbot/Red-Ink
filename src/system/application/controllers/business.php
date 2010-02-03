@@ -16,7 +16,7 @@ class Business extends Controller {
     $this->user->load_nav($_SESSION['userid']);
     $this->load->view('user_body_start');
     $data['bizs'] = $this->biz->get_bizs();
-    $this->load->view('list_bizs',$data);
+    $this->load->view('list_businesses',$data);
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');
   }
@@ -57,7 +57,7 @@ class Business extends Controller {
     $this->load->view('site_nav',$user_data);
     $this->user->load_nav($_SESSION['userid']);
     $this->load->view('user_body_start'); 
-    $this->load->view('register_business',$data);
+    $this->load->view('create_business',$data);
     $this->load->view('user_body_stop');
     $this->load->view('site_foot'); 
   }

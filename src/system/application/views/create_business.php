@@ -1,4 +1,4 @@
-<?= form_open(site_url('business/add'),array('id'=>'businessinfoform')); ?>
+<?= form_open(site_url('business/add'),array('id'=>'bigform')); ?>
 
 <h1>Business Info</h1>
 

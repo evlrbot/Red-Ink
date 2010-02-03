@@ -1,4 +1,4 @@
-<?= form_open(site_url('campaign/create'),array('id'=>'accountinfoform')); ?>
+<?= form_open(site_url('campaign/create'),array('id'=>'bigform')); ?>
 
 <h1>Create A New Campaign </h1>
 <p><?= form_label('Name','name'); ?></p>

@@ -1,5 +1,5 @@
 <div id="user_body">
-<?= form_open(site_url('me/account_update'),array('id'=>'accountinfoform')); ?>
+<?= form_open(site_url('me/account_update'),array('id'=>'bigform')); ?>
 
 <h1>Account Info</h1>
 <p><?= form_label('E-Mail','email'); ?></p>

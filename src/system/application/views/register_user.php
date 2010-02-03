@@ -7,7 +7,7 @@
 <script language="javascript" src="/system/application/js/jquery-1.3.2.min.js"></script>
 </head>
 <body id="login">
-<?= form_open(site_url('registeruser'),array('id'=>'registrationform')); ?>
+<?= form_open(site_url('registeruser'),array('id'=>'bigform')); ?>
 <p><?= form_label('E-Mail','email'); ?></p>
 <?= form_error('email'); ?>
 <?= form_input(array('id'=>'email','name'=>'email')); ?>

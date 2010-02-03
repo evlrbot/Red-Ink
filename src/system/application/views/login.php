@@ -6,7 +6,7 @@
 </style>
 </head>
 <body id="login">
-<?=form_open('login/auth',array('id'=>'loginform'));?>
+<?=form_open('login/auth',array('id'=>'bigform'));?>
 <?=form_label('<p>Username</p>','username');?>
 <?= form_error('username'); ?>
 <?=form_input(array('id'=>'username','name'=>'username','value'=>''));?>

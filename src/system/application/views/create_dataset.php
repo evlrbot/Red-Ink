@@ -1,4 +1,4 @@
-<?= form_open(site_url("dataset/create/$modid"),array('id'=>'registrationform')); ?>
+<?= form_open(site_url("/dataset/create/$modid"),array('id'=>'bigform')); ?>
 
 <h1>Create Dataset</h1>
 <p><?= form_label('Name','name'); ?></p>

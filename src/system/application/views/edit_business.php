@@ -1,4 +1,4 @@
-<?= form_open(site_url("business/edit/$biz[id]"),array('id'=>'businessinfoform')); ?>
+<?= form_open(site_url("business/edit/$biz[id]"),array('id'=>'bigform')); ?>
 
 <h1>Business Info</h1>
 
@@ -86,12 +86,12 @@ $state_list = array('AL'=>"Alabama",
 <?= form_hidden(array('bizid'=>"$biz[id]"));?>
 <p><?= form_submit(array('id'=>'submit','value'=>'Update')); ?></p>
 
-<h1>Memo Strings <a href='/business/addmemo' class='small'>add</a></h1>
+<h1>Memo Strings <a href='/memo/add/<?=$biz['id']?>' class='small'>add</a></h1>
 <?php if(count($memo)) { ?>
 <table cellpadding="0" cellspacing="0" border="0" id="dataset"><thead><tr><td>memo</td><td width='100px'>Action</td></tr></thead>
 <?php
 foreach($memo AS $m) {
-      echo "<tr><td>$m[memo]</td><td><a href='/business/deletememo/$biz[id]/$memo[id]'>delete</a></td></tr>";
+      echo "<tr><td>$m[memo]</td><td><a href='/memo/remove/$biz[id]/$memo[id]'>delete</a></td></tr>";
 }
 ?>
 </table>
