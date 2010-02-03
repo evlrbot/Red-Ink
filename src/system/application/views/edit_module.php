@@ -14,7 +14,7 @@
 <h1>Data Sets <a href='/dataset/create/<?=$id?>' class='small'>add</a></h1>
 
 <?php 
-echo "<table id='dataset' border='0' cellpadding='10' cellspacing='2'>";
+echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>";
 echo "<thead><tr><td>Label</td><td>Query</td><td width='100px'>Actions</td></tr></thead><tbody>";
 $count = 0;
 foreach($data AS $d) {
@@ -25,4 +25,7 @@ foreach($data AS $d) {
 echo "</tbody></table>";
 ?>
 <p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
+
+<h1>Visualizations <a href='/visualization/add/<?= $id ?>' class='small'>add</a></h1>
+
 <?= form_close(); ?>

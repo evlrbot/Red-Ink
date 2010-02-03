@@ -34,7 +34,7 @@ class Memo extends Model {
    */
   function delete($id) {
     $id = $this->db->escape($id);
-    $query = "DELETE FROM public.business WHERE id=$id";
+    $query = "DELETE FROM public.memo WHERE id=$id";
     $this->db->query($query);
   }
 

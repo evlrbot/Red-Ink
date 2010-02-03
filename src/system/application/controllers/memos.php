@@ -34,4 +34,9 @@ class Memos extends Controller {
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');
   }
+
+  function remove($bizid,$memoid) {
+    $this->memo->remove($bizid,$memoid);
+    redirect("/business/edit/$bizid");
+  }
 }

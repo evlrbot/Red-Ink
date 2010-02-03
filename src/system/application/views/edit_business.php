@@ -94,7 +94,7 @@ $count=0;
 foreach($memo AS $m) {
   $count++;
   $style = $count % 2 ? "c1":"c2";
-  echo "<tr class='$style'><td>$m[memo]</td><td align='center'><a href='/memo/remove/$biz[id]/$m[id]'>delete</a></td></tr>";
+  echo "<tr class='$style'><td>$m[memo]</td><td align='center'><a href='/memos/remove/$biz[id]/$m[id]'>delete</a></td></tr>";
 }
 ?>
 </table>
