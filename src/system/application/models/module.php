@@ -144,7 +144,7 @@ class Module extends Model {
    * DESCRP: For a given view returns the view's associate template file path
    */
   function get_template($viewid) {
-    $query = "SELECT template FROM view WHERE id=$viewid LIMIT 1";
+    $query = "SELECT template FROM visualization WHERE id=$viewid LIMIT 1";
     $result = $this->db->query($query);
     $tmp = $result->row_array();
     return $tmp['template'];
