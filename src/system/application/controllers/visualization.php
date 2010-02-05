@@ -36,14 +36,14 @@ class Visualization extends Controller {
     }
   }
 
-  function edit($modid,$modvizid) {
+  function edit($modid,$vizid,$modvizid) {
     $data['modid'] = $modid;
     $data['user'] = $this->user->get_account($_SESSION['userid']);
     $this->load->view('site_nav',$data['user']);
     $this->user->load_nav($_SESSION['userid']);
     $this->load->view('user_body_start');
     $data['dataset'] = $this->module->get_datasets();
-    $this->load->view('list_datasets',$data);
+    $this->load->view('modvizdata',$data);
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');   
   }
