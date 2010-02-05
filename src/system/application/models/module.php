@@ -177,9 +177,15 @@ class Module extends Model {
     return $result->result_array();    
   }
 
-  /* PARAMS: $viewid
-   * DESCRP: return an array of data for the view
+  /* PARAMS: $modid - module id
+   * DESCRP: list views associated with this module
    */
+  function get_visualizations($modid) {
+    $query = "SELECT * FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
+    $result = $this->db->query($query);
+    return $result->result_array();
+  }
+
 /*
   function get_view_data($modid,$viewid,$userid) {
     $query = "SELECT dataid,name FROM public.view_data AS t1, public.data AS t2 WHERE t1.viewid='$viewid' AND t1.modid='$modid' AND t2.id=dataid";

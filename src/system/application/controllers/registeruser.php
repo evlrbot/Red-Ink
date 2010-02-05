@@ -26,7 +26,7 @@ class RegisterUser extends Controller
       $user_data = array('email'=>$this->input->post('email'),'password'=>$this->input->post('password1'));
       if($this->user->account_create(&$user_data)) {
 	$data = array('msg'=>'<p><em>You may now login with your new user credentials.</em</p>');
-	$this->load->view('welcome_message.php',$data);   
+	$this->load->view('login',$data);   
       }
       else {
 	$data = array('msg'=>'<p class="error">That email address is already assigned to a user account.</p>');

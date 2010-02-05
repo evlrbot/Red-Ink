@@ -45,22 +45,16 @@ class Campaign extends Controller {
 
   function edit($modid) {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
-      // add validation stuff
-      // update module info
+      /*
+       * ROT: ADD IN VALIDATION 
+       */
       $this->module->update_module($modid,array('name'=>$this->input->post('name'),'description'=>$this->input->post('description')));
-      // delete the removed datasets
-      // get ids of remaining datasets
       $datasets = $this->module->get_data_sets($modid);
       foreach($datasets AS $ds) {
 	$label = $this->input->post("$ds[dataid]_label");
 	$query = $this->input->post("$ds[dataid]_query");
 	$this->module->update_data_set($ds['dataid'],$label,$query);
       }
-      // look for their data in the post
-      // update what is found
-      // if an index is not found, then its been removed (?)
-      // find new indexes in the post
-      // insert new data
     }
     $user_data = $this->user->get_account($_SESSION['userid']);
     $this->load->view('site_nav',$user_data);
@@ -68,6 +62,7 @@ class Campaign extends Controller {
     $this->load->view('user_body_start');
     $mod = $this->module->get_module($modid);
     $mod['data'] = $this->module->get_data_sets($modid);
+    //$mod['viz'] = $this->module->get_visualizations($modid);
     $this->load->view('edit_module',$mod);
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');

@@ -2,7 +2,7 @@
 <ul id="list">
 <?php
 foreach($vizs AS $v) {
-   echo "<li><em>$v[name]</em><br/>$v[template]</li>";
+   echo "<li>$v[name] - <a href='/visualization/add/$modid/$v[id]'>add</a></li>";
 }
 ?>
 </ul>

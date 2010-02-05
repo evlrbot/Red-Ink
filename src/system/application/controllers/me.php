@@ -27,8 +27,8 @@ class Me extends Controller {
     $apis = $this->api->list_apis();
     foreach($apis AS $api) {
       $api_login = $this->user->get_api_login($_SESSION['userid'],$api['id']);
-      $user_data[$api['name'].'_username'] = $api_login['username'];
-      $user_data[$api['name'].'_password'] = $api_login['password'];
+      $user_data[$api['name'].'_username'] = count($api_login) ? $api_login['username'] : '';
+      $user_data[$api['name'].'_password'] = count($api_login) ? $api_login['password'] : '';
     }
     $this->load->view('site_nav',$user_data);
     $this->user->load_nav($_SESSION['userid']);

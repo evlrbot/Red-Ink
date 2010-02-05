@@ -27,5 +27,11 @@ echo "</tbody></table>";
 <p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
 
 <h1>Visualizations <a href='/visualization/add/<?= $id ?>' class='small'>add</a></h1>
-
+<ul id="list">
+<?php
+foreach($viz AS $v) {
+  echo "<li>$v[name] - <a href='/visualization/remove/$id/$v[id]'>remove</a></li>";
+}
+?>
+</ul>
 <?= form_close(); ?>

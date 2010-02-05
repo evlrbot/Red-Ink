@@ -36,10 +36,13 @@ a:hover { background-color:#4680FF; color:white; }
 #user_body #modulelist li { margin:15px 0px; }
 #user_body h1 a.small { font-size:14px; vertical-align:middle; }
 
-#list {  margin:0px auto; }
-#list thead { font-weight:bold; text-align:center; }
-#list .c1 { background-color:#EEE; }
-#list .c2 { background-color:#FFF; }
+table#list { margin:0px auto; }
+table#list thead { font-weight:bold; text-align:center; }
+table#list .c1 { background-color:#EEE; }
+table#list .c2 { background-color:#FFF; }
+ul#list li { margin:10px 0px; }
+ul#list em { font-weight:bold; }
+
 
 #individual_transactions { margin:0px auto; }
 
