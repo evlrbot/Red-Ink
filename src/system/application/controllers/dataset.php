@@ -9,25 +9,23 @@ class Dataset extends Controller {
     $this->load->model("user");
   }
   
-  function index($dataid) {
-    $user_data = $this->user->get_account($_SESSION['userid']);
-    $this->load->view('site_nav',$user_data);
-    $this->user->load_nav($_SESSION['userid']);
-    $this->load->view('user_body_start');
-    $data = $this->data->get_data_set($dataid);
-    $this->load->view('edit_dataset',$data);
-    $this->load->view('user_body_stop');
-    $this->load->view('site_foot');
-  }
-    
-  function edit($dataid) {
+  function edit($modid,$dataid) {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
       $name = $this->db->escape($this->input->post("name"));
       $query = $this->db->escape($this->input->post("query"));
       $q = "UPDATE public.data SET name=$name, query=$query WHERE id=$dataid";
       $this->db->query($q);
+      redirect("campaign/edit/$modid");
     }
-    redirect("dataset/index/$dataid");
+    $user_data = $this->user->get_account($_SESSION['userid']);
+    $this->load->view('site_nav',$user_data);
+    $this->user->load_nav($_SESSION['userid']);
+    $this->load->view('user_body_start');
+    $data = $this->data->get_data_set($dataid);
+    $data['modid'] = $modid;
+    $this->load->view('edit_dataset',$data);
+    $this->load->view('user_body_stop');
+    $this->load->view('site_foot');
   }
 
   function create($modid) {

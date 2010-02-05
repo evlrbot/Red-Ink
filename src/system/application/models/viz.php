@@ -38,12 +38,14 @@ class Viz extends Model {
    *         $vizid - visualization id
    * DESCRP: disassociate a visualization from a module
    */
-  function remove($modid,$vizid) {
-    if(is_numeric($modid) && is_numeric($vizid) ) {
-      $query = "INSERT INTO module_visualization (modid,vizid) VALUES ($modid,$vizid)";
+  function remove($modvizid) {
+    if(is_numeric($modvizid)) {
+      $query = "DELETE FROM module_visualization WHERE id=$modvizid";
       $this->db->query($query);
     }
   }
 
-
+  function edit_mod($modid,$vizid) {
+    
+  }
 }

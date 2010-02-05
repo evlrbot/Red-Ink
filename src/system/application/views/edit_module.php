@@ -15,23 +15,26 @@
 
 <?php 
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>";
-echo "<thead><tr><td>Label</td><td>Query</td><td width='100px'>Actions</td></tr></thead><tbody>";
+echo "<thead><tr><td>Label</td><td>Query</td><td width='130px'>Actions</td></tr></thead><tbody>";
 $count = 0;
 foreach($data AS $d) {
   $rowclass = $count % 2 == 0 ? "c1" : "c2";
   $count++;
-  echo "<tr class='$rowclass'><td>$d[name]</td><td>$d[query]</td><td><a href='/dataset/edit/$d[dataid]'>edit</a> &nbsp;&nbsp;<a href='/dataset/remove/$id/$d[dataid]'>remove</a></td></tr>";
+  echo "<tr class='$rowclass'><td>$d[name]</td><td>$d[query]</td><td><a href='/dataset/edit/$id/$d[dataid]'>edit</a> <a href='/dataset/remove/$id/$d[dataid]'>remove</a></td></tr>";
 }
 echo "</tbody></table>";
 ?>
 <p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
 
 <h1>Visualizations <a href='/visualization/add/<?= $id ?>' class='small'>add</a></h1>
-<ul id="list">
+<table id='list' border='0' cellpadding='10' cellspacing='2'>
+<thead><tr><td width="300px">Name</td><td width="300px">Data Sets</td><td>Actions</td></tr></thead>
 <?php
+$count=0;
 foreach($viz AS $v) {
-  echo "<li>$v[name] - <a href='/visualization/remove/$id/$v[id]'>remove</a></li>";
+  $style = $count++ % 2 ? "c1":"c2";
+  echo "<tr class='$style'><td>$v[name]</td><td></td><td><a href='/visualization/edit/$id/$v[modvizid]'>edit</a><a href='/visualization/remove/$id/$v[modvizid]'>remove</a></td></tr>\n";
 }
 ?>
-</ul>
+</table>
 <?= form_close(); ?>

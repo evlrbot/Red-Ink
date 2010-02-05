@@ -62,7 +62,7 @@ class Campaign extends Controller {
     $this->load->view('user_body_start');
     $mod = $this->module->get_module($modid);
     $mod['data'] = $this->module->get_data_sets($modid);
-    //$mod['viz'] = $this->module->get_visualizations($modid);
+    $mod['viz'] = $this->module->get_visualizations($modid);
     $this->load->view('edit_module',$mod);
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');

@@ -40,6 +40,7 @@ table#list { margin:0px auto; }
 table#list thead { font-weight:bold; text-align:center; }
 table#list .c1 { background-color:#EEE; }
 table#list .c2 { background-color:#FFF; }
+table#list a { margin:0px 5px; }
 ul#list li { margin:10px 0px; }
 ul#list em { font-weight:bold; }
 

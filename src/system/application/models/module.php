@@ -168,38 +168,12 @@ class Module extends Model {
     return $result->row_array();
   }
  
-  /* PARAMS: $dataid
-   * DESCRP: return the constraint strings for the given data
-   */
-  function get_constraints($dataid) {
-    $query = "SELECT t2.constraint FROM public.data_constraint AS t1, public.constraint AS t2 WHERE t1.dataid=$dataid AND t2.id = t1.constraintid";
-    $result = $this->db->query($query);
-    return $result->result_array();    
-  }
-
   /* PARAMS: $modid - module id
    * DESCRP: list views associated with this module
    */
   function get_visualizations($modid) {
-    $query = "SELECT * FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
+    $query = "SELECT t1.name, t1.template, t1.multidata, t2.id AS modvizid FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
     $result = $this->db->query($query);
     return $result->result_array();
   }
-
-/*
-  function get_view_data($modid,$viewid,$userid) {
-    $query = "SELECT dataid,name FROM public.view_data AS t1, public.data AS t2 WHERE t1.viewid='$viewid' AND t1.modid='$modid' AND t2.id=dataid";
-    $result = $this->db->query($query);
-    $datas = $result->result_array();
-    $tmp = array();
-    foreach($datas AS $data) {
-      $query = "SELECT \"constraint\" FROM public.data_constraint AS t1, public.constraint AS t2 WHERE dataid='$data[dataid]' AND t2.id=constraintid";
-      $result = $this->db->query($query);
-      $sql = $result->row_array();
-      $result = $this->db->query($sql['constraint'],array($userid));
-      $tmp[$data['name']] = $result->result_array();
-    }
-    return $tmp;
-  }
-*/  
 }
