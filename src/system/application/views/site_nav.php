@@ -15,7 +15,7 @@ $(document).ready(function(){});
 <div id="site_nav">
 <span class="sitelinks">
 <em>Act As One</em> |
-<a href="/home">Home</a>
+<a href="#">Home</a>
 <a href="http://www.make-them-think.org/Blog/Index" target="_blank">Blog</a>
 <a href="http://www.make-them-think.org/Help/Index" target="_blank">Help</a>  
 <a href="/campaign/index">Campaigns</a>

@@ -49,12 +49,6 @@ class Campaign extends Controller {
        * ROT: ADD IN VALIDATION 
        */
       $this->module->update_module($modid,array('name'=>$this->input->post('name'),'description'=>$this->input->post('description')));
-      $datasets = $this->module->get_data_sets($modid);
-      foreach($datasets AS $ds) {
-	$label = $this->input->post("$ds[dataid]_label");
-	$query = $this->input->post("$ds[dataid]_query");
-	$this->module->update_data_set($ds['dataid'],$label,$query);
-      }
     }
     $user_data = $this->user->get_account($_SESSION['userid']);
     $this->load->view('site_nav',$user_data);

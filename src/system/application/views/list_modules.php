@@ -1,4 +1,4 @@
-<h1>Campaigns</h1>
+<h1>Campaigns <a href="/campaign/create" class="small">add</a></h1>
 <ul id="modulelist">
 <?php
 foreach($data AS $mod) {
