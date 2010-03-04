@@ -32,6 +32,9 @@ echo "</tbody></table>";
 <?php
 $count=0;
 foreach($viz AS $v) {
+
+	print_r($viz);
+
   $style = $count++ % 2 ? "c1":"c2";
   echo "<tr class='$style'><td>$v[name]</td><td></td><td><a href='/visualization/edit/$id/$v[modvizid]'>edit</a><a href='/visualization/remove/$id/$v[modvizid]'>remove</a></td></tr>\n";
 }

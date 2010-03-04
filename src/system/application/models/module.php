@@ -172,8 +172,77 @@ class Module extends Model {
    * DESCRP: list views associated with this module
    */
   function get_visualizations($modid) {
-    $query = "SELECT t1.name, t1.template, t1.multidata, t2.id AS modvizid FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
+    $query = "SELECT t1.name, t1.template, t1.multidata, t2.vizid AS modvizid FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
     $result = $this->db->query($query);
     return $result->result_array();
+  }
+  
+  /* PARAMS: $type - single, multi, combo
+   * DESCRP: generates the xml to be loaded in charts.  
+   */  
+  function write_xml($type, $data, $mod) {
+
+	switch($type) {
+	
+		case 'single':
+			
+			$xml= "<chart caption='".htmlentities($mod['name'])."' xAxisName='Month' yAxisName='$' showValues='0' numberPrefix='$' canvasbgColor='FFFFFF' canvasBorderColor='000000' canvasBorderThickness='2'>";
+			$colors = array("FF0000","AA0000","0000FF","0E2964");
+			date_default_timezone_set('America/New_York');
+			$keys = array_keys($data);
+			
+			foreach($data[$keys[0]] as $d) {
+			
+				$xml .= "<set label= '0' value='" .abs($d['value']). "'/>";
+			}
+			
+			
+			$xml.= "</chart>";
+	
+			break;
+			
+		case 'multi':
+			
+			$xml= "<chart caption='".htmlentities($mod['name'])."' xAxisName='Month' yAxisName='$' showValues='0' numberPrefix='$' canvasbgColor='FFFFFF' canvasBorderColor='000000' canvasBorderThickness='2'>";
+			$colors = array("FF0000","AA0000","0000FF","0E2964");
+			date_default_timezone_set('America/New_York');
+			$keys = array_keys($data);
+			$xml.= "<categories>";
+			
+			foreach($data[$keys[0]] AS $d) {
+			  $d['label'] = date_format(date_create($d['label']), "M y");
+			  $xml.= "<category label='$d[label]'/>";
+			}
+			
+			$xml.="</categories>";
+			$i = 0;
+			
+			foreach($keys AS $index) {
+			  $xml.= "<dataset seriesName='$index' color='$colors[$i]'>";
+			  foreach($data[$index] AS $d) {
+				$xml.= "<set value='".abs($d['value'])."'/>";
+			  }
+			  $xml.="</dataset>";
+			  $i++;
+			}
+			
+			foreach($data[$keys[0]] as $d) {
+			
+				$xml .= "<set label= '0' value='" .abs($d['value']). "'/>";
+			}
+			
+			
+			$xml.= "</chart>";
+			
+			
+			break;
+		
+		case 'combo':
+		
+			break;
+	}
+	
+	return $xml;
+	
   }
 }

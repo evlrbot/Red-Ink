@@ -16,9 +16,13 @@
 <li><em>Participant:</em></li>
 <ul>
 <?php
+
 foreach($modules AS $mod) {
-   echo "<li><a href='/campaign/view/$mod[id]'>$mod[name]</a></li>";
+   if(isset($mod['id']) ) {
+	  echo "<li><a href='/campaign/view/$mod[id]'>$mod[name]</a></li>";
+   }
 }
+
 ?>
 </ul>
 </ul>
