@@ -36,30 +36,108 @@ class Visualization extends Controller {
     }
   }
 
-  function edit($modid,$vizid,$modvizid) {
+  function edit($modid,$modvizid) {
+
+	$data_sets= $this->module->get_data_sets($modid);	
+
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
+    	
+    	$q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
+    	$this->db->query($q);
+    	
+    	foreach($data_sets as $d) {	
+    	    	
+	    	if($moddataid = $this->db->escape($this->input->post($d['dataid']))) {
+	    	
+				$q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid) VALUES ($modid, $modvizid, $moddataid)";
+				$this->db->query($q);
+			}
+			
+    	}
+    }
+
 
 	$user= $this->user->get_account($_SESSION['userid']);
 	$userid= $_SESSION['userid'];
-	$data_sets= $this->module->get_data_sets($modid);	
+
 	$data_set_results= $this->module->get_data_sets_results($data_sets, $userid);
-	$template = $this->module->get_template($vizid);
+
+	$template = $this->module->get_template($modvizid);
+	
 	$mod= $this->module->get_module($modid);
     
 	$xml= "<chart caption='".htmlentities($modid['name'])."' xAxisName='Month' yAxisName='$' showValues='0' numberPrefix='$' canvasbgColor='FFFFFF' canvasBorderColor='000000' canvasBorderThickness='2'>";
 	$colors = array("FF0000","AA0000","0000FF","0E2964");
 	date_default_timezone_set('America/New_York');
-	$keys = array_keys($data_set_results); 
+    
+    $dataids= $this->module->get_modviz_datasets($modid, $modvizid);
+
+	print_r($data_set_results);
+
+	$keys = array_keys($data_set_results); 	
 	
-	// take a single dataset
-	$data_set_results= $data_set_results[$keys[0]];
+	if(count($dataids) > 1) {
 	
-	// iterate through to find month/$ pairs
-	foreach($data_set_results as $d) {
-	
-		$xml .= "<set label= '" .$d["label"]. "' value='" .abs($d["value"]). "'/>";
+		$xml.= "<categories>";
+		
+		foreach($data_set_results[$keys[0]] as $d) {
+		
+			$xml .="<category label='". $d["label"] . "' />";			
+		}
+		
+		$xml .= "</categories>";
+		
+
+		
+		foreach($keys as $key) {
+
+			$xml .="<dataset seriesName= '" . $key . "' >";
+			
+			foreach($data_set_results[$key] as $dt) {
+			
+				$xml .= "<set value='" . abs($dt["value"]) . "' />";
+			}
+			
+			$xml .="</dataset>";
+			
+		}
+		
+		$xml .= "</chart>";
 	}
 	
-	$xml.= "</chart>";
+	else {
+	
+
+		// take a single dataset
+		$data_set_results= $data_set_results[$keys[0]];
+		
+		// iterate through to find month/$ pairs
+		foreach($data_set_results as $d) {
+		
+			$xml .= "<set label= '" .$d["label"]. "' value='" .abs($d["value"]). "'/>";
+		}
+		
+		$xml.= "</chart>";
+    }
+
+	$i= 0;
+
+	while($i< count($data_sets)) {
+    
+    	$d= $data_sets[$i]["dataid"]; 
+    
+		$data_sets[$i]['checked']= '';
+		
+		foreach($dataids as $did) {
+					
+			if($d== $did["moddataid"]) {
+			
+				$data_sets[$i]['checked']= 'checked';
+			}
+		}
+		
+		$i++;
+	}
     
     $data['xml'] = $xml;
 	$data['modid'] = $modid;
@@ -68,11 +146,16 @@ class Visualization extends Controller {
 	$data['template'] = $template;
     $data['mod'] = $mod;
 	$data['data_set_results'] = $data_set_results;
-	$data['vizid']= $vizid;
-	
+	$data['modvizid']= $modvizid;
+	$data['dataids']= $dataids;
+
+	$data['keys']= $keys;
+
+    $this->load->view('site_nav',$data['user']);	
     $this->user->load_nav($userid);    
-    $this->load->view('site_nav',$data['user']);
-    $this->load->view('user_body_start');    
+    $this->load->view('user_body_start');
+
+    
     $this->load->view('modvizdata',$data);
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');   

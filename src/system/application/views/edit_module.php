@@ -33,10 +33,25 @@ echo "</tbody></table>";
 $count=0;
 foreach($viz AS $v) {
 
-	print_r($viz);
+	$mvid=$v['modvizid'];
 
-  $style = $count++ % 2 ? "c1":"c2";
-  echo "<tr class='$style'><td>$v[name]</td><td></td><td><a href='/visualization/edit/$id/$v[modvizid]'>edit</a><a href='/visualization/remove/$id/$v[modvizid]'>remove</a></td></tr>\n";
+	$style = $count++ % 2 ? "c1":"c2";
+	echo "<tr class='$style'><td>$v[name]</td>";
+	echo "<td>";
+  
+	if(isset($dataids[$mvid])) {
+	
+	  foreach($dataids[$mvid] as $dids) {
+	  
+		  echo $dids['name'];	  
+	  }
+	}
+  
+  echo "</td>";
+  
+  
+  
+  echo "<td><a href='/visualization/edit/$id/$v[modvizid]'>edit</a><a href='/visualization/remove/$id/$v[modvizid]'>remove</a></td></tr>\n";
 }
 ?>
 </table>

@@ -143,11 +143,11 @@ class Module extends Model {
   /* PARAMS: $viewid
    * DESCRP: For a given view returns the view's associate template file path
    */
-  function get_template($viewid) {
-    $query = "SELECT template FROM visualization WHERE id=$viewid LIMIT 1";
+  function get_template($modviewid) {
+    $query = "SELECT v.template, v.multidata FROM visualization AS v, module_visualization AS mv WHERE mv.id=$modviewid AND mv.vizid= v.id LIMIT 1";
     $result = $this->db->query($query);
     $tmp = $result->row_array();
-    return $tmp['template'];
+    return $tmp;
   }
 
   /* PARAMS: void
@@ -172,10 +172,25 @@ class Module extends Model {
    * DESCRP: list views associated with this module
    */
   function get_visualizations($modid) {
-    $query = "SELECT t1.name, t1.template, t1.multidata, t2.vizid AS modvizid FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
+    $query = "SELECT t1.name, t1.template, t1.multidata, t2.id AS modvizid FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
     $result = $this->db->query($query);
     return $result->result_array();
   }
+  
+  
+  function add_mod_dataid($modid,$modvizid, $moddataid) {
+    $query = "INSERT INTO public.mod_viz_data (modid,modvizid,moddataid) VALUES ($modid,$modvizid,$moddataid)";
+    $this->db->query($query);
+  }  
+  
+  function get_modviz_datasets($modid, $modvizid) {
+  	$query= "SELECT mvd.moddataid, d.name FROM public.data AS d, public.mod_viz_data as mvd WHERE mvd.modid=$modid AND mvd.moddataid= d.id AND mvd.modvizid= $modvizid;";
+    $result= $this->db->query($query);
+	 return $result->result_array();
+  }
+  
+ 
+  
   
   /* PARAMS: $type - single, multi, combo
    * DESCRP: generates the xml to be loaded in charts.  

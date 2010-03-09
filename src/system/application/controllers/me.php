@@ -10,17 +10,18 @@ class Me extends Controller {
     $this->load->model("api");
     $this->load->model("module");
   }
-
+  
   function index()
   {
     $user_data = $this->user->get_account($_SESSION['userid']);
     $this->load->view('site_nav',$user_data);
     $this->user->load_nav($_SESSION['userid']);
     $this->load->view('user_body_start');
-    $this->user->load_modules($_SESSION['userid']);
+    //$this->user->load_modules($_SESSION['userid']);
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');
   }
+  
 
   function account() {
     $user_data = $this->user->get_account($_SESSION['userid']);
@@ -81,5 +82,5 @@ class Me extends Controller {
 	redirect('me/account');
       }
     }
-  }
+  }  
 }
