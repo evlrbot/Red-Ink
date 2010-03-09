@@ -59,4 +59,7 @@ foreach($viz AS $v) {
 }
 ?>
 </table>
+
+<p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
+
 <?= form_close(); ?>
