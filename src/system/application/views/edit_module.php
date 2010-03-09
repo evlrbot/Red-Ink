@@ -41,10 +41,14 @@ foreach($viz AS $v) {
   
 	if(isset($dataids[$mvid])) {
 	
+		$string= '';
+	
 	  foreach($dataids[$mvid] as $dids) {
 	  
-		  echo $dids['name'];	  
+		  $string.= $dids['name'] . ", ";	  
 	  }
+	  
+	  echo substr($string, 0, -2);
 	}
   
   echo "</td>";
