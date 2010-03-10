@@ -54,6 +54,13 @@ class Visualization extends Controller {
 			}
 			
     	}
+    	
+		if($this->db->escape($this->input->post('submit2'))) {
+		
+			$redirect= "/campaign/edit/$modid";
+		
+			redirect($redirect);
+		}
     }
 
 
@@ -72,9 +79,26 @@ class Visualization extends Controller {
     
     $dataids= $this->module->get_modviz_datasets($modid, $modvizid);
 
-	print_r($data_set_results);
-
 	$keys = array_keys($data_set_results); 	
+	
+	$labels= array();
+	
+	/*
+	$i= 0;
+	
+	foreach($data_set_results as $ds) {
+	
+		foreach($ds as $d) {
+		
+			$labels[$i][]= $d["label"];
+		}
+		
+		$i++;
+	}
+	
+	print_r($labels);	
+	
+	*/
 	
 	if(count($dataids) > 1) {
 	
@@ -82,22 +106,47 @@ class Visualization extends Controller {
 		
 		foreach($data_set_results[$keys[0]] as $d) {
 		
+			$labels[]= $d["label"];
 			$xml .="<category label='". $d["label"] . "' />";			
 		}
 		
 		$xml .= "</categories>";
 		
-
-		
 		foreach($keys as $key) {
 
 			$xml .="<dataset seriesName= '" . $key . "' >";
 			
-			foreach($data_set_results[$key] as $dt) {
+			$label_count= 0;
 			
-				$xml .= "<set value='" . abs($dt["value"]) . "' />";
-			}
+			$j= 0;
 			
+			for($i= 0; $i< count($labels); $i++) {
+			
+				//echo $data_set_results[$key][$i]["label"] . "<br />";
+				
+				//echo $labels[$j] . "<br />";
+	
+				if(isset($data_set_results[$key][$j])) {
+			
+					$dt= $data_set_results[$key][$j];
+				}
+				else {
+					
+					$dt["label"]= '';
+				}
+			
+				if($dt["label"]== $labels[$i]) {
+			
+					$xml .= "<set value='" . abs($dt["value"]) . "' />";
+					$j++;
+				}
+				
+				else {
+			
+					$xml .= "<set value='0' />";
+				}
+			}					
+	
 			$xml .="</dataset>";
 			
 		}
@@ -106,15 +155,20 @@ class Visualization extends Controller {
 	}
 	
 	else {
-	
 
 		// take a single dataset
-		$data_set_results= $data_set_results[$keys[0]];
 		
-		// iterate through to find month/$ pairs
-		foreach($data_set_results as $d) {
+		if(isset($dataids[0])) {
 		
-			$xml .= "<set label= '" .$d["label"]. "' value='" .abs($d["value"]). "'/>";
+			$single= $dataids[0]['name'];
+	
+			$data_set_results= $data_set_results[$single];
+		
+			// iterate through to find month/$ pairs
+			foreach($data_set_results as $d) {
+		
+				$xml .= "<set label= '" .$d["label"]. "' value='" .abs($d["value"]). "'/>";
+			}
 		}
 		
 		$xml.= "</chart>";
