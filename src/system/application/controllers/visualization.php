@@ -62,8 +62,7 @@ class Visualization extends Controller {
 			redirect($redirect);
 		}
     }
-
-
+	
 	$user= $this->user->get_account($_SESSION['userid']);
 	$userid= $_SESSION['userid'];
 
@@ -81,30 +80,15 @@ class Visualization extends Controller {
 
 	$keys = array_keys($data_set_results); 	
 	
+	$categories = $dataids[0];
+	
 	$labels= array();
-	
-	/*
-	$i= 0;
-	
-	foreach($data_set_results as $ds) {
-	
-		foreach($ds as $d) {
-		
-			$labels[$i][]= $d["label"];
-		}
-		
-		$i++;
-	}
-	
-	print_r($labels);	
-	
-	*/
 	
 	if(count($dataids) > 1) {
 	
 		$xml.= "<categories>";
 		
-		foreach($data_set_results[$keys[0]] as $d) {
+		foreach($data_set_results[$categories['name']] as $d) {
 		
 			$labels[]= $d["label"];
 			$xml .="<category label='". $d["label"] . "' />";			
@@ -112,43 +96,31 @@ class Visualization extends Controller {
 		
 		$xml .= "</categories>";
 		
-		foreach($keys as $key) {
+		foreach($dataids as $ds) {
+		
+			
 
-			$xml .="<dataset seriesName= '" . $key . "' >";
+			$current_dataset= $data_set_results[$ds['name']];
+			$current_dataset_name= $ds['name'];
+
+			$xml .= "<dataset seriesName= '" . $current_dataset_name . "' >";
 			
-			$label_count= 0;
+			$label_index= 0;
 			
-			$j= 0;
+			$data_index= 0;
 			
-			for($i= 0; $i< count($labels); $i++) {
-			
-				//echo $data_set_results[$key][$i]["label"] . "<br />";
+			while($label_index < count($labels)) {
 				
-				//echo $labels[$j] . "<br />";
-	
-				if(isset($data_set_results[$key][$j])) {
-			
-					$dt= $data_set_results[$key][$j];
-				}
-				else {
+				if($current_dataset[$label_index]['label']== $labels[$data_index]) {
 					
-					$dt["label"]= '';
-				}
-			
-				if($dt["label"]== $labels[$i]) {
-			
-					$xml .= "<set value='" . abs($dt["value"]) . "' />";
-					$j++;
+					$xml .= "<set value='" . abs($current_dataset[$data_index]['value']) . "' />";
+					$data_index++;
 				}
 				
-				else {
-			
-					$xml .= "<set value='0' />";
-				}
-			}					
-	
-			$xml .="</dataset>";
-			
+				$label_index++;
+			}
+				
+			$xml .= "</dataset>";
 		}
 		
 		$xml .= "</chart>";
@@ -158,9 +130,9 @@ class Visualization extends Controller {
 
 		// take a single dataset
 		
-		if(isset($dataids[0])) {
+		if(isset($categories)) {
 		
-			$single= $dataids[0]['name'];
+			$single= $categories['name'];
 	
 			$data_set_results= $data_set_results[$single];
 		
