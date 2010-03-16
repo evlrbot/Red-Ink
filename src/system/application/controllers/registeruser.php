@@ -20,14 +20,39 @@ class RegisterUser extends Controller{
         $this->load->view('register_user');   
     }
       else{
-		$user_email = $this->input->post('email');
-      	$this->load->library('email');
-      	$this->email->from('melva.james@gmail.com', 'Melva James');
-      	$this->email->to($user_email);
-      	$this->email->subject('RedInk Account Validation');
-      	$this->email->message('Thank you for joining RedInk!  Please complete your registration by clicking the link below.');
-      	$this->email->send();
-      	echo $this->email->print_debugger();
+		  	$config=Array(
+		  	  'useragent'=>'Red Ink',  
+			  'protocol'=>'postfix',  
+			  'mailpath'=>'/usr/sbin/postfix',
+			  'smtp_host'=>'',
+			  'smtp_user'=>'',  
+			  'smtp_pass'=>'',  
+			  'smtp_port'=>'25',  
+			  'smtp_timeout'=>'5',  
+			  'wordwrap'=>TRUE,  
+			  'wrapchars'=>'76',
+			  'mailtype'=>'text',
+			  'charset'=>'iso-8859-1',  
+			  'validate'=>TRUE,
+			  'priority'=>'1',
+			  'crlf'=>"\r\n",
+			  'newline'=>"\r\n", 
+			  'bcc_batch_mode'=>FALSE, 
+			  'bcc_batch_size'=>'200' 
+			);
+  
+		  $this->load->library('email', $config); 
+
+		  $user_email = $this->input->post('email');
+		  date_default_timezone_set('America/New_York');
+		  $this->email->from('melva.james@gmail.com', 'Melva James');
+		  $this->email->to($user_email);
+		  $this->email->subject('RedInk Account Validation');
+		  $this->email->message('Thank you for joining RedInk!  Please complete your registration by clicking the link below.');
+		  //<br><a href="http://redink.media.mit.edu/registeruser"></a>
+		  //<br>Sent ".date("D, j M, Y @ h:i:s A")."</p>";
+		  $this->email->send();
+		  echo $this->email->print_debugger();
 
       }
   }
@@ -48,7 +73,6 @@ class RegisterUser extends Controller{
         $this->email->send();
 
 */
-
 
 
 /*
@@ -135,7 +159,36 @@ $content = "<p>$p1[name] ($p1[email]) has challenged $p2[name] ($p2[email]) to a
 */
 
 
+//		if ( ! defined('BASEPATH')) exit('No direct script access allowed');  
 
+
+/*
+		  -------------------------------------------------------------------
+		  EMAIL CONFIG
+		  -------------------------------------------------------------------
+		  Configuration of outgoing mail server. 
+*/
+		     
+/*	
+		  $config['useragent']='Red Ink';  
+		  $config['protocol']='postfix';  
+		  $config['mailpath']='/usr/sbin/postfix';
+		  $config['smtp_host']='';
+		  $config['smtp_user']='';  
+		  $config['smtp_pass']='';  
+		  $config['smtp_port']='25';  
+		  $config['smtp_timeout']='5';  
+		  $config['wordwrap']=TRUE;  
+		  $config['wrapchars']='76';
+		  $config['mailtype']='text';
+		  $config['charset']='iso-8859-1';  
+		  $config['validate']=TRUE;
+		  $config['priority']='1';
+		  $config['crlf']="\r\n";
+		  $config['newline']="\r\n"; 
+		  $config['bcc_batch_mode']=FALSE; 
+		  $config['bcc_batch_size']='200'; 
+*/
 
 /*
 
