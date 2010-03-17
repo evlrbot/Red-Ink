@@ -19,6 +19,9 @@ class RegisterUser extends Controller{
     if($this->form_validation->run() == FALSE){
         $this->load->view('register_user');   
     }
+      
+//SET EMAIL CONFIGURATION PARAMETERS      
+      
       else{
 		  	$config=Array(
 		  	  'useragent'=>'Red Ink',  
