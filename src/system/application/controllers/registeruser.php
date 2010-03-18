@@ -19,14 +19,23 @@ class RegisterUser extends Controller{
     if($this->form_validation->run() == FALSE){
         $this->load->view('register_user');   
     }   
-      
       else{
-      
+        $user_data = array('email'=>$this->input->post('email'),'password'=>$this->input->post('password1'));
+        $this->user->account_check($user_data); 
+      }
+  }
+}
+
+
+
+
+
+
 /*
 
 $sql = "SELECT *
-        FROM table
-        WHERE team_name = '$team_name';";
+        FROM user
+        WHERE email = '$email';";
 
 $result = mysql_query($sql) or die(mysql_error());
 
@@ -39,7 +48,7 @@ else
   // team not registered
 }
 
-*/
+
 	    if ($data = array('msg'=>'<p class="error">That email address is already assigned to a user account.</p>'){
  	      $this->load->view('register_user.php',$data); 
 		}     
@@ -79,6 +88,7 @@ else
       }
   }
 }
+*/
 
 //OTHER MESSAGES 1
 
