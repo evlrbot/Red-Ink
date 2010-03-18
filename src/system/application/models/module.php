@@ -115,7 +115,8 @@ class Module extends Model {
     $data['data'] = $this->get_data_sets_results($this->get_data_sets($modid),$userid);  
     if(count($data['data']) > 0) {
       $template = $this->get_template($viewid);
-      $this->load->view("modules/$template",$data);
+      //$this->load->view("modules/$template",$data);
+      $this->load->view("modules/bar_chart",$data);
     }
   }
 
