@@ -17,7 +17,7 @@
 <?=form_submit(array('value'=>'Login','id'=>'submit'));?>
 <?=br();?>
 <?=isset($msg) ? $msg : '';?>
-<p>If you don't have a login, you may sign-up for one <a href="/registeruser">here</a>.
+<p>If you don't have a login, you may sign-up for one <a href="/registerusercheck">here</a>.
 <?=form_close();?>
 <p id="rendertime">Page rendered in {elapsed_time} seconds.</p>
 </body>

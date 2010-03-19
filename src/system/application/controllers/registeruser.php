@@ -21,7 +21,7 @@ class RegisterUser extends Controller{
     }   
       else{
         $user_data = array('email'=>$this->input->post('email'),'password'=>$this->input->post('password1'));
-        $this->user->account_check($user_data); 
+        $this->user->account_create($user_data); 
       }
   }
 }
