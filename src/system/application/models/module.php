@@ -111,12 +111,20 @@ class Module extends Model {
    * DESCRP: Loads the appropriate module/view/data given the above params
    */
   function load($modid,$viewid,$userid) {
+  
     $data['mod'] = $this->get_module($modid);
     $data['data'] = $this->get_data_sets_results($this->get_data_sets($modid),$userid);  
     if(count($data['data']) > 0) {
-      $template = $this->get_template($viewid);
-      //$this->load->view("modules/$template",$data);
-      $this->load->view("modules/bar_chart",$data);
+    	$data['viz']= $this->get_visualizations($modid);
+    	
+    	foreach($data['viz'] as $viz) {
+    	
+			$modvizid= $viz['modvizid'];
+			$this->viz->load_viz($modid, $modvizid);
+    	}
+    	
+		//$this->load->view("modules/$template",$data);
+		//$this->load->view("modules/bar_chart",$data);
     }
   }
 

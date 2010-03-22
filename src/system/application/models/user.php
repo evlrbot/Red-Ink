@@ -134,9 +134,10 @@ class User extends Model {
   }
 
   function load_modules($userid) {
-    foreach($this->get_modules($userid) AS $mod) {
-      $this->module->load($mod['modid'],$mod['viewid'],$_SESSION['userid']);
-    }
+  
+    //foreach($this->get_modules($userid) AS $mod) {
+      //$this->module->load($mod['modid'],$mod['viewid'],$_SESSION['userid']);
+    //}
   }
   
   function load_nav($userid) {
