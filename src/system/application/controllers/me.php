@@ -24,8 +24,6 @@ class Me extends Controller {
     	
     		$vizs= $this->module->get_visualizations($mod['modid']);
     		
-    		var_dump($vizs);
-    		
     		$this->viz->load_vizs($mod, $vizs);
     	}
     }

@@ -32,7 +32,9 @@ class Viz extends Model {
 		$viz_datasets= $this->load_viz_datasets($dataids);
 		$viz_data= $this->load_viz_data($viz_datasets);
 		
-		$xml= $this->format_xml($viz_data, $dataids);
+		$chart_name= $this->module->get_module($modid);
+		$chart_name= $chart_name['name'];
+		$xml= $this->format_xml($viz_data, $dataids, $chart_name);
 		
 		$chart_data= array("viz"=>$viz, "xml"=>$xml, "viz_data"=>$viz_data);
 		
@@ -67,9 +69,9 @@ class Viz extends Model {
 		return $data;
   }
   
-  function format_xml($viz_data, $data_ids) {
+  function format_xml($viz_data, $data_ids, $chart_name) {
 
-	  $xml= "<chart caption='". " Name of Chart"  ."' bgColor= 'FFFFFF' plotGradientColor='' showBorder= '0' showValues='0' numberPrefix='$' canvasbgColor='000000' canvasBorderColor='000000' canvasBorderThickness='2' showPlotBorder='0' useRoundEdges='1' canvasBorderThickness= '0' chartTopMargin= '0'>";
+	  $xml= "<chart caption='". $chart_name ."' bgColor= 'FFFFFF' plotGradientColor='' showBorder= '0' showValues='0' numberPrefix='$' canvasbgColor='000000' canvasBorderColor='000000' canvasBorderThickness='2' showPlotBorder='0' useRoundEdges='1' canvasBorderThickness= '0' chartTopMargin= '0'>";
 	  
 	  // figure out a place for these
 	  
@@ -92,7 +94,6 @@ class Viz extends Model {
             		<apply toObject='Xaxisname' styles='Labels' />
             		<apply toObject='Yaxisname' styles='YValues' />
             		<apply toObject='Yaxisvalues' styles='Values' />            		
-            		<apply toObject='Canvas' styles='MyFirstAnimationS	tyle' />
             		<apply toObject='DataPlot' styles='Bevel, Shadow' />
 				</application>    
 			  </styles>";
