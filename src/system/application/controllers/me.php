@@ -23,7 +23,10 @@ class Me extends Controller {
     	foreach($modules as $mod) {
     	
     		$vizs= $this->module->get_visualizations($mod['modid']);
-    		$this->viz->load_vizs($mod['modid'], $vizs);
+    		
+    		var_dump($vizs);
+    		
+    		$this->viz->load_vizs($mod, $vizs);
     	}
     }
     $this->load->view('user_body_stop');

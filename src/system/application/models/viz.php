@@ -20,13 +20,18 @@ class Viz extends Model {
     return $result->result_array();
   }
   
-  function load_vizs($modid, $vizs) {
+  function load_vizs($mod, $vizs) {
   
-  	foreach($vizs as $viz) {
-  	
+  	$modid= $mod['modid'];
+  	$mod_info= $this->module->get_module($modid);
+  
+	foreach($vizs as $viz) {
+	
 		$dataids= $this->module->get_modviz_datasets($modid, $viz['modvizid']);
+		
 		$viz_datasets= $this->load_viz_datasets($dataids);
 		$viz_data= $this->load_viz_data($viz_datasets);
+		
 		$xml= $this->format_xml($viz_data, $dataids);
 		
 		$chart_data= array("viz"=>$viz, "xml"=>$xml, "viz_data"=>$viz_data);
@@ -41,7 +46,7 @@ class Viz extends Model {
   	
   	foreach($dataids as $dataid) {
   		
-		$query= "SELECT d.query, md.dataid FROM data AS d, module_data AS md WHERE d.id= md.modid AND md.dataid= ". $dataid['moddataid'];
+		$query= "SELECT d.query FROM data AS d WHERE d.id= ". $dataid['moddataid'];
 		$tmp= $this->db->query($query);  
 		$results[]= $tmp->result_array();
   	}	
@@ -52,7 +57,7 @@ class Viz extends Model {
   function load_viz_data($viz_datasets) {
   
 		$data = array(); 
-	
+		
 		foreach($viz_datasets AS $viz_dataset) {
 		
 			$result = $this->db->query($viz_dataset[0]['query']);
@@ -62,66 +67,91 @@ class Viz extends Model {
 		return $data;
   }
   
-  function format_xml($viz_data, $dataids) {
+  function format_xml($viz_data, $data_ids) {
 
-	$xml= "<chart caption='". " Name of Chart"  ."' xAxisName='Month' yAxisName='$' showValues='0' numberPrefix='$' canvasbgColor='FFFFFF' canvasBorderColor='000000' canvasBorderThickness='2'>";
-	$colors = array("FF0000","AA0000","0000FF","0E2964");
-	date_default_timezone_set('America/New_York');
-	
-	$labels= array();
-	
-	if(count($dataids) > 1) {
-	
-		$xml.= "<categories>";
-			
-		foreach($viz_data[0] as $data_pair) {
-		
-			$labels[]= $data_pair["label"];
-			$xml .="<category label='". $data_pair["label"] . "' />";
-		}
-		
-		$xml .= "</categories>";
-		
-		$i= 1;
-		
-		foreach($viz_data as $dataset) {
-		
-			$xml .= "<dataset seriesName= '" . $i . "' >";
-		
-			$i++;
-		
-			foreach($dataset as $data_pair) {
-				
-				$xml .= "<set value='" . abs($data_pair['value']) . "' />";
-			}
-				
-			$xml .= "</dataset>";
-		}
-		
-		$xml .= "</chart>";
-	}
-	
-	else {
-
-		// take a single dataset
-		
-		if(isset($categories)) {
-		
-			$single= $categories['name'];
-	
-			$data_set_results= $data_set_results[$single];
-		
-			// iterate through to find month/$ pairs
-			foreach($data_set_results as $d) {
-		
-				$xml .= "<set label= '" .$d["label"]. "' value='" .abs($d["value"]). "'/>";
-			}
-		}
-		
-		$xml.= "</chart>";
-    }
-    
-    return $xml;
+	  $xml= "<chart caption='". " Name of Chart"  ."' bgColor= 'FFFFFF' plotGradientColor='' showBorder= '0' showValues='0' numberPrefix='$' canvasbgColor='000000' canvasBorderColor='000000' canvasBorderThickness='2' showPlotBorder='0' useRoundEdges='1' canvasBorderThickness= '0' chartTopMargin= '0'>";
+	  
+	  // figure out a place for these
+	  
+	  $colors = array("FF0000","AA0000","0000FF","0E2964");
+	  //date_default_timezone_set('America/New_York');
+	  
+	  $xml.= "<styles>
+			    <definition>
+            		<style name='Title' type='font' face='Arial' size='15' color='000000' bold='1'/>
+            		<style name='Labels' type='font' face='Arial' size='15' color='000000' bold='1'/>
+					<style name='Values' type='font' face='Arial' size='13' color='000000' bold='0'/>
+					<style name='YValues' type='font' face='Arial' size='24' color='000000' bold='1'/>
+					<style name='Bevel' type='bevel' distance='0'/>
+		            <style name='Shadow' type='shadow' angle='45' distance='0'/>
+      			</definition>
+      			<application>
+            		<apply toObject='Caption' styles='Title' />
+            		<apply toObject='Datalabels' styles='Values' />
+            		<apply toObject='Datavalues' styles='Values' />         
+            		<apply toObject='Xaxisname' styles='Labels' />
+            		<apply toObject='Yaxisname' styles='YValues' />
+            		<apply toObject='Yaxisvalues' styles='Values' />            		
+            		<apply toObject='Canvas' styles='MyFirstAnimationS	tyle' />
+            		<apply toObject='DataPlot' styles='Bevel, Shadow' />
+				</application>    
+			  </styles>";
+	  
+	  
+	  $labels= array();
+	  
+	  if(count($data_ids) > 1) {
+	  
+		  $xml.= "<categories>";
+			  
+		  foreach($viz_data[0] as $data_pair) {
+		  
+			  $label= date('M', strtotime($data_pair["label"]));
+			  $labels[]= $label;
+			  $xml .="<category label='". $label . "' />";
+		  }
+		  
+		  $xml .= "</categories>";
+		  
+		  foreach($viz_data as $dataset) {
+		  
+			  $xml .= "<dataset seriesName= '"  . "' >";
+		  
+		  	// counter for multiseries colors  
+		  	
+			  $i= 0;
+			  
+		  
+			  foreach($dataset as $data_pair) {
+				  
+				  $xml .= "<set value='" . abs($data_pair['value']) . "' color= '$colors[$i]'/>";
+				  
+				  // cycle thru colors
+				  
+				  $i > 2 ? $i= 0 : $i++;
+			  }
+				  
+			  $xml .= "</dataset>";
+		  }
+		  
+		  $xml .= "</chart>";
+	  }
+	  
+	  else {
+		  
+		  if($viz_data) {
+		  
+			  foreach($viz_data[0] as $data_pair) {
+			  
+	  			  $label= date('M', strtotime($data_pair["label"]));
+				  $xml .= "<set label= '" .$label. "' value='" .abs($data_pair["value"]). "' color='FF0000'/>";
+			  }
+			  
+			  $xml.= "</chart>";
+		  }
+	  }
+	  
+	  return $xml;
     
   }
   

@@ -31,7 +31,7 @@ a:hover { background-color:#4680FF; color:white; }
 #user_body h1 {  color:#4680FF; text-align:center; }
 #user_body object, 
 #user_body embed { margin:25px auto; }
-#user_body #module { border:0px solid fuchsia; text-align:center; }
+#user_body #module { border:0px solid fuchsia; text-align:center; margin: -26px}
 #user_body #modulelist em { font-weight:bold;  }
 #user_body #modulelist li { margin:15px 0px; }
 #user_body h1 a.small { font-size:14px; vertical-align:middle; }

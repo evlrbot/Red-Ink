@@ -4,6 +4,7 @@
 
 if(count($dataids) > 1) {
 
+	$xml= $chart_data['xml'];
 	echo renderChartHTML("/system/application/libraries/$template[multidata]", "", "$xml", "myNext", 700, 300, false, false);
 }
 else {
