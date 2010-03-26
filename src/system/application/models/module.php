@@ -180,10 +180,19 @@ class Module extends Model {
   /* PARAMS: $modid - module id
    * DESCRP: list views associated with this module
    */
-  function get_visualizations($modid) {
-    $query = "SELECT t1.name, t1.template, t1.multidata, t2.id AS modvizid FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
-    $result = $this->db->query($query);
-    return $result->result_array();
+  function get_visualizations($modid, $vizid= -1) {
+  
+	// if vizid was passed, select a single viz and return single row else select all vizs
+  	if($vizid < 0) {
+    	$query = "SELECT t1.name, t1.template, t1.multidata, t2.id AS modvizid, t2.viz_name FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
+		$result = $this->db->query($query);
+		return $result->result_array();    	
+    }
+    else {
+    	$query = "SELECT t1.name, t1.template, t1.multidata, t2.id AS modvizid, t2.viz_name FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid AND t2.id=$vizid";    	
+		$result = $this->db->query($query);
+		return $result->row_array();
+    }
   }
   
   

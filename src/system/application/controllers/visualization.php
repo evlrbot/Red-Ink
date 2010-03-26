@@ -42,8 +42,13 @@ class Visualization extends Controller {
 
     if($_SERVER['REQUEST_METHOD'] == "POST") {
     	
+    	
+    	// these need to be moved into model and optimized
+    	
     	$q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
     	$this->db->query($q);
+    	
+    	//
     	
     	foreach($data_sets as $d) {	
     	    	
@@ -54,6 +59,12 @@ class Visualization extends Controller {
 			}
 			
     	}
+    	
+    	if($viz_name= $this->db->escape($this->input->post('viz_name_field'))) {
+    	
+			$q= "UPDATE public.module_visualization SET viz_name=$viz_name WHERE id= $modvizid";
+			$this->db->query($q);
+		}
     	
 		if($this->db->escape($this->input->post('submit2'))) {
 		
@@ -73,14 +84,23 @@ class Visualization extends Controller {
 	$mod= $this->module->get_module($modid);
 	
 	$dataids= $this->module->get_modviz_datasets($modid, $modvizid);
+
+/*	load viz and chart data  */
+
+    $viz = $this->module->get_visualizations($modid, $modvizid);
 	
 	$viz_datasets= $this->viz->load_viz_datasets($dataids);
 	
 	$viz_data= $this->viz->load_viz_data($viz_datasets);
 	
-	$xml= $this->viz->format_xml($viz_data, $dataids);
+	$chart_name= $this->module->get_module($modid);
+	$chart_name= $chart_name['name'];	
+	
+	$xml= $this->viz->format_xml($viz_data, $dataids, $chart_name);
 	
 	$chart_data= array("viz"=>"", "xml"=>$xml, "viz_data"=>$viz_data);
+
+/*  */
 
 	$i= 0;
 
@@ -113,6 +133,7 @@ class Visualization extends Controller {
 	$data['modvizid']= $modvizid;
 	$data['dataids']= $dataids;
 	$data['chart_data']= $chart_data;
+	$data['viz']= $viz;
 
     $this->load->view('site_nav',$data['user']);	
     $this->user->load_nav($userid);    

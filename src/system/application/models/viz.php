@@ -32,8 +32,8 @@ class Viz extends Model {
 		$viz_datasets= $this->load_viz_datasets($dataids);
 		$viz_data= $this->load_viz_data($viz_datasets);
 		
-		$chart_name= $this->module->get_module($modid);
-		$chart_name= $chart_name['name'];
+		$chart_name= $viz['viz_name'];
+		
 		$xml= $this->format_xml($viz_data, $dataids, $chart_name);
 		
 		$chart_data= array("viz"=>$viz, "xml"=>$xml, "viz_data"=>$viz_data);
@@ -48,10 +48,11 @@ class Viz extends Model {
   	
   	foreach($dataids as $dataid) {
   		
+  		$name= $dataid['name'];
 		$query= "SELECT d.query FROM data AS d WHERE d.id= ". $dataid['moddataid'];
-		$tmp= $this->db->query($query);  
-		$results[]= $tmp->result_array();
-  	}	
+		$tmp= $this->db->query($query);
+		$results[$name]= $tmp->row_array();
+	}	
   	
   	return $results;
   }
@@ -60,12 +61,17 @@ class Viz extends Model {
   
 		$data = array(); 
 		
-		foreach($viz_datasets AS $viz_dataset) {
-		
-			$result = $this->db->query($viz_dataset[0]['query']);
-			$data[] = $result->result_array();
+		foreach($viz_datasets AS $key=>$viz_dataset) {
+
+			// pass the dataset name on as the array key for data
+			$name= array_keys($viz_dataset);
+			// only one array key per dataset
+			$name= $name[0];
+			
+			$result = $this->db->query($viz_dataset['query']);
+			$data[$key] = $result->result_array();
 		}
-	
+		
 		return $data;
   }
   
@@ -104,8 +110,12 @@ class Viz extends Model {
 	  if(count($data_ids) > 1) {
 	  
 		  $xml.= "<categories>";
-			  
-		  foreach($viz_data[0] as $data_pair) {
+		  
+		  //  gets keys to iterate thru array - probably a cleaner way of doing this
+		
+		$keys= array_keys($viz_data);
+			
+		  foreach($viz_data[$keys[0]] as $data_pair) {
 		  
 			  $label= date('M', strtotime($data_pair["label"]));
 			  $labels[]= $label;
@@ -114,9 +124,9 @@ class Viz extends Model {
 		  
 		  $xml .= "</categories>";
 		  
-		  foreach($viz_data as $dataset) {
+		  foreach($viz_data as $key=>$dataset) {
 		  
-			  $xml .= "<dataset seriesName= '"  . "' >";
+			  $xml .= "<dataset seriesName= '$key' >";
 		  
 		  	// counter for multiseries colors  
 		  	

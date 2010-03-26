@@ -22,6 +22,8 @@ echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>";
 echo "<thead><tr><td>Label</td><td>Query</td></tr></thead><tbody>";
 
 echo form_open(site_url("visualization/edit/$modid/$modvizid"));
+
+echo "<div id='viz_name'><label for='viz_name_field'>Viz Name</label><input name= 'viz_name_field' value='$viz[viz_name]' id='viz_name_field'></div>";
 			
 echo "<table>";
 echo "<tr>";
@@ -29,12 +31,12 @@ echo "<tr>";
 foreach($data_sets as $d) {
 	
 	echo "<td><input name= '" . $d['dataid'] . "' value='" . $d['dataid'] ."' type='checkbox' ". $d['checked'] . "></td><td>" . $d['name'] . "</td><td>" . $d['query'] . "</td>";
-	echo "</tr>";	
+	echo "</tr>";
 }
 
-?>
+echo "</table>";
 
-</table>
+?>
 
 <p style="text-align: center"><?= form_submit(array('id'=>'submit','value'=>'Save')); ?><?= form_button(array('name'=>'submit2', 'id'=>'submit2','value'=>'submit2', 'type'=>'submit'), 'Save and Go Back'); ?></p>
 

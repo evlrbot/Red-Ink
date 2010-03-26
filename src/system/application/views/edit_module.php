@@ -28,7 +28,7 @@ echo "</tbody></table>";
 
 <h1>Visualizations <a href='/visualization/add/<?= $id ?>' class='small'>add</a></h1>
 <table id='list' border='0' cellpadding='10' cellspacing='2'>
-<thead><tr><td width="300px">Name</td><td width="300px">Data Sets</td><td>Actions</td></tr></thead>
+<thead><tr><td width="300px">Viz Name</td><td width="300px">Chart Type</td><td width="300px">Data Sets</td><td>Actions</td></tr></thead>
 <?php
 $count=0;
 foreach($viz AS $v) {
@@ -36,7 +36,12 @@ foreach($viz AS $v) {
 	$mvid=$v['modvizid'];
 
 	$style = $count++ % 2 ? "c1":"c2";
-	echo "<tr class='$style'><td>$v[name]</td>";
+	
+	echo "<tr class='$style'><td>$v[viz_name]</td>";
+	
+	echo "<td>$v[name]</td>";
+	
+	// load the dataids for each viz
 	echo "<td>";
   
 	if(isset($dataids[$mvid])) {
