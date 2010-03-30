@@ -58,17 +58,20 @@ class User extends Model {
 	  $this->email->message("<p>Thank you for joining RedInk!&nbsp;&nbsp;Please complete your registration by clicking the link below:</p><p><a href=\"http://redink.media.mit.edu/registeruser\">RedInk Account Registration</a><p>Sent ".date("D, j M, Y @ h:i:s A")."</p>");
 	  $this->email->send();
 	  echo $this->email->print_debugger();
+	}
+	
+	if($result->num_rows() != 0) {
+      $data = array('msg'=>'<p class="error">That email address is already assigned to a user account.</p>');
+ 	  $this->load->view('register_user_check.php',$data);
     }
   }
-    
-/*      
+        
       
   /* METHOD: account_create
    * PARAMS: $user_data - array of user data key=>values
    * DESCRP: checks if an account exists, if not creates it.
    */
-
-/*  
+ 
   function account_create($user_data) {
   
       $password = md5($user_data['password']); // MOVE MD5 TO JQUERY FORM PRE PROCESSING
@@ -76,16 +79,12 @@ class User extends Model {
       $result = $this->db->query($query);
       return true;
     }
-*/
-/*
      
     else {
       $data = array('msg'=>'<p class="error">That email address is already assigned to a user account.</p>');
  	  $this->load->view('register_user.php',$data); 
       return false;
     }   
-    
-*/
 
 /************************************************************************
  *                           ACCESSOR METHODS
