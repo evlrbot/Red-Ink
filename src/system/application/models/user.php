@@ -29,10 +29,10 @@ class User extends Model {
       $data = array('msg'=>'<p class="error">That email address is already assigned to a user account.</p>');
  	  $this->load->view('register_user_check.php',$data);
     }    
-      // IF USER EMAIL DOES NOT EXIST...CREATE ACCOUNT & SEND USER CONFIRMATION EMAIL
+      // IF USER EMAIL DOES NOT EXIST...CREATE UNVERIFIED USER ACCOUNT & SEND USER CONFIRMATION EMAIL
       else{
       
-        $this->user->account_create($user_data);
+        $this->user->unverified_account_create($user_data);
         
         $config=Array(
 		  'useragent'=>'Red Ink',  
@@ -67,7 +67,19 @@ class User extends Model {
 //	    echo $this->email->print_debugger();  OPTIONAL EMAIL DELIVERY CHECK
 	  }
   }
-        
+     
+  /* METHOD: unverified_account_create
+   * PARAMS: $user_data - array of user data key=>values
+   * DESCRP: checks if an account exists, if not creates it.
+   */
+ 
+  function unverified_account_create($user_data) {
+  
+      $password = md5($user_data['password']); // MOVE MD5 TO JQUERY FORM PRE PROCESSING
+      $query = "INSERT INTO public.user (password,email,date_activated) VALUES ('$password','$user_data[email]',current_timestamp)";
+      $result = $this->db->query($query);
+      return true;
+    } 
       
   /* METHOD: account_create
    * PARAMS: $user_data - array of user data key=>values
