@@ -89,7 +89,7 @@ class Viz extends Model {
   
   function format_xml($viz_data, $data_ids, $chart_name) {
 
-	  $xml= "<chart caption='". $chart_name ."' bgColor= 'FFFFFF' plotGradientColor='' showBorder= '0' showValues='0' numberPrefix='$' canvasbgColor='000000' canvasBorderColor='000000' canvasBorderThickness='2' showPlotBorder='0' useRoundEdges='1' canvasBorderThickness= '0' chartTopMargin= '0'>";
+	  $xml= "<chart caption='". $chart_name ."' bgColor= 'FFFFFF' plotGradientColor='' showBorder= '0' showValues='0' numberPrefix='$' canvasbgColor='000000' canvasBorderColor='000000' canvasBorderThickness='2' showPlotBorder='0' useRoundEdges='1' canvasBorderThickness= '0' chartTopMargin= '0' paletteColors= 'FF0000, 0000FF, AA0000, 0E2964'>";
 	  
 	  // figure out a place for these
 	  
@@ -147,7 +147,7 @@ class Viz extends Model {
 		  
 			  foreach($dataset as $data_pair) {
 				  
-				  $xml .= "<set value='" . abs($data_pair['value']) . "' color= '$colors[$i]'/>";
+				  $xml .= "<set value='" . abs($data_pair['value']) . "'/>";
 				  
 				  // cycle thru colors
 				  
