@@ -42,6 +42,18 @@ class Viz extends Model {
 	}
   }
   
+  function load_sample_vizs($modid) {
+  
+  	$vizs= $this->viz->get_vizs();
+
+  
+	foreach($vizs as $viz) {
+		
+		$data= array("viz"=>$viz, "modid"=>$modid);
+		$this->load->view('/list_visualization', $data);
+	}
+  }
+  
   function load_viz_datasets($dataids) {
   
   	$results= array();
@@ -150,9 +162,11 @@ class Viz extends Model {
 	  
 	  else {
 		  
-		  if($viz_data) {
-		  
-			  foreach($viz_data[0] as $data_pair) {
+		  if($key= array_keys($viz_data)) {
+		  	  
+		  	  $key= $key[0];
+		  	  
+			  foreach($viz_data[$key] as $data_pair) {
 			  
 	  			  $label= date('M', strtotime($data_pair["label"]));
 				  $xml .= "<set label= '" .$label. "' value='" .abs($data_pair["value"]). "' color='FF0000'/>";

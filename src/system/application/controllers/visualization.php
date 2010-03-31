@@ -21,8 +21,9 @@ class Visualization extends Controller {
       $this->load->view('site_nav',$data['user']);
       $this->user->load_nav($_SESSION['userid']);
       $this->load->view('user_body_start');
-      $data['vizs'] = $this->viz->get_vizs();
-      $this->load->view('list_visualization',$data);
+      
+	  $this->viz->load_sample_vizs($modid);
+      
       $this->load->view('user_body_stop');
       $this->load->view('site_foot');    
     }

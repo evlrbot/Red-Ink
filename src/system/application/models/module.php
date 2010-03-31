@@ -160,10 +160,10 @@ class Module extends Model {
   }
 
   /* PARAMS: void
-   * DESCRP: return list of all modules
+   * DESCRP: return list of all modules except sample module id 1
    */
   function get_modules() {
-    $query = "SELECT * FROM public.module";
+    $query = "SELECT * FROM public.module WHERE id<> 1";
     $result = $this->db->query($query);
     return $result->result_array();
   }
