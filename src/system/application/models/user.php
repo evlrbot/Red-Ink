@@ -24,46 +24,48 @@ class User extends Model {
     $query = "SELECT * FROM public.user WHERE email='$user_data[email]' LIMIT 1";
     $result = $this->db->query($query);  
     
-    // IF NOT...SEND USER CONFIRMATION EMAIL
-    if($result->num_rows() == 0) {
-      
-      $config=Array(
-		'useragent'=>'Red Ink',  
-		'protocol'=>'postfix',  
-		'mailpath'=>'/usr/sbin/postfix',
-		'smtp_host'=>'',
-		'smtp_user'=>'',  
-		'smtp_pass'=>'',  
-		'smtp_port'=>'25',  
-		'smtp_timeout'=>'5',  
-		'wordwrap'=>TRUE,  
-		'wrapchars'=>'76',
-		'mailtype'=>'html',
-		'charset'=>'iso-8859-1',  
-		'validate'=>TRUE,
-		'priority'=>'1',
-		'crlf'=>"\r\n",
-		'newline'=>"\r\n", 
-		'bcc_batch_mode'=>FALSE, 
-		'bcc_batch_size'=>'200' 
-	  );
-  
-	  $this->load->library('email', $config); 
-
-	  $user_email = $this->input->post('email');
-	  date_default_timezone_set('America/New_York');
-	  $this->email->from('melva.james@gmail.com', 'Melva James');
-	  $this->email->to($user_email);
-	  $this->email->subject('RedInk Account Validation');
-	  $this->email->message("<p>Thank you for joining RedInk!&nbsp;&nbsp;Please complete your registration by clicking the link below:</p><p><a href=\"http://redink.media.mit.edu/registeruser\">RedInk Account Registration</a><p>Sent ".date("D, j M, Y @ h:i:s A")."</p>");
-	  $this->email->send();
-	  echo $this->email->print_debugger();
-	}
-	
-	if($result->num_rows() != 0) {
+    // IF USER EMAIL EXISTS...DELIVER ERROR MESSAGE
+    if($result->num_rows() != 0) {
       $data = array('msg'=>'<p class="error">That email address is already assigned to a user account.</p>');
  	  $this->load->view('register_user_check.php',$data);
-    }
+    }    
+      // IF USER EMAIL DOES NOT EXIST...CREATE ACCOUNT & SEND USER CONFIRMATION EMAIL
+      else{
+      
+        $this->user->account_create($user_data);
+        
+        $config=Array(
+		  'useragent'=>'Red Ink',  
+		  'protocol'=>'postfix',  
+		  'mailpath'=>'/usr/sbin/postfix',
+		  'smtp_host'=>'',
+		  'smtp_user'=>'',  
+		  'smtp_pass'=>'',  
+		  'smtp_port'=>'25',  
+		  'smtp_timeout'=>'5',  
+		  'wordwrap'=>TRUE,  
+		  'wrapchars'=>'76',
+		  'mailtype'=>'html',
+		  'charset'=>'iso-8859-1',  
+		  'validate'=>TRUE,
+		  'priority'=>'1',
+		  'crlf'=>"\r\n",
+		  'newline'=>"\r\n", 
+		  'bcc_batch_mode'=>FALSE, 
+		  'bcc_batch_size'=>'200' 
+	    );
+  
+	    $this->load->library('email', $config); 
+
+	    $user_email = $this->input->post('email');
+	    date_default_timezone_set('America/New_York');
+	    $this->email->from('melva.james@gmail.com', 'Melva James');
+	    $this->email->to($user_email);
+	    $this->email->subject('RedInk Account Validation');
+	    $this->email->message("<p>Thank you for joining RedInk!&nbsp;&nbsp;Please complete your registration by clicking the link below:</p><p><a href=\"http://redink.media.mit.edu/registeruser\">RedInk Account Registration</a><p>Sent ".date("D, j M, Y @ h:i:s A")."</p>");
+	    $this->email->send();
+//	    echo $this->email->print_debugger();  OPTIONAL EMAIL DELIVERY CHECK
+	  }
   }
         
       
@@ -78,13 +80,7 @@ class User extends Model {
       $query = "INSERT INTO public.user (password,email,date_activated) VALUES ('$password','$user_data[email]',current_timestamp)";
       $result = $this->db->query($query);
       return true;
-    }
-     
-    else {
-      $data = array('msg'=>'<p class="error">That email address is already assigned to a user account.</p>');
- 	  $this->load->view('register_user.php',$data); 
-      return false;
-    }   
+    } 
 
 /************************************************************************
  *                           ACCESSOR METHODS
