@@ -89,11 +89,14 @@ class Viz extends Model {
   
   function format_xml($viz_data, $data_ids, $chart_name) {
 
-	  $xml= "<chart caption='". $chart_name ."' bgColor= 'FFFFFF' plotGradientColor='' showBorder= '0' showValues='0' numberPrefix='$' canvasbgColor='000000' canvasBorderColor='000000' canvasBorderThickness='2' showPlotBorder='0' useRoundEdges='1' canvasBorderThickness= '0' chartTopMargin= '0' paletteColors= 'FF0000, 0000FF, AA0000, 0E2964'>";
+	  $colors= array('FF0000', '00FF00', '0000FF', 'AA0000', '0E2964');
+	  shuffle($colors);
+	  $palette_colors= implode(",", $colors);
+
+	  $xml= "<chart caption='". $chart_name ."' bgColor= 'FFFFFF' plotGradientColor='' showBorder= '0' showValues='0' numberPrefix='$' canvasbgColor='000000' canvasBorderColor='000000' canvasBorderThickness='2' showPlotBorder='0' useRoundEdges='1' canvasBorderThickness= '0' chartTopMargin= '0' paletteColors= '$palette_colors' showLegend= '1'>";
 	  
 	  // figure out a place for these
 	  
-	  $colors = array("FF0000","AA0000","0000FF","0E2964");
 	  //date_default_timezone_set('America/New_York');
 	  
 	  $xml.= "<styles>
@@ -118,6 +121,8 @@ class Viz extends Model {
 	  
 	  
 	  $labels= array();
+	  
+	  // if more than one dataset
 	  
 	  if(count($data_ids) > 1) {
 	  
@@ -169,7 +174,7 @@ class Viz extends Model {
 			  foreach($viz_data[$key] as $data_pair) {
 			  
 	  			  $label= date('M', strtotime($data_pair["label"]));
-				  $xml .= "<set label= '" .$label. "' value='" .abs($data_pair["value"]). "' color='FF0000'/>";
+				  $xml .= "<set label= '" .$label. "' value='" .abs($data_pair["value"]). "' color='$colors[0]'/>";
 			  }
 			  
 			  $xml.= "</chart>";
