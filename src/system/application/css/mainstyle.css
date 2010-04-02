@@ -60,3 +60,13 @@ ul#list em { font-weight:bold; }
 	margin: 20px;
 	width: 300px;
 }
+
+#viz_stacked {
+
+	margin-left: 120px;
+}
+
+#viz_stacked input {
+	
+	margin: 20px;
+}

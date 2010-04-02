@@ -61,11 +61,15 @@ class Visualization extends Controller {
 			
     	}
     	
-    	if($viz_name= $this->db->escape($this->input->post('viz_name_field'))) {
+    	$viz_name= $this->db->escape($this->input->post('viz_name_field'));
     	
 			$q= "UPDATE public.module_visualization SET viz_name=$viz_name WHERE id= $modvizid";
 			$this->db->query($q);
-		}
+		
+    	$viz_stacked= $this->db->escape($this->input->post('viz_stacked_field'));
+    	
+			$q= "UPDATE public.module_visualization SET stacked= $viz_stacked WHERE id= $modvizid";
+			$this->db->query($q);
     	
 		if($this->db->escape($this->input->post('submit2'))) {
 		

@@ -31,7 +31,14 @@ $xml.= "</chart>"; */
 
 if(count($viz_data) > 1) {
 
-	echo renderChartHTML("/system/application/libraries/$viz[multidata]", "", "$xml", "myNext", 700, 300, false, false);
+	if($viz['viz_stacked']) {
+	
+		echo renderChartHTML("/system/application/libraries/$viz[stacked]", "", "$xml", "myNext", 700, 300, false, false);
+	}
+	else {
+	
+		echo renderChartHTML("/system/application/libraries/$viz[multidata]", "", "$xml", "myNext", 700, 300, false, false);	
+	}
 }
 else {
 

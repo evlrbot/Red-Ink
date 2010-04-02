@@ -2,10 +2,19 @@
 
 <?php
 
+	$xml= $chart_data['xml'];
+
 if(count($dataids) > 1) {
 
-	$xml= $chart_data['xml'];
-	echo renderChartHTML("/system/application/libraries/$template[multidata]", "", "$xml", "myNext", 700, 300, false, false);
+	if($viz['viz_stacked']) {
+	
+		echo renderChartHTML("/system/application/libraries/$template[stacked]", "", "$xml", "myNext", 700, 300, false, false);
+	}
+	
+	else {
+	
+		echo renderChartHTML("/system/application/libraries/$template[multidata]", "", "$xml", "myNext", 700, 300, false, false);	
+	}
 }
 else {
 
@@ -24,6 +33,11 @@ echo "<thead><tr><td>Label</td><td>Query</td></tr></thead><tbody>";
 echo form_open(site_url("visualization/edit/$modid/$modvizid"));
 
 echo "<div id='viz_name'><label for='viz_name_field'>Viz Name</label><input name= 'viz_name_field' value='$viz[viz_name]' id='viz_name_field'></div>";
+
+if(count($dataids) > 1) {
+
+	echo "<div id='viz_stacked'><label for='viz_stacked_field'>Stack Viz?</label><input name= 'viz_stacked_field' type='checkbox' $viz[viz_stacked] id='viz_stacked_field' value='checked'></div>";
+}
 			
 echo "<table>";
 echo "<tr>";

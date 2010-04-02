@@ -153,7 +153,7 @@ class Module extends Model {
    * DESCRP: For a given view returns the view's associate template file path
    */
   function get_template($modviewid) {
-    $query = "SELECT v.template, v.multidata FROM visualization AS v, module_visualization AS mv WHERE mv.id=$modviewid AND mv.vizid= v.id LIMIT 1";
+    $query = "SELECT v.template, v.multidata, v.stacked FROM visualization AS v, module_visualization AS mv WHERE mv.id=$modviewid AND mv.vizid= v.id LIMIT 1";
     $result = $this->db->query($query);
     $tmp = $result->row_array();
     return $tmp;
@@ -184,12 +184,12 @@ class Module extends Model {
   
 	// if vizid was passed, select a single viz and return single row else select all vizs
   	if($vizid < 0) {
-    	$query = "SELECT t1.name, t1.template, t1.multidata, t2.id AS modvizid, t2.viz_name FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
+    	$query = "SELECT t1.name, t1.template, t1.multidata, t1.stacked, t2.id AS modvizid, t2.viz_name, t2.stacked AS viz_stacked FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
 		$result = $this->db->query($query);
 		return $result->result_array();    	
     }
-    else {
-    	$query = "SELECT t1.name, t1.template, t1.multidata, t2.id AS modvizid, t2.viz_name FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid AND t2.id=$vizid";    	
+	else {
+    	$query = "SELECT t1.name, t1.template, t1.multidata, t1.stacked, t2.id AS modvizid, t2.viz_name, t2.stacked AS viz_stacked FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid AND t2.id=$vizid";    	
 		$result = $this->db->query($query);
 		return $result->row_array();
     }
