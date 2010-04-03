@@ -126,7 +126,9 @@ class Viz extends Model {
 	  
 	  if(count($data_ids) > 1) {
 	  
-		  $xml.= "<categories>";
+		//$this->get_timeframe($viz_data, $data_ids);
+		
+  		$xml.= "<categories>";
 		  
 		  //  gets keys to iterate thru array - probably a cleaner way of doing this
 		
@@ -138,8 +140,8 @@ class Viz extends Model {
 			  $labels[]= $label;
 			  $xml .="<category label='". $label . "' />";
 		  }
-		  
-		  $xml .= "</categories>";
+		
+		$xml .= "</categories>";		
 		  
 		  foreach($viz_data as $key=>$dataset) {
 		  
@@ -185,6 +187,27 @@ class Viz extends Model {
     
   }
   
+  function get_timeframe($viz_data, $data_ids) {
+  	
+  		$xml= "<categories>";
+		  
+		  //  gets keys to iterate thru array - probably a cleaner way of doing this
+		
+		$keys= array_keys($viz_data);
+			
+		  foreach($viz_data as $dataset) {
+		  
+			foreach($dataset as $data_pair) {
+		  
+			  $label= date('M', strtotime($data_pair["label"]));
+			  $labels[]= $label;
+			  //$xml .="<category label='". $label . "' />";
+			}
+		  }
+		
+		$xml .= "</categories>";
+  }  
+
 
 /************************************************************************
  *                               WRITE METHODS
