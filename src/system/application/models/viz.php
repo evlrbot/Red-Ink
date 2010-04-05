@@ -126,45 +126,45 @@ class Viz extends Model {
 	  
 	  if(count($data_ids) > 1) {
 	  
-		//$this->get_timeframe($viz_data, $data_ids);
+		$labels= $this->get_timeframe($viz_data, $data_ids);
 		
   		$xml.= "<categories>";
-		  
-		  //  gets keys to iterate thru array - probably a cleaner way of doing this
 		
-		$keys= array_keys($viz_data);
+		foreach($labels as $label) {
+
+			// construct a label index
+			$label_index[$label]= 0;
 			
-		  foreach($viz_data[$keys[0]] as $data_pair) {
-		  
-			  $label= date('M', strtotime($data_pair["label"]));
-			  $labels[]= $label;
-			  $xml .="<category label='". $label . "' />";
-		  }
+			$label= date('M', strtotime($label));		
+			$xml .="<category label='". $label . "' />";
+		}
 		
 		$xml .= "</categories>";		
+  
+		foreach($viz_data as $key=>$dataset) {
+		
+			$xml .= "<dataset seriesName= '$key' >";			
+
+			// reset the values in the label index
+			foreach($labels as $label) {
+	
+				$label_index[$label]= 0;
+			}
+
+			foreach($dataset as $data_pair) {			
+				
+				$label_index[$data_pair['label']]= abs($data_pair['value']);  
+			}
+			
+			foreach($label_index as $index) {
+			
+				$xml .= "<set value='$index'/>";
+			}
+				
+			$xml .= "</dataset>";
+		}
 		  
-		  foreach($viz_data as $key=>$dataset) {
-		  
-			  $xml .= "<dataset seriesName= '$key' >";
-		  
-		  	// counter for multiseries colors  
-		  	
-			  $i= 0;
-			  
-		  
-			  foreach($dataset as $data_pair) {
-				  
-				  $xml .= "<set value='" . abs($data_pair['value']) . "'/>";
-				  
-				  // cycle thru colors
-				  
-				  $i > 2 ? $i= 0 : $i++;
-			  }
-				  
-			  $xml .= "</dataset>";
-		  }
-		  
-		  $xml .= "</chart>";
+		$xml .= "</chart>";
 	  }
 	  
 	  else {
@@ -188,10 +188,6 @@ class Viz extends Model {
   }
   
   function get_timeframe($viz_data, $data_ids) {
-  	
-  		$xml= "<categories>";
-		  
-		  //  gets keys to iterate thru array - probably a cleaner way of doing this
 		
 		$keys= array_keys($viz_data);
 			
@@ -199,13 +195,13 @@ class Viz extends Model {
 		  
 			foreach($dataset as $data_pair) {
 		  
-			  $label= date('M', strtotime($data_pair["label"]));
-			  $labels[]= $label;
-			  //$xml .="<category label='". $label . "' />";
+			  $labels[]= $data_pair["label"];
+			  sort($labels);
+			  $labels= array_unique($labels);
 			}
 		  }
-		
-		$xml .= "</categories>";
+		  
+		return $labels;
   }  
 
 
