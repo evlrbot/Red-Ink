@@ -5,22 +5,22 @@ a:hover { background-color:#4680FF; color:white; }
 .success { text-algin:center; font-weight:bold; }
 #rendertime { position:absolute; bottom:10px; right:10px; font-size:0.7em; }
 #login { padding-top:100px; }
+h2 { font-weight:normal; font-size:1.2em; }
 
 #bigform { width:700px; margin:0px auto 0px auto; text-align:center;}
 #bigform label { clear:right; display:block; }
 #bigform input { font-size:1.5em; margin:15px 0px; }
+#bigform textarea { font-size:1.5em; font-family:inherit; }
 #bigform select { font-size:1.5em; padding:5px;  }
 #bigform p { margin:0px; }
 #bigform p em { font-weight:bold; }
 
 #site_nav { margin-bottom:20px; padding:5px; border-bottom:1px solid #AAA; text-align:left; }
-
 #site_nav em { font-style:normal; font-weight:bold; }
 #site_nav .logout { float:right; }
 #site_nav .sitelinks a { margin:0px 10px; }
 
 #user_nav { margin:0px 0px 0px 0px; padding:0px; width:210px; border: 0px solid black; float: left; height: 600px; }
-
 #user_nav a:hover { background-color:white; color:#0E2964; }
 #user_nav em {  font-style:italic; font-weight:normal; color:#999; }
 #user_nav ul { padding-left:10px; margin-bottom:20px; }
@@ -43,7 +43,6 @@ table#list .c2 { background-color:#FFF; }
 table#list a { margin:0px 5px; }
 ul#list li { margin:10px 0px; }
 ul#list em { font-weight:bold; }
-
 
 #individual_transactions { margin:0px auto; }
 

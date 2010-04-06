@@ -23,10 +23,36 @@ class Data extends Model {
     $this->db->query($q);
   }
 
-  
+  /* PARAMS: $dataset_id - id of the dataset to associate
+   *         $filter_id - id of the filter to associate
+   * DESCRP: associate a transaction filter with a dataset
+   */
+  function add_filter($dataset_id,$filter_id) {
+    $query = "INSERT INTO public.data_filter (dataset_id,filter_id) VALUES ($dataset_id,$filter_id)";
+    $this->db->query($query);    
+  }
+
 /********************************************************************************
  *                               ACCESSOR METHODS
  ********************************************************************************/
+  /* PARAMS: $dataset_id
+   * DESCRP: return array of filter data for the given dataset
+   */
+  function get_filters($dataset_id) {
+    $query = "SELECT filter_id AS id FROM data_filter WHERE dataset_id = $dataset_id";
+    $result = $this->db->query($query);
+    $filters = $result->result_array();
+    $memos = array();
+    foreach( $filters AS $filter) {
+      $query = "SELECT t1.memo FROM public.memo AS t1, public.business_memo AS t2 WHERE t2.bizid = $filter[id] AND t1.id = t2.memoid";
+      $result = $this->db->query($query);
+      foreach( $result->result_array() AS $m ) {
+	array_push($memos,$m['memo']);
+      }
+    }  
+    return($memos);  
+  }
+
   /* PARAMS: $dataid
    * DESCRP: return array of data's fields for given id
    */
