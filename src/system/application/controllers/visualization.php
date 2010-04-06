@@ -49,13 +49,11 @@ class Visualization extends Controller {
     	$q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
     	$this->db->query($q);
     	
-    	//
-    	
     	foreach($data_sets as $d) {	
     	    	
 	    	if($moddataid = $this->db->escape($this->input->post($d['dataid']))) {
 	    	
-				$q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid) VALUES ($modid, $modvizid, $moddataid)";
+				$q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddata_color) VALUES ($modid, $modvizid, $moddataid, $moddata_color)";
 				$this->db->query($q);
 			}
 			
@@ -78,6 +76,8 @@ class Visualization extends Controller {
 			redirect($redirect);
 		}
     }
+    
+    var_dump($_POST);
 	
 	$user= $this->user->get_account($_SESSION['userid']);
 	$userid= $_SESSION['userid'];

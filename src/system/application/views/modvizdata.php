@@ -28,7 +28,7 @@ else {
 <?php
 
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>";
-echo "<thead><tr><td>Label</td><td>Query</td></tr></thead><tbody>";
+echo "<thead><tr><td>Label</td><td>Query</td><td>Color</td></tr></thead><tbody>";
 
 echo form_open(site_url("visualization/edit/$modid/$modvizid"));
 
@@ -45,6 +45,7 @@ echo "<tr>";
 foreach($data_sets as $d) {
 	
 	echo "<td><input name= '" . $d['dataid'] . "' value='" . $d['dataid'] ."' type='checkbox' ". $d['checked'] . "></td><td>" . $d['name'] . "</td><td>" . $d['query'] . "</td>";
+	echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='blue'>Blue</option><option value='red'>Red</option><option value='yellow'>Yellow</option><option value='green'>Green</option><option value='purple'>Purple</option><option value='orange'>Orange</option></select></td>";
 	echo "</tr>";
 }
 
