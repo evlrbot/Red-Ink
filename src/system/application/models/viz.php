@@ -14,92 +14,88 @@ class Viz extends Model {
 /************************************************************************
  *                           ACCESSOR METHODS
  ************************************************************************/
+  /* PARAMS: void
+   * DESCRP: return result set containing all data from the visualization table
+   */
   function get_vizs() {
     $query = "SELECT * FROM public.visualization";
     $result = $this->db->query($query);
     return $result->result_array();
   }
-  
-  function load_vizs($mod, $vizs) {
-  
-  	$modid= $mod['modid'];
-  	$mod_info= $this->module->get_module($modid);
-  
-	foreach($vizs as $viz) {
-	
-		$dataids= $this->module->get_modviz_datasets($modid, $viz['modvizid']);
-		
-		$viz_datasets= $this->load_viz_datasets($dataids);
-		$viz_data= $this->load_viz_data($viz_datasets);
-		
-		$chart_name= $viz['viz_name'];
-		
-		$xml= $this->format_xml($viz_data, $dataids, $chart_name);
-		
-		$chart_data= array("viz"=>$viz, "xml"=>$xml, "viz_data"=>$viz_data);
-		
-		$this->load->view('/modules/bar_chart', $chart_data);
-	}
-  }
-  
-  function load_sample_vizs($modid) {
-  
-  	$vizs= $this->viz->get_vizs();
 
-  
-	foreach($vizs as $viz) {
-		
-		$data= array("viz"=>$viz, "modid"=>$modid);
-		$this->load->view('/list_visualization', $data);
-	}
+  /* PARAMS: $modid - id of the module in question
+   *         $vizs - visualizations available to this module
+   * DESCRP: 
+   */  
+  function load_vizs($modid, $vizs) {
+    foreach($vizs as $viz) {
+      $dataids = $this->module->get_modviz_datasets($modid, $viz['modvizid']);
+      $viz_datasets = $this->load_viz_datasets($dataids);
+      $viz_data = $this->load_viz_data($viz_datasets);		
+      $chart_name = $viz['viz_name'];		
+      $xml = $this->format_xml($viz_data, $dataids, $chart_name);		
+      $chart_data = array("viz"=>$viz, "xml"=>$xml, "viz_data"=>$viz_data);		
+      $this->load->view('/modules/bar_chart', $chart_data);
+    }
   }
   
+  /* PARAMS:
+   * DESCRP:
+   */ 
   function load_viz_datasets($dataids) {
-  
-  	$results= array();
-  	
-  	foreach($dataids as $dataid) {
-  		
-  		$name= $dataid['name'];
-		$query= "SELECT d.query FROM data AS d WHERE d.id= ". $dataid['moddataid'];
-		$tmp= $this->db->query($query);
-		$results[$name]= $tmp->row_array();
-	}	
-  	
-  	return $results;
+    $results = array();
+    foreach($dataids as $dataid) {
+      $name = $dataid['name'];
+      $query = "SELECT d.query FROM data AS d WHERE d.id= ". $dataid['moddataid'];
+      $tmp = $this->db->query($query);
+      $results[$name] = $tmp->row_array();
+    }	
+    return $results;
   }
   
+  /* PARAMS:
+   * DESCRP:
+   */
   function load_viz_data($viz_datasets) {
-  
-		$data = array(); 
-		
-		foreach($viz_datasets AS $key=>$viz_dataset) {
-
-			// pass the dataset name on as the array key for data
-			$name= array_keys($viz_dataset);
-			// only one array key per dataset
-			$name= $name[0];
-			
-			$result = $this->db->query($viz_dataset['query']);
-			$data[$key] = $result->result_array();
-		}
-		
-		return $data;
+    $data = array(); 
+    foreach($viz_datasets AS $key=>$viz_dataset) {
+      // pass the dataset name on as the array key for data
+      $name= array_keys($viz_dataset);
+      // only one array key per dataset
+      $name= $name[0];
+      $result = $this->db->query($viz_dataset['query']);
+      $data[$key] = $result->result_array();
+    } 
+    return $data;
   }
-  
+
+  /* PARAMS:
+   * DESCRP:
+   */
+  function load_sample_vizs($modid) {
+    $vizs= $this->viz->get_vizs();
+    foreach($vizs as $viz) {
+      $data= array("viz"=>$viz, "modid"=>$modid);
+      $this->load->view('/list_visualization', $data);
+    }
+  }
+
+  /* PARAMS:
+   * DESCRP:
+   */  
   function format_xml($viz_data, $data_ids, $chart_name) {
-
-	  $colors= array('FF0000', '00FF00', '0000FF', 'AA0000', '0E2964');
-	  shuffle($colors);
-	  $palette_colors= implode(",", $colors);
-
-	  $xml= "<chart caption='". $chart_name ."' bgColor= 'FFFFFF' plotGradientColor='' showBorder= '0' showValues='0' numberPrefix='$' canvasbgColor='000000' canvasBorderColor='000000' canvasBorderThickness='2' showPlotBorder='0' useRoundEdges='1' canvasBorderThickness= '0' chartTopMargin= '0' paletteColors= '$palette_colors' showLegend= '1'>";
-	  
-	  // figure out a place for these
-	  
-	  //date_default_timezone_set('America/New_York');
-	  
-	  $xml.= "<styles>
+    
+    $colors= array('FF0000', '00FF00', '0000FF', 'AA0000', '0E2964');
+    shuffle($colors);
+    $palette_colors= implode(",", $colors);
+    
+    $xml= "<chart caption='". $chart_name ."' bgColor= 'FFFFFF' plotGradientColor='' showBorder= '0' showValues='0' numberPrefix='$' canvasbgColor='000000' canvasBorderColor='000000' canvasBorderThickness='2' showPlotBorder='0' useRoundEdges='1' canvasBorderThickness= '0' chartTopMargin= '0' paletteColors= '$palette_colors' showLegend= '1'>";
+    
+    // figure out a place for these
+    
+    //date_default_timezone_set('America/New_York');
+    
+    $xml.= "<styles>
 			    <definition>
             		<style name='Title' type='font' face='Arial' size='15' color='000000' bold='1'/>
             		<style name='Labels' type='font' face='Arial' size='15' color='000000' bold='1'/>
@@ -120,94 +116,97 @@ class Viz extends Model {
 			  </styles>";
 	  
 	  
-	  $labels= array();
-	  
-	  // if more than one dataset
-	  
-	  if(count($data_ids) > 1) {
-	  
-		$labels= $this->get_timeframe($viz_data, $data_ids);
-		
-  		$xml.= "<categories>";
-		
-		foreach($labels as $label) {
-
-			// construct a label index
-			$label_index[$label]= 0;
-			
-			$label= date('M', strtotime($label));		
-			$xml .="<category label='". $label . "' />";
-		}
-		
-		$xml .= "</categories>";		
-  
-		foreach($viz_data as $key=>$dataset) {
-		
-			$xml .= "<dataset seriesName= '$key' >";			
-
-			// reset the values in the label index
-			foreach($labels as $label) {
+    $labels= array();
+    
+    // if more than one dataset
+    
+    if(count($data_ids) > 1) {
+      
+      $labels= $this->get_timeframe($viz_data, $data_ids);
+      
+      $xml.= "<categories>";
+      
+      foreach($labels as $label) {
 	
-				$label_index[$label]= 0;
-			}
-
-			foreach($dataset as $data_pair) {			
-				
-				$label_index[$data_pair['label']]= abs($data_pair['value']);  
-			}
-			
-			foreach($label_index as $index) {
-			
-				$xml .= "<set value='$index'/>";
-			}
-				
-			$xml .= "</dataset>";
-		}
-		  
-		$xml .= "</chart>";
-	  }
+	// construct a label index
+	$label_index[$label]= 0;
+	
+	$label= date('M', strtotime($label));		
+	$xml .="<category label='". $label . "' />";
+      }
+      
+      $xml .= "</categories>";		
+      
+      foreach($viz_data as $key=>$dataset) {
+	
+	$xml .= "<dataset seriesName= '$key' >";			
+	
+	// reset the values in the label index
+	foreach($labels as $label) {
 	  
-	  else {
-		  
-		  if($key= array_keys($viz_data)) {
-		  	  
-		  	  $key= $key[0];
-		  	  
-			  foreach($viz_data[$key] as $data_pair) {
-			  
-	  			  $label= date('M', strtotime($data_pair["label"]));
-				  $xml .= "<set label= '" .$label. "' value='" .abs($data_pair["value"]). "' color='$colors[0]'/>";
-			  }
-			  
-			  $xml.= "</chart>";
-		  }
-	  }
+	  $label_index[$label]= 0;
+	}
+	
+	foreach($dataset as $data_pair) {			
 	  
-	  return $xml;
+	  $label_index[$data_pair['label']]= abs($data_pair['value']);  
+	}
+	
+	foreach($label_index as $index) {
+	  
+	  $xml .= "<set value='$index'/>";
+	}
+	
+	$xml .= "</dataset>";
+      }
+      
+      $xml .= "</chart>";
+    }
+    
+    else {
+      
+      if($key= array_keys($viz_data)) {
+	
+	$key= $key[0];
+	
+	foreach($viz_data[$key] as $data_pair) {
+	  
+	  $label= date('M', strtotime($data_pair["label"]));
+	  $xml .= "<set label= '" .$label. "' value='" .abs($data_pair["value"]). "' color='$colors[0]'/>";
+	}
+	
+	$xml.= "</chart>";
+      }
+    }
+    
+    return $xml;
     
   }
   
+  /* PARAMS:
+   * DESCRP:
+   */
   function get_timeframe($viz_data, $data_ids) {
-		
-		$keys= array_keys($viz_data);
-			
-		  foreach($viz_data as $dataset) {
-		  
-			foreach($dataset as $data_pair) {
-		  
-			  $labels[]= $data_pair["label"];
-			  sort($labels);
-			  $labels= array_unique($labels);
-			}
-		  }
-		  
-		return $labels;
+    
+    $keys= array_keys($viz_data);
+    
+    foreach($viz_data as $dataset) {
+      
+      foreach($dataset as $data_pair) {
+	
+	$labels[]= $data_pair["label"];
+	sort($labels);
+	$labels= array_unique($labels);
+      }
+    }
+    
+    return $labels;
   }  
-
-
-/************************************************************************
- *                               WRITE METHODS
- ************************************************************************/
+  
+  
+  /************************************************************************
+   *                               WRITE METHODS
+   ************************************************************************/
   /* PARAMS: $modid - module id
    *         $vizid - visualization id
    * DESCRP: associate a visualization with a module
@@ -230,6 +229,9 @@ class Viz extends Model {
     }
   }
 
+  /* PARAMS:
+   * DESCRP:
+   */
   function edit_mod($modid,$vizid) {
     
   }

@@ -58,15 +58,14 @@ class Campaign extends Controller {
     $mod['data'] = $this->module->get_data_sets($modid);
     $mod['viz'] = $this->module->get_visualizations($modid);
     
-	$dataids= array();
+    $dataids= array();
     
     foreach($mod['viz'] as $v) {
-    
-    	$m= $v['modvizid'];
-    	$dataids[$m]= $this->module->get_modviz_datasets($modid, $m);
+      $m = $v['modvizid'];
+      $dataids[$m]= $this->module->get_modviz_datasets($modid, $m);
     }
     
-	$mod['dataids']= $dataids;
+    $mod['dataids']= $dataids;
     
     $this->load->view('edit_module',$mod);
     $this->load->view('user_body_stop');
