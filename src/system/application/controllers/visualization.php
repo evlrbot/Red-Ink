@@ -53,7 +53,11 @@ class Visualization extends Controller {
     	    	
 	    	if($moddataid = $this->db->escape($this->input->post($d['dataid']))) {
 	    	
-				$q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddata_color) VALUES ($modid, $modvizid, $moddataid, $moddata_color)";
+	    		// needs optimization
+	    		$moddataid_color= $d['dataid'] . "_color";
+	    		$moddataid_color= $_POST[$moddataid_color];
+	    	
+				$q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddataid_color) VALUES ($modid, $modvizid, $moddataid, '$moddataid_color')";
 				$this->db->query($q);
 			}
 			
