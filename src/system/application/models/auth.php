@@ -10,7 +10,7 @@ class Auth extends Model {
   function authorize() {
     $uname = $this->input->post('username');
     $passwd = md5($this->input->post('password')); // MOVE MD5 TO JS PRIOR TO SUBMITTING THE FORM
-    $query = "SELECT * FROM public.user WHERE email='$uname' AND password='$passwd' LIMIT 1";
+    $query = "SELECT * FROM public.user WHERE email='$uname' AND password='$passwd' AND verified='TRUE' LIMIT 1";
     $result = $this->db->query($query); 
     $row = $result->row();
     return $result->num_rows ? $row->id : false;

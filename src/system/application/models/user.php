@@ -32,6 +32,8 @@ class User extends Model {
       // IF USER EMAIL DOES NOT EXIST...CREATE UNVERIFIED USER ACCOUNT & SEND USER CONFIRMATION EMAIL
       else{
       
+        $this->user->account_create($user_data);
+        
         $this->load->view('register_user_email');
         
         $config=Array(
@@ -65,6 +67,7 @@ class User extends Model {
 	    $this->email->message("<p>Thank you for joining RedInk!&nbsp;&nbsp;Please complete your registration by clicking the link below:</p><p><a href=\"http://redink.media.mit.edu/registeruser\">RedInk Account Registration</a><p>Sent ".date("D, j M, Y @ h:i:s A")."</p>");
 	    $this->email->send();
 //	    echo $this->email->print_debugger();  OPTIONAL EMAIL DELIVERY CHECK
+		
 	  }
   }
 
@@ -76,7 +79,7 @@ class User extends Model {
   function account_create($user_data) {
   
       $password = md5($user_data['password']); // MOVE MD5 TO JQUERY FORM PRE PROCESSING
-      $query = "INSERT INTO public.user (password,email,date_activated) VALUES ('$password','$user_data[email]',current_timestamp)";
+      $query = "INSERT INTO public.user (password,email,date_activated,verified) VALUES ('$password','$user_data[email]',current_timestamp,'FALSE')";
       $result = $this->db->query($query);
       return true;
     } 

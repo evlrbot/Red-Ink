@@ -28,11 +28,12 @@ class Login extends Controller
 	$this->load->view('login');   
       }
       else {
-	// CHECK IF USER EXISTS
+	// CHECK IF USER EXISTS AND ACCOUNT IS VERIFIED
 	$this->load->model("auth");
 	if($uid = $this->auth->authorize()) {
-	  $this->auth->start_session($uid);
-	  redirect('me');
+	  //USER EXISTS AND ACCOUNT IS VERIFIED...START SESSION
+	    $this->auth->start_session($uid);
+	    redirect('me');
 	}
 	// IF NOT EXISTS... DISPLAY ERROR 
 	else {
