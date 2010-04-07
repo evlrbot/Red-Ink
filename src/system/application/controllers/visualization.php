@@ -43,7 +43,6 @@ class Visualization extends Controller {
 
     if($_SERVER['REQUEST_METHOD'] == "POST") {
     	
-    	
     	// these need to be moved into model and optimized
     	
     	$q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
