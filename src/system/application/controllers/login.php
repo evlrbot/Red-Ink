@@ -1,15 +1,12 @@
 <?php
 
-class Login extends Controller 
-{
+class Login extends Controller {
  
-  function Login()
-  {
+  function Login() {
     parent::Controller();
   }
   
-  function index()
-  {
+  function index() {
     $this->load->view('login');
   }
   
@@ -23,27 +20,27 @@ class Login extends Controller
 		     );
       $this->form_validation->set_rules($rules);
       $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-      // FORM DID NOT VALIDATE RE-PROMPT
+      // FORM DOES NOT VALIDATE...RE-PROMPT
       if($this->form_validation->run() == FALSE) {
-	$this->load->view('login');   
+	    $this->load->view('login');   
       }
-      else {
-	// CHECK IF USER EXISTS AND ACCOUNT IS VERIFIED
-	$this->load->model("auth");
-	if($uid = $this->auth->authorize()) {
-	  //USER EXISTS AND ACCOUNT IS VERIFIED...START SESSION
-	    $this->auth->start_session($uid);
-	    redirect('me');
-	}
-	// IF NOT EXISTS... DISPLAY ERROR 
-	else {
-	  $data = array('msg'=>'<p><span class="error">The username or password for that user was incorrect.</span></p>');
-	  $this->load->view('login',$data);
-	}
-      }
+        else {
+	     // FORM VALIDATES...CHECK IF USER EXISTS AND ACCOUNT IS VERIFIED
+	     $this->load->model("auth");
+	       if($uid = $this->auth->authorize()) {
+	         //USER EXISTS AND ACCOUNT IS VERIFIED...START SESSION
+	         $this->auth->start_session($uid);
+	         redirect('me');
+	       }
+	         else {
+	           //USER DOES NOT EXIST... DISPLAY ERROR 
+	           $data = array('msg'=>'<p><span class="error">The username or password for that user was incorrect.</span></p>');
+	           $this->load->view('login',$data);
+	         }
+        }
     }
-    else {
-      redirect('login');
-    } 
+      else {
+        redirect('login');
+      } 
   }
 }

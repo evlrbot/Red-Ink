@@ -16,6 +16,11 @@ class Auth extends Model {
     return $result->num_rows ? $row->id : false;
   }
 
+  function verify_account() {
+    $query = "INSERT INTO public.user (verified) VALUES ('TRUE')";
+    $result = $this->db->query($query);
+  }
+  
   function start_session($uid) {
     $_SESSION['userid'] = $uid;
     $_SESSION['token'] = $token = rand(0,getrandmax());
