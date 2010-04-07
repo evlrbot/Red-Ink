@@ -20,8 +20,8 @@ class Me extends Controller {
     $this->load->view('user_body_start');
     if( $modules= $this->user->get_modules($_SESSION['userid']) ) {    	
       foreach($modules as $mod) {
-	$vizs = $this->module->get_visualizations($mod['modid']);    		
-	$this->viz->load_vizs($mod['modid'], $vizs);
+		$vizs = $this->module->get_visualizations($mod['modid']);    
+		$this->viz->load_vizs($mod['modid'], $vizs);
       }
     }
     $this->load->view('user_body_stop');

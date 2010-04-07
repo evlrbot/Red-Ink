@@ -152,6 +152,8 @@ class Viz extends Model {
 	  $label_index[$data_pair['label']]= abs($data_pair['value']);  
 	}
 	
+	$label_index= array();
+	
 	foreach($label_index as $index) {
 	  
 	  $xml .= "<set value='$index'/>";
@@ -194,13 +196,19 @@ class Viz extends Model {
       
       foreach($dataset as $data_pair) {
 	
-	$labels[]= $data_pair["label"];
-	sort($labels);
-	$labels= array_unique($labels);
+		$labels[]= $data_pair["label"];
+		sort($labels);
+		$labels= array_unique($labels);
       }
     }
     
-    return $labels;
+    if(isset($labels)) {
+      return $labels;
+    }
+    else {
+      $labels= array();
+      return $labels;
+    }
   }  
   
   
