@@ -143,9 +143,12 @@ class Module extends Model {
   function get_data_sets_results($datasets,$userid) {
     $data = array();
     foreach($datasets AS $ds) {
-      if($ds['query']!= 0) {
+      if($ds['query']!= '0') {
         $result = $this->db->query($ds['query'],array($userid));
         $data[$ds['name']] = $result->result_array();
+      }
+      else {
+        $data[$ds['name']] = array();
       }
     }
     return $data;

@@ -130,39 +130,40 @@ class Viz extends Model {
       
       foreach($labels as $label) {
 	
-	// construct a label index
-	$label_index[$label]= 0;
-	
-	$label= date('M', strtotime($label));		
-	$xml .="<category label='". $label . "' />";
+		// construct a label index
+		$label_index[$label]= 0;
+		
+		$label= date('M', strtotime($label));		
+		$xml .="<category label='". $label . "' />";
       }
       
       $xml .= "</categories>";		
-      
+    
       foreach($viz_data as $key=>$dataset) {
 	
-	$xml .= "<dataset seriesName= '$key' >";			
-	
-	// reset the values in the label index
-	foreach($labels as $label) {
+	    $xml .= "<dataset seriesName= '$key' >";			
 	  
-	  $label_index[$label]= 0;
-	}
+		// reset the values in the label index
+		
+		$label_index= array();
+		
+		foreach($labels as $label) {
+		  
+		  $label_index[$label]= 0;
+		}
 	
-	foreach($dataset as $data_pair) {			
+		foreach($dataset as $data_pair) {			
+		  
+		  $label_index[$data_pair['label']]= abs($data_pair['value']);  
+		}
+	
+		foreach($label_index as $index) {
 	  
-	  $label_index[$data_pair['label']]= abs($data_pair['value']);  
-	}
+		  $xml .= "<set value='$index'/>";
+		}
 	
-	$label_index= array();
-	
-	foreach($label_index as $index) {
-	  
-	  $xml .= "<set value='$index'/>";
-	}
-	
-	$xml .= "</dataset>";
-      }
+		$xml .= "</dataset>";
+	  }
       
       $xml .= "</chart>";
     }
