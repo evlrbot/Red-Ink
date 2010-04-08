@@ -63,8 +63,10 @@ class Viz extends Model {
       $name= array_keys($viz_dataset);
       // only one array key per dataset
       $name= $name[0];
-      $result = $this->db->query($viz_dataset['query']);
-      $data[$key] = $result->result_array();
+      if($viz_dataset['query']!= '0') {
+        $result = $this->db->query($viz_dataset['query']);
+        $data[$key] = $result->result_array();
+      }
     } 
     return $data;
   }

@@ -133,7 +133,7 @@ class Module extends Model {
    */
   function get_data_sets($modid) {
     $query = "SELECT t2.name, t2.id AS dataid, t2.query FROM public.module_data AS t1, public.data AS t2 WHERE modid=$modid AND t1.dataid = t2.id ORDER BY t1.order ASC";
-    $result = $this->db->query($query);
+    $result = $this->db->query($query);    
     return $result->result_array();
   }
 
@@ -143,8 +143,10 @@ class Module extends Model {
   function get_data_sets_results($datasets,$userid) {
     $data = array();
     foreach($datasets AS $ds) {
-      $result = $this->db->query($ds['query'],array($userid));
-      $data[$ds['name']] = $result->result_array();
+      if($ds['query']!= 0) {
+        $result = $this->db->query($ds['query'],array($userid));
+        $data[$ds['name']] = $result->result_array();
+      }
     }
     return $data;
   }

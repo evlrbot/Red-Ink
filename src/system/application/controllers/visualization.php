@@ -39,7 +39,7 @@ class Visualization extends Controller {
 
   function edit($modid,$modvizid) {
 
-	$data_sets= $this->module->get_data_sets($modid);	
+ 	$data_sets= $this->module->get_data_sets($modid);	
 
     if($_SERVER['REQUEST_METHOD'] == "POST") {
     	
@@ -79,8 +79,8 @@ class Visualization extends Controller {
 			redirect($redirect);
 		}
     }
-    
-    var_dump($_POST);
+
+    //var_dump($_POST);
 	
 	$user= $this->user->get_account($_SESSION['userid']);
 	$userid= $_SESSION['userid'];
