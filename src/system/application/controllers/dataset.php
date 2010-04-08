@@ -71,6 +71,13 @@ class Dataset extends Controller {
     }
   }
 
+  function removefilter($modid,$dataset_id,$filter_id) {
+    if($modid && $dataset_id && $filter_id) {
+      $this->data->remove_filter($dataset_id,$filter_id);
+      redirect(site_url()."dataset/edit/$modid/$dataset_id");
+    }
+  }
+
   function add() {
     $user_data = $this->user->get_account($_SESSION['userid']);
     $this->load->view('site_nav',$user_data);

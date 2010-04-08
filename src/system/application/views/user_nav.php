@@ -3,16 +3,11 @@
 <ul>
 <li><a href='/me'>My Dashboard</a></li>
 <li><a href='/me/account'>Account Info</a></li>
-<li><a href='#'>Badges</a></li>
 </ul>
 <li>Campaign Manager</li>
 <ul>
 <li><a href='/campaign/create'>Start New Campaign</a></li>
 <li><a href='/campaign/index'>Search Campaigns</a></li>
-<li><em>Organizer:</em></li>
-<ul>
-<li><a href='#'>Spending Habits in Cambridge, MA</a></li>
-</ul>
 <li><em>Participant:</em></li>
 <ul>
 <?php

@@ -7,6 +7,7 @@ class Campaign extends Controller {
     $this->auth->access();
     $this->load->model("module");
     $this->load->model("user");
+    $this->load->model("data");
   }
   
   function index() {

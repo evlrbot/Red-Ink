@@ -14,7 +14,7 @@ $(document).ready(function(){});
 
 <div id="site_nav">
 <span class="sitelinks">
-<em>Millipede</em> |
+<em>Red Ink</em> |
 <a href="/me">Home</a>
 <a href="http://www.make-them-think.org/Blog/Index" target="_blank">Blog</a>
 <a href="http://www.make-them-think.org/Help/Index" target="_blank">Help</a>  

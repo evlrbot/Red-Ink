@@ -6,6 +6,7 @@ class Data extends Model {
   function Data() {
     parent::Model();
     $this->load->database();
+    $this->load->model('biz');
   }
 
 /********************************************************************************
@@ -32,6 +33,15 @@ class Data extends Model {
     $this->db->query($query);    
   }
 
+  /* PARAMS: $dataset_id - id of the dataset to associate
+   *         $filter_id - id of the filter to associate
+   * DESCRP: associate a transaction filter with a dataset
+   */
+  function remove_filter($dataset_id,$filter_id) {
+    $query = "DELETE FROM public.data_filter WHERE dataset_id = $dataset_id AND filter_id = $filter_id";
+    $this->db->query($query);    
+  }
+
 /********************************************************************************
  *                               ACCESSOR METHODS
  ********************************************************************************/
@@ -39,6 +49,20 @@ class Data extends Model {
    * DESCRP: return array of filter data for the given dataset
    */
   function get_filters($dataset_id) {
+    $query = "SELECT filter_id AS id FROM data_filter WHERE dataset_id = $dataset_id";
+    $result = $this->db->query($query);
+    $ids = $result->result_array();
+    $filters = array();
+    foreach( $ids AS $id) {
+      array_push($filters,$this->biz->get_biz($id['id']));
+    }  
+    return($filters);  
+  }
+
+  /* PARAMS: $dataset_id
+   * DESCRP: return query based on the dataset's filters
+   */
+  function make_query_from_filters($dataset_id) {
     $query = "SELECT filter_id AS id FROM data_filter WHERE dataset_id = $dataset_id";
     $result = $this->db->query($query);
     $filters = $result->result_array();
