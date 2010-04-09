@@ -207,7 +207,7 @@ class Module extends Model {
   }  
   
   function get_modviz_datasets($modid, $modvizid) {
-  	$query= "SELECT mvd.moddataid, d.name FROM public.data AS d, public.mod_viz_data as mvd WHERE mvd.modid=$modid AND mvd.moddataid= d.id AND mvd.modvizid= $modvizid;";
+  	$query= "SELECT mvd.moddataid, mvd.moddataid_color, d.name FROM public.data AS d, public.mod_viz_data as mvd WHERE mvd.modid=$modid AND mvd.moddataid= d.id AND mvd.modvizid= $modvizid;";
     $result= $this->db->query($query);
 	 return $result->result_array();
   }

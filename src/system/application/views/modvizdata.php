@@ -45,7 +45,7 @@ echo "<tr>";
 foreach($data_sets as $d) {
 	
 	echo "<td><input name= '" . $d['dataid'] . "' value='" . $d['dataid'] ."' type='checkbox' ". $d['checked'] . "></td><td>" . $d['name'] . "</td><td>" . $d['query'] . "</td>";
-	echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='blue'>Blue</option><option value='red'>Red</option><option value='yellow'>Yellow</option><option value='green'>Green</option><option value='purple'>Purple</option><option value='orange'>Orange</option></select></td>";
+	echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='0000FF'>Blue</option><option value='FF0000'>Red</option><option value='F7FF00'>Yellow</option><option value='00FF00'>Green</option><option value='FF00DD'>Purple</option><option value='FF8F00'>Orange</option></select></td>";
 	echo "</tr>";
 }
 

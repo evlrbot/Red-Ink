@@ -29,11 +29,11 @@ class Viz extends Model {
    */  
   function load_vizs($modid, $vizs) {
     foreach($vizs as $viz) {
-      $dataids = $this->module->get_modviz_datasets($modid, $viz['modvizid']);
-      $viz_datasets = $this->load_viz_datasets($dataids);
+      $data_ids = $this->module->get_modviz_datasets($modid, $viz['modvizid']);
+      $viz_datasets = $this->load_viz_datasets($data_ids);
       $viz_data = $this->load_viz_data($viz_datasets);		
       $chart_name = $viz['viz_name'];		
-      $xml = $this->format_xml($viz_data, $dataids, $chart_name);		
+      $xml = $this->format_xml($viz_data, $data_ids, $chart_name);		
       $chart_data = array("viz"=>$viz, "xml"=>$xml, "viz_data"=>$viz_data);		
       $this->load->view('/modules/bar_chart', $chart_data);
     }
