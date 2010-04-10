@@ -1,5 +1,28 @@
 <div id="placeholder" style="width:600px;height:300px"></div>
 
+<script id="source" language="javascript" type="text/javascript">
+$(function () {
+    
+  var options = {
+	series: {
+      lines: { show: true, fill: true },
+	  points: { show: true }
+	},
+	xaxis: {
+      mode: "time",  
+    }
+    
+  };
+
+  var data = [
+	{ label: "Foo", data: [ [10, 1], [17, 13], [30, 5] ] },
+	{ label: "Bar", data: [ [11, 13], [19, 11], [30, 4] ] }
+	];
+  
+  $.plot($("#placeholder"), data, options);
+});
+</script>
+
 
 <?php
 echo form_open(site_url("visualization/edit/$modid/$modvizid"),array('id'=>'bigform'));
