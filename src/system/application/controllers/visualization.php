@@ -29,7 +29,7 @@ class Visualization extends Controller {
     }
     else {} // NOTHING WAS PASSED, DO NOTHING
   }
-  
+   
   function remove($modid,$modvizid) {
     if($modid && $modvizid) { // ADD VIZ 2 MOD
       $this->viz->remove($modvizid);

@@ -43,6 +43,31 @@ class Viz extends Model {
       $this->load->view('/modules/bar_chart', $chart_data);
     }
   }
+
+  /* PARAMS: $modvizid - module visualization id
+   * DESCRP: list datasets associated with this visualization
+   */ 
+  function get_datasets($modvizid) {
+    $query = "SELECT mvd.moddataid, mvd.moddataid_color, d.name FROM public.data AS d, public.mod_viz_data as mvd WHERE mvd.moddataid = d.id AND mvd.modvizid= $modvizid;";
+    $result = $this->db->query($query);
+    return $result->result_array();
+  }
+
+
+  /* PARAMS: void
+   * DESCRP: constructs a query using the filters associated with a vis and the vis' 
+   *         settings for period and frequency of aggregation.
+   * RETURN: array(array()) of results data keyed by dataset title
+   */ 
+  function get_dataset_results() {
+    // get datasets for this mod_viz_id
+    // foreach dataset
+    // get its filters
+    // foreach filter append to query string the memo data
+    // append period and frequency settings from vis to query string
+    // make query
+    // return results    
+  }
   
   /* PARAMS:
    * DESCRP:

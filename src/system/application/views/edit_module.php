@@ -36,41 +36,22 @@ echo "</tbody></table>";
 <table id='list' border='0' cellpadding='10' cellspacing='2'>
 <thead><tr><td width="300px">Viz Name</td><td width="300px">Chart Type</td><td width="300px">Data Sets</td><td>Actions</td></tr></thead>
 <?php
-$count=0;
+$count = 0;
 foreach($viz AS $v) {
-
-	$mvid=$v['modvizid'];
-
-	$style = $count++ % 2 ? "c1":"c2";
-	
-	echo "<tr class='$style'><td>$v[viz_name]</td>";
-	
-	echo "<td>$v[name]</td>";
-	
-	// load the dataids for each viz
-	echo "<td>";
-  
-	if(isset($dataids[$mvid])) {
-	
-		$string= '';
-	
-	  foreach($dataids[$mvid] as $dids) {
-	  
-		  $string.= $dids['name'] . ", ";	  
-	  }
-	  
-	  echo substr($string, 0, -2);
-	}
-  
+  $style = $count++ % 2 ? "c1":"c2";	
+  echo "<tr class='$style'><td>$v[viz_name]</td>";	
+  echo "<td>$v[name]</td>";	
+  // load the dataids for each viz
+  echo "<td>";  
+  $tmp = array();
+  foreach($modvizdata[$v['modvizid']] as $mvd) {
+    array_push($tmp,$mvd['name']);
+  }
+  echo implode(', ',$tmp);
   echo "</td>";
-  
-  
-  
-  echo "<td><a href='/visualization/edit/$id/$v[modvizid]'>edit</a><a href='/visualization/remove/$id/$v[modvizid]'>remove</a></td></tr>\n";
+  echo "<td><a href='/visualization/edit/$id/$v[modvizid]'>edit</a> <a href='/visualization/remove/$id/$v[modvizid]'>remove</a></td></tr>\n";
 }
 ?>
 </table>
-
 <p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
-
 <?= form_close(); ?>

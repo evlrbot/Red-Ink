@@ -8,6 +8,7 @@ class Campaign extends Controller {
     $this->load->model("module");
     $this->load->model("user");
     $this->load->model("data");
+    $this->load->model("viz");
   }
   
   function index() {
@@ -62,11 +63,10 @@ class Campaign extends Controller {
     $dataids= array();
     
     foreach($mod['viz'] as $v) {
-      $m = $v['modvizid'];
-      $dataids[$m]= $this->module->get_modviz_datasets($modid, $m);
+      $modvizdata[$v['modvizid']] = $this->viz->get_datasets($v['modvizid']);
     }
     
-    $mod['dataids']= $dataids;
+    $mod['modvizdata'] = $modvizdata;
     
     $this->load->view('edit_module',$mod);
     $this->load->view('user_body_stop');
