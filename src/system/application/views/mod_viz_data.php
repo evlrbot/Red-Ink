@@ -1,6 +1,9 @@
+
+
 <div id="placeholder" style="width:600px;height:300px"></div>
 
 <script id="source" language="javascript" type="text/javascript">
+
 $(function () {
     
   var options = {
@@ -21,10 +24,12 @@ $(function () {
   
   $.plot($("#placeholder"), data, options);
 });
+
 </script>
 
 
 <?php
+
 echo form_open(site_url("visualization/edit/$modid/$modvizid"),array('id'=>'bigform'));
 echo "<div id='viz_name'><label for='viz_name_field'>Visualization Label</label><input name='viz_name_field' value='$viz[viz_name]' id='viz_name_field'></div>\n";
 if(count($dataids) > 1) {

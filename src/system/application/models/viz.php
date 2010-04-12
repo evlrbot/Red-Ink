@@ -28,13 +28,18 @@ class Viz extends Model {
    * DESCRP: 
    */  
   function load_vizs($modid, $vizs) {
+  
+    $chart_name= 0;
+  
     foreach($vizs as $viz) {
       $data_ids = $this->module->get_modviz_datasets($modid, $viz['modvizid']);
       $viz_datasets = $this->load_viz_datasets($data_ids);
-      $viz_data = $this->load_viz_data($viz_datasets);		
-      $chart_name = $viz['viz_name'];		
-      $xml = $this->format_xml($viz_data, $data_ids, $chart_name);		
-      $chart_data = array("viz"=>$viz, "xml"=>$xml, "viz_data"=>$viz_data);		
+      $viz_data = $this->load_viz_data($viz_datasets);
+      //$chart_name = $viz['viz_name'];		
+      //$xml = $this->format_xml($viz_data, $data_ids, $chart_name);
+      $chart_name++;
+      $json= $this->format_json($viz_data);
+      $chart_data = array("viz"=>$viz, "viz_data"=>$viz_data, "json"=>$json, "chart_name"=>$chart_name);		
       $this->load->view('/modules/bar_chart', $chart_data);
     }
   }
@@ -80,6 +85,44 @@ class Viz extends Model {
       $data= array("viz"=>$viz, "modid"=>$modid);
       $this->load->view('/list_visualization', $data);
     }
+  }
+
+  /* PARAMS:
+   * DESCRP:
+   */
+  function format_json($viz_data) {
+  
+    $json= "var data= [ ";  
+  
+    if($viz_data) {
+    
+	  foreach($viz_data as $key=>$dataset) {
+		
+		$json.= "{ label: \"$key\", data: [";
+		
+		$var= 0;
+		foreach($dataset as $data_pair) {
+		
+		  $var++;
+		  $json.= "[$var, $data_pair[value]],";
+		}
+		
+		$json= substr($json, 0, (strlen($json) -1));  
+		$json.= "] }";
+		
+		if(count($viz_data > 1)) {
+		  $json.= ", ";
+		}
+	  }
+	}
+	else {
+	
+		$json.= "{ label: \"none\", data: [ [0, 0] ] }";
+	}
+	
+	$json.= "];";
+	
+	return($json);
   }
 
   /* PARAMS:
