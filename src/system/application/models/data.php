@@ -62,7 +62,7 @@ class Data extends Model {
   /* PARAMS: $dataset_id
    * DESCRP: return query based on the dataset's filters
    */
-  function make_query_from_filters($dataset_id) {
+  function get_memos($dataset_id) {
     $query = "SELECT filter_id AS id FROM data_filter WHERE dataset_id = $dataset_id";
     $result = $this->db->query($query);
     $filters = $result->result_array();

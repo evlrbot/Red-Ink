@@ -10,6 +10,7 @@ class Viz extends Model {
   function Viz() {
     parent::Model();
     $this->load->database();
+    $this->load->model('data');
   }
 /************************************************************************
  *                           ACCESSOR METHODS
@@ -57,16 +58,26 @@ class Viz extends Model {
   /* PARAMS: void
    * DESCRP: constructs a query using the filters associated with a vis and the vis' 
    *         settings for period and frequency of aggregation.
-   * RETURN: array(array()) of results data keyed by dataset title
+   * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
    */ 
-  function get_dataset_results() {
-    // get datasets for this mod_viz_id
-    // foreach dataset
-    // get its filters
-    // foreach filter append to query string the memo data
-    // append period and frequency settings from vis to query string
-    // make query
-    // return results    
+  function get_dataset_results($modvizid,$userid) {
+    // GET VISUALIZATION'S DATASETS
+    $datasets = $this->get_datasets($modvizid);   
+    // GET MEMO STRINGS FROM DATASETS
+    $memos = array();   
+    foreach($datasets AS $ds) {                   
+      $memos = array_merge($memos,$this->data->get_memos($ds['moddataid']));
+    }
+    // CONVERT MEMOS STRINGS INTO SQL STATEMENT
+    for($i=0;$i<count($memos);$i++) {  
+      $memos[$i] = "memo LIKE '%$memos[$i]%' OR merchant LIKE '%$memos[$i]%'";
+    }
+    $memos = implode(' OR ',$memos);
+    $frequency = 'month';
+    $query = "SELECT date_trunc('$frequency',created) AS label, round(sum(amount)/100.0,2) AS value FROM public.transaction";
+    $query .= "WHERE $memos";
+    echo $query .= "GROUP BY date_trunc('$frequency',created) ORDER BY label ASC";
+    
   }
   
   /* PARAMS:

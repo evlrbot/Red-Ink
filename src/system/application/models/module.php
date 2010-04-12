@@ -183,20 +183,21 @@ class Module extends Model {
   }
  
   /* PARAMS: $modid - module id
-   * DESCRP: list views associated with this module. If vizid was passed 
-   *         select a single viz else select all vizs.
+   * DESCRP: list all visualizations associated with this module.
    */
-  function get_visualizations($modid, $vizid = 0) {  
-    if($vizid) {
-      $query = "SELECT t1.name, t1.template, t1.multidata, t1.stacked, t2.id AS modvizid, t2.viz_name, t2.stacked AS viz_stacked FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid AND t2.id=$vizid";    	
-      $result = $this->db->query($query);
-      return $result->row_array();      
-    }
-    else {
-      $query = "SELECT t1.name, t1.template, t1.multidata, t1.stacked, t2.id AS modvizid, t2.viz_name, t2.stacked AS viz_stacked FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
-      $result = $this->db->query($query);
-      return $result->result_array();    	
-    }
+  function get_visualizations($modid) {  
+    $query = "SELECT t1.name, t1.template, t1.multidata, t1.stacked, t2.id AS modvizid, t2.viz_name, t2.stacked AS viz_stacked FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
+    $result = $this->db->query($query);
+    return $result->result_array();    	
+  }
+
+  /* PARAMS: $modvisid - module visualization id
+   * DESCRP: return data for a particular visualization
+   */
+  function get_visualization($vizid) {  
+    $query = "SELECT t1.name, t1.template, t1.multidata, t1.stacked, t2.id AS modvizid, t2.viz_name, t2.stacked AS viz_stacked FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.id=$vizid";    	
+    $result = $this->db->query($query);
+    return $result->row_array();      
   }
   
   function add_mod_dataid($modid,$modvizid, $moddataid) {

@@ -44,13 +44,13 @@ class Visualization extends Controller {
       $q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
       $this->db->query($q);
       foreach($data_sets as $d) {	
-		if($moddataid = $this->db->escape($this->input->post($d['dataid']))) {
-		  // needs optimization
-		  $moddataid_color= $d['dataid'] . "_color";
-		  $moddataid_color= $_POST[$moddataid_color];
-		  $q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddataid_color) VALUES ($modid, $modvizid, $moddataid, '$moddataid_color')";
-		  $this->db->query($q);
-		}
+	if($moddataid = $this->db->escape($this->input->post($d['dataid']))) {
+	  // needs optimization
+	  $moddataid_color= $d['dataid'] . "_color";
+	  $moddataid_color= $_POST[$moddataid_color];
+	  $q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddataid_color) VALUES ($modid, $modvizid, $moddataid, '$moddataid_color')";
+	  $this->db->query($q);
+	}
       }
       $viz_name= $this->db->escape($this->input->post('viz_name_field'));
       $q= "UPDATE public.module_visualization SET viz_name=$viz_name WHERE id= $modvizid";
@@ -59,19 +59,15 @@ class Visualization extends Controller {
       $q= "UPDATE public.module_visualization SET stacked= $viz_stacked WHERE id= $modvizid";
       $this->db->query($q);
       if($this->db->escape($this->input->post('submit2'))) {
-		$redirect= "/campaign/edit/$modid";
-		redirect($redirect);
+	$redirect= "/campaign/edit/$modid";
+	redirect($redirect);
       }
     }
-    $user = $this->user->get_account($_SESSION['userid']);
-    $userid = $_SESSION['userid'];
-    $data_set_results= $this->module->get_data_sets_results($data_sets, $userid); // return the time series data for the dataset
+    $data_set_results= $this->viz->get_dataset_results($modvizid,$_SESSION['userid']);
     $template = $this->module->get_template($modvizid);
     $mod = $this->module->get_module($modid);
-    $dataids = $this->module->get_modviz_datasets($modid, $modvizid);
-
-    /*	load viz and chart data  */
-    $viz = $this->module->get_visualizations($modid, $modvizid); // get the info for this vis for this module
+    $modvizdata = $this->viz->get_datasets($modvizid);
+    $viz = $this->module->get_visualization($modvizid);            // get the info for this vis for this module
     $viz_datasets = $this->viz->load_viz_datasets($dataids);     // for given dataset ids, run their queries, and return the results
     $viz_data = $this->viz->load_viz_data($viz_datasets);        // this function is redundant
     $xml = $this->viz->format_xml($viz_data, $dataids, $mod['name']);
@@ -84,11 +80,10 @@ class Visualization extends Controller {
       }
     }
     
-    // need to go through and see which are needed
-    
+    // need to go through and see which are needed    
     $data['xml'] = $xml;
     $data['modid'] = $modid;
-    $data['user'] = $user;
+    $data['user'] = $this->user->get_account($_SESSION['userid']);
     $data['data_sets'] = $data_sets;
     $data['template'] = $template;
     $data['mod'] = $mod;
@@ -99,7 +94,7 @@ class Visualization extends Controller {
     $data['viz'] = $viz;
     
     $this->load->view('site_nav',$data['user']);	
-    $this->user->load_nav($userid);    
+    $this->user->load_nav($_SESSION['userid']);    
     $this->load->view('user_body_start');
     $this->load->view('mod_viz_data',$data);
     $this->load->view('user_body_stop');
