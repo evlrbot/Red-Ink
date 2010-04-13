@@ -76,7 +76,7 @@ class Viz extends Model {
     $frequency = 'month';
     $query = "SELECT date_trunc('$frequency',created) AS label, round(sum(amount)/100.0,2) AS value FROM public.transaction";
     $query .= "WHERE $memos";
-    echo $query .= "GROUP BY date_trunc('$frequency',created) ORDER BY label ASC";
+    $query .= "GROUP BY date_trunc('$frequency',created) ORDER BY label ASC";
     
   }
   

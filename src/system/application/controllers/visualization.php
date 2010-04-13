@@ -38,7 +38,8 @@ class Visualization extends Controller {
   }
 
   function edit($modid,$modvizid) {
-    $data_sets= $this->module->get_data_sets($modid);	
+  
+    $data_sets= $this->module->get_data_sets($modid); 
     if($_SERVER['REQUEST_METHOD'] == "POST") {
       // these need to be moved into model and optimized
       $q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
@@ -68,20 +69,22 @@ class Visualization extends Controller {
     $mod = $this->module->get_module($modid);
     $modvizdata = $this->viz->get_datasets($modvizid);
     $viz = $this->module->get_visualization($modvizid);            // get the info for this vis for this module
-    $viz_datasets = $this->viz->load_viz_datasets($dataids);     // for given dataset ids, run their queries, and return the results
+    $data_ids = $this->module->get_modviz_datasets($modid, $modvizid);    
+    $viz_datasets = $this->viz->load_viz_datasets($data_ids);     // for given dataset ids, run their queries, and return the results
     $viz_data = $this->viz->load_viz_data($viz_datasets);        // this function is redundant
-    $xml = $this->viz->format_xml($viz_data, $dataids, $mod['name']);
-    $chart_data = array("viz"=>"", "xml"=>$xml, "viz_data"=>$viz_data);
+    //$xml = $this->viz->format_xml($viz_data, $data_ids, $mod['name']);
+    $chart_data = array("viz"=>"", "viz_data"=>$viz_data);
 
     // SET THE ACTIVE DATASETS FOR THIS VISUALIZATION FOR THIS MODULE
-    for($i=0; $i<count($data_sets);$i++) {
-      foreach($dataids as $id) {
-	$data_sets[$i]['checked'] = ($data_sets[$i]["dataid"] == $id["moddataid"]) ? 'checked' : '';
+    for($i=0; $i<count($data_sets); $i++) {
+      foreach($data_ids as $id) {
+	    if($data_sets[$i]["dataid"]== $id["moddataid"]) {
+	      $data_sets[$i]["checked"]= 'checked';
+	    }
       }
     }
     
     // need to go through and see which are needed    
-    $data['xml'] = $xml;
     $data['modid'] = $modid;
     $data['user'] = $this->user->get_account($_SESSION['userid']);
     $data['data_sets'] = $data_sets;
@@ -89,7 +92,7 @@ class Visualization extends Controller {
     $data['mod'] = $mod;
     $data['data_set_results'] = $data_set_results;
     $data['modvizid'] = $modvizid;
-    $data['dataids'] = $dataids;
+    $data['data_ids'] = $data_ids;
     $data['chart_data'] = $chart_data;
     $data['viz'] = $viz;
     

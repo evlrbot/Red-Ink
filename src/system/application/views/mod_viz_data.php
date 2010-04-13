@@ -32,7 +32,7 @@ $(function () {
 
 echo form_open(site_url("visualization/edit/$modid/$modvizid"),array('id'=>'bigform'));
 echo "<div id='viz_name'><label for='viz_name_field'>Visualization Label</label><input name='viz_name_field' value='$viz[viz_name]' id='viz_name_field'></div>\n";
-if(count($dataids) > 1) {
+if(count($data_ids) > 1) {
   echo "<div id='viz_stacked'><label for='viz_stacked_field'>Stack Viz?</label><input name= 'viz_stacked_field' type='checkbox' $viz[viz_stacked] id='viz_stacked_field' value='checked'></div>\n";
 }
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>\n";
