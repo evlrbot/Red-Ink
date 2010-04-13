@@ -72,8 +72,7 @@ class Visualization extends Controller {
     $data_ids = $this->module->get_modviz_datasets($modid, $modvizid);    
     $viz_datasets = $this->viz->load_viz_datasets($data_ids);     // for given dataset ids, run their queries, and return the results
     $viz_data = $this->viz->load_viz_data($viz_datasets);        // this function is redundant
-    //$xml = $this->viz->format_xml($viz_data, $data_ids, $mod['name']);
-    $chart_data = array("viz"=>"", "viz_data"=>$viz_data);
+    $json= $this->viz->format_json($viz_data);
 
     // SET THE ACTIVE DATASETS FOR THIS VISUALIZATION FOR THIS MODULE
     for($i=0; $i<count($data_sets); $i++) {
@@ -93,8 +92,8 @@ class Visualization extends Controller {
     $data['data_set_results'] = $data_set_results;
     $data['modvizid'] = $modvizid;
     $data['data_ids'] = $data_ids;
-    $data['chart_data'] = $chart_data;
     $data['viz'] = $viz;
+    $data['json'] = $json;
     
     $this->load->view('site_nav',$data['user']);	
     $this->user->load_nav($_SESSION['userid']);    
