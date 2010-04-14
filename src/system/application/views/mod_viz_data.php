@@ -1,6 +1,6 @@
 
 
-<div id="placeholder" style="width:600px;height:300px"></div>
+<div id="placeholder" style="width:700px;height:300px; margin-bottom: 40px;"></div>
 
 <script id="source" language="javascript" type="text/javascript">
 
@@ -32,14 +32,17 @@ $(function () {
 
 echo form_open(site_url("visualization/edit/$modid/$modvizid"),array('id'=>'bigform'));
 echo "<div id='viz_name'><label for='viz_name_field'>Visualization Label</label><input name='viz_name_field' value='$viz[viz_name]' id='viz_name_field'></div>\n";
-if(count($data_ids) > 1) {
-  echo "<div id='viz_stacked'><label for='viz_stacked_field'>Stack Viz?</label><input name= 'viz_stacked_field' type='checkbox' $viz[viz_stacked] id='viz_stacked_field' value='checked'></div>\n";
-}
+
+echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Timeframe</td><td>Interval</td></tr></thead>";
+
+echo "<tbody><tr><td><select name='timeframe'><option value='year'>Year</option><option value='6month'>6 Months</option><option value='3month'>3 Months</option></select></td>\n";
+echo "<td><select name='interval'><option value='month'>Month</option><option value='week'>Week</option><option value='day'>Day</option></select></td></tr></tbody></table>\n";
+
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>\n";
-echo "<thead><tr><td>Active</td><td>Label</td><td>Query</td><td>Color</td></tr></thead><tbody>\n";
+echo "<thead><tr><td>Active</td><td>Label</td><td>Color</td></tr></thead><tbody>\n";
 echo "<tr>";
 foreach($data_sets as $d) {	
-  echo "<td><input name= '" . $d['dataid'] . "' value='" . $d['dataid'] ."' type='checkbox' ". $d['checked'] . "></td><td>" . $d['name'] . "</td><td>" . $d['query'] . "</td>\n";
+  echo "<td><input name= '" . $d['dataid'] . "' value='" . $d['dataid'] ."' type='checkbox' ". $d['checked'] . "></td><td>" . $d['name'] . "</td>";
   echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='0000FF'>Blue</option><option value='FF0000'>Red</option><option value='F7FF00'>Yellow</option><option value='00FF00'>Green</option><option value='FF00DD'>Purple</option><option value='FF8F00'>Orange</option></select></td>\n";
   echo "</tr>\n";
 }

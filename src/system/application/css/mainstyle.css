@@ -50,7 +50,7 @@ ul#list em { font-weight:bold; }
 #bizlist li { margin: 10px 0px; }
 #bizlist li a { margin:0px 15px 0px 0px; }
 
-#viz_name { margin-left:120px; }
+#viz_name { margin-left:20px; }
 #viz_name input { margin:20px; width: 300px; }
 #viz_stacked {margin-left:120px;}
 #viz_stacked input {margin:20px;}
