@@ -1,28 +1,18 @@
-
-
 <div id="placeholder" style="width:700px;height:300px; margin-bottom: 40px;"></div>
-
 <script id="source" language="javascript" type="text/javascript">
-
 $(function () {
-  
   //var data= jQuery.parseJSON( json )
-  
-  
   var options = {
-	series: {
-      lines: { show: true, fill: true },
-	  points: { show: true }
-	},
-	xaxis: {
-      //mode: "time",  
-    }
-    
+     series: {
+       lines: { show: true, fill: true },
+       points: { show: true }
+     },
+     xaxis: {
+       mode: 'time',
+       timeformat: "%b"
+     }
   };
-
-  <?php echo $json ?>
-
-  
+  var data = <?php echo $json ?>;
   $.plot($("#placeholder"), data, options);
 });
 

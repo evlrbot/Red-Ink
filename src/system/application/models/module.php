@@ -200,17 +200,10 @@ class Module extends Model {
     return $result->row_array();      
   }
   
-  function add_mod_dataid($modid,$modvizid, $moddataid) {
+  function add_mod_dataid($modid,$modvizid,$moddataid) {
     $query = "INSERT INTO public.mod_viz_data (modid,modvizid,moddataid) VALUES ($modid,$modvizid,$moddataid)";
     $this->db->query($query);
   }  
-  
-  function get_modviz_datasets($modid, $modvizid) {
-  	$query= "SELECT mvd.moddataid, mvd.moddataid_color, d.name FROM public.data AS d, public.mod_viz_data as mvd WHERE mvd.modid=$modid AND mvd.moddataid= d.id AND mvd.modvizid= $modvizid;";
-    $result= $this->db->query($query);
-	 return $result->result_array();
-  }
-  
   
   /* PARAMS: $type - single, multi, combo
    * DESCRP: generates the xml to be loaded in charts.  

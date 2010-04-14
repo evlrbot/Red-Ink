@@ -64,38 +64,23 @@ class Visualization extends Controller {
 	redirect($redirect);
       }
     }
-    $data_set_results= $this->viz->get_dataset_results($modvizid,$_SESSION['userid']);
-    $template = $this->module->get_template($modvizid);
-    $mod = $this->module->get_module($modid);
-    $modvizdata = $this->viz->get_datasets($modvizid);
-    $viz = $this->module->get_visualization($modvizid);            // get the info for this vis for this module
-    $data_ids = $this->module->get_modviz_datasets($modid, $modvizid);    
-    $viz_datasets = $this->viz->load_viz_datasets($data_ids);     // for given dataset ids, run their queries, and return the results
-    $viz_data = $this->viz->load_viz_data($viz_datasets);        // this function is redundant
-    $json= $this->viz->format_json($viz_data);
+    $data_set_results = $this->viz->get_dataset_results($modvizid,$_SESSION['userid']);  // *NEW* THE REAL TIME SERIES DATA QUERY
+    $json = $this->viz->format_json($data_set_results);                                  // FORMAT TIME SERIES DATA INTO FLOT JSON
 
     // SET THE ACTIVE DATASETS FOR THIS VISUALIZATION FOR THIS MODULE
     for($i=0; $i<count($data_sets); $i++) {
-      foreach($data_ids as $id) {
-	    if($data_sets[$i]["dataid"]== $id["moddataid"]) {
-	      $data_sets[$i]["checked"]= 'checked';
-	    }
+      foreach($this->viz->get_datasets($modvizid) AS $ds) {
+	$data_sets[$i]["checked"] = ($data_sets[$i]["dataid"] == $ds["moddataid"]) ? 'checked' : '';
       }
     }
-    
-    // need to go through and see which are needed    
+
+    // PREPARE DATA TO LOAD IN VIEW
     $data['modid'] = $modid;
-    $data['user'] = $this->user->get_account($_SESSION['userid']);
-    $data['data_sets'] = $data_sets;
-    $data['template'] = $template;
-    $data['mod'] = $mod;
-    $data['data_set_results'] = $data_set_results;
     $data['modvizid'] = $modvizid;
-    $data['data_ids'] = $data_ids;
-    $data['viz'] = $viz;
     $data['json'] = $json;
-    
-    $this->load->view('site_nav',$data['user']);	
+    $data['data_sets'] = $data_sets;
+    $data['viz'] = $this->module->get_visualization($modvizid);  // get the info for this vis for this module
+    $this->load->view('site_nav',$this->user->get_account($_SESSION['userid']));	
     $this->user->load_nav($_SESSION['userid']);    
     $this->load->view('user_body_start');
     $this->load->view('mod_viz_data',$data);
