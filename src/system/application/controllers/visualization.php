@@ -38,8 +38,8 @@ class Visualization extends Controller {
   }
 
   function edit($modid,$modvizid) {
-  
     $data_sets= $this->module->get_data_sets($modid); 
+
     if($_SERVER['REQUEST_METHOD'] == "POST") {
       // these need to be moved into model and optimized
       $q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
@@ -70,7 +70,9 @@ class Visualization extends Controller {
     // SET THE ACTIVE DATASETS FOR THIS VISUALIZATION FOR THIS MODULE
     for($i=0; $i<count($data_sets); $i++) {
       foreach($this->viz->get_datasets($modvizid) AS $ds) {
-	$data_sets[$i]["checked"] = ($data_sets[$i]["dataid"] == $ds["moddataid"]) ? 'checked' : '';
+	if($data_sets[$i]["dataid"] == $ds["moddataid"]) {
+	  $data_sets[$i]["checked"] = 'checked';
+	}
       }
     }
 
