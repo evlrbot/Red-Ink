@@ -1,7 +1,7 @@
 <div id="placeholder" style="width:700px;height:300px; margin-bottom: 40px;"></div>
 <script id="source" language="javascript" type="text/javascript">
 $(function () {
-  //var data= jQuery.parseJSON( json )
+
   var options = {
      series: {
        lines: { show: true, fill: true },
@@ -37,6 +37,14 @@ foreach($data_sets as $d) {
   echo "</tr>\n";
 }
 ?>
+
+$.ajax({
+	url: dataurl,
+	method: 'GET',
+	dataType: 'json',
+	success: onDataReceived
+});
+
 <tfoot><tr><td colspan='4'>
 <?=form_submit(array('id'=>'submit','value'=>'Save')); ?>
 <?=form_submit(array('id'=>'submit2','value'=>'Save And Return','name'=>'submit2')); ?>
