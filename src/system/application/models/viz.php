@@ -51,9 +51,9 @@ class Viz extends Model {
       }
       $memos = implode(' OR ',$memos);
       $frequency = 'month';
-      $query = "SELECT date_part('epoch', created)*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction";
+      $query = "SELECT date_part('epoch', date_trunc('month',created))*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction";
       $query .= " WHERE $memos ";
-      $query .= "GROUP BY date_part('epoch', created)*1000 ORDER BY label ASC";
+      $query .= "GROUP BY date_part('epoch', date_trunc('month',created))*1000 ORDER BY label ASC";
       $result = $this->db->query($query);
       $results[$ds['name']] = $result->result_array();
     }    

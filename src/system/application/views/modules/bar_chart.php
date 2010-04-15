@@ -1,5 +1,8 @@
 <div id="module">
-<div id="<?=$viz['modvizid']?>" style="width:600px;height:300px; display: block; margin: 40px;"></div>
+
+<h3><?=$viz['viz_name']?></h3>
+<div id="<?=$viz['modvizid']?>" class="vis">
+</div>
 <script id="source" language="javascript" type="text/javascript">
 $(function () {
    var options = {
