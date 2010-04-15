@@ -87,4 +87,11 @@ class Visualization extends Controller {
     $this->load->view('user_body_stop');
     $this->load->view('site_foot');   
   }
+
+  function json($modid,$modvizid) {
+  
+    $data_set_results = $this->viz->get_dataset_results($modvizid,$_SESSION['userid']);  // *NEW* THE REAL TIME SERIES DATA QUERY
+    $json = $this->viz->format_json($data_set_results);                                  // FORMAT TIME SERIES DATA INTO FLOT JSON 
+    echo $json;
+  }
 }
