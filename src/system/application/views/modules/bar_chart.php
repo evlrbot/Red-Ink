@@ -1,5 +1,4 @@
 <div id="module">
-
 <h3><?=$viz['viz_name']?></h3>
 <div id="<?=$viz['modvizid']?>" class="vis">
 </div>
@@ -13,6 +12,9 @@ $(function () {
       xaxis: {
          mode: "time",
 	 timeformat: '%b'
+      },
+      yaxis: {
+         tickFormatter: function(v,axis) {return '$'+v.toFixed(axis.tickDecimals)}
       }
    };
    var data = <?php echo $json ?>;  
