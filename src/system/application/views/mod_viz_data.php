@@ -1,7 +1,11 @@
+<h1>Edit Visualization <a href='<?=site_url()."campaign/edit/$modid"?>' class='small'>back</a></h1>
+<?php
+echo form_open(site_url("visualization/edit/$modid/$modvizid"),array('id'=>'bigform'));
+echo "<input name='viz_name_field' value='$viz[viz_name]' id='viz_name_field' size='30'>\n";
+?>
 <div id="placeholder" style="width:700px;height:300px; margin-bottom: 40px;"></div>
 <script id="source" language="javascript" type="text/javascript">
 $(function () {
-
   var options = {
      series: {
        lines: { show: true, fill: true },
@@ -15,14 +19,9 @@ $(function () {
   var data = <?php echo $json ?>;
   $.plot($("#placeholder"), data, options);
 });
-
 </script>
 
 <?php
-
-echo form_open(site_url("visualization/edit/$modid/$modvizid"),array('id'=>'bigform'));
-echo "<div id='viz_name'><label for='viz_name_field'>Visualization Label</label><input name='viz_name_field' value='$viz[viz_name]' id='viz_name_field'></div>\n";
-
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Timeframe</td><td>Interval</td></tr></thead>";
 
 echo "<tbody><tr><td><select name='timeframe'><option value='year'>Year</option><option value='6month'>6 Months</option><option value='3month'>3 Months</option></select></td>\n";

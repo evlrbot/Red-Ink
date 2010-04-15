@@ -9,7 +9,7 @@ h2 { font-weight:normal; font-size:1.2em; }
 
 #bigform { width:700px; margin:0px auto 0px auto; text-align:center;}
 #bigform label { clear:right; display:block; }
-#bigform input { font-size:1.5em; margin:15px 10px; }
+#bigform input { font-size:1.5em; margin:15px 10px; text-align:center; }
 #bigform textarea { font-size:1.5em; font-family:inherit; }
 #bigform select { font-size:1.5em; padding:0px 25px; }
 #bigform p { margin:0px; }
@@ -52,7 +52,5 @@ ul#list em { font-weight:bold; }
 #bizlist li { margin: 10px 0px; }
 #bizlist li a { margin:0px 15px 0px 0px; }
 
-#viz_name { margin-left:20px; }
-#viz_name input { margin:20px; width: 300px; }
 #viz_stacked {margin-left:120px;}
 #viz_stacked input {margin:20px;}

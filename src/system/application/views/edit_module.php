@@ -3,7 +3,7 @@
 <h1>Edit Campaign <a href='<?=site_url().'campaign/index'?>' class='small'>back</a></h1>
 <p><?= form_label('Name','name'); ?></p>
 <?= form_error('name'); ?>
-<?= form_input(array('id'=>'name','name'=>'name','value'=>"$name")); ?>
+<?= form_input(array('id'=>'name','name'=>'name','value'=>"$name",'size'=>30)); ?>
 
 <p><?= form_label('Description','description'); ?></p>
 <?= form_error('description'); ?>
@@ -42,13 +42,12 @@ foreach($viz AS $v) {
   echo "<tr class='$style'><td>$v[viz_name]</td>";	
   echo "<td>$v[name]</td>";	
   // load the dataids for each viz
-  echo "<td>";  
-  $tmp = array();
+  echo "<td><ul>";  
   foreach($modvizdata[$v['modvizid']] as $mvd) {
-    array_push($tmp,$mvd['name']);
+    //echo "<li>$mvd[name]</li>\n";
+    echo "<li><a href='".site_url()."dataset/edit/$id/$mvd[moddataid]'>$mvd[name]</a></li>";
   }
-  echo implode(', ',$tmp);
-  echo "</td>";
+  echo "</ul></td>";
   echo "<td><a href='/visualization/edit/$id/$v[modvizid]'>edit</a> <a href='/visualization/remove/$id/$v[modvizid]'>remove</a></td></tr>\n";
 }
 ?>
