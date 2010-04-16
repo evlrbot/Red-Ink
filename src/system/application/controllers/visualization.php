@@ -65,9 +65,8 @@ class Visualization extends Controller {
       }
     }
     $data_set_results = $this->viz->get_dataset_results($modvizid,$_SESSION['userid']);  // *NEW* THE REAL TIME SERIES DATA QUERY
-    $json = $this->viz->format_json($data_set_results);                                  // FORMAT TIME SERIES DATA INTO FLOT JSON
-
     // SET THE ACTIVE DATASETS FOR THIS VISUALIZATION FOR THIS MODULE
+    // also needed for colors in frontpage, this should be moved into the model
     for($i=0; $i<count($data_sets); $i++) {
       foreach($this->viz->get_datasets($modvizid) AS $ds) {
 	if($data_sets[$i]["dataid"] == $ds["moddataid"]) {
@@ -76,7 +75,9 @@ class Visualization extends Controller {
 	}
       }
     }
-
+    
+    $json = $this->viz->format_json($data_set_results, $data_sets);                                  // FORMAT TIME SERIES DATA INTO FLOT JSON
+    
     // PREPARE DATA TO LOAD IN VIEW
     $data['modid'] = $modid;
     $data['modvizid'] = $modvizid;

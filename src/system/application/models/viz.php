@@ -63,16 +63,26 @@ class Viz extends Model {
   /* PARAMS: $data - serialized data from the query
    * DESCRP: returns json object of serialized data
    */
-  function format_json($data) {  
+  function format_json($data, $data_sets) {  
     $tmp = array();
     foreach($data AS $key=>$value) {
+	  foreach($data_sets as $ds) {
+	    if($key== $ds['name']) {
+	      $color= $ds['color'];
+	      if($color== 'random') {
+		    $colors= array('#0000FF', '#FF0000', '#F7FF00', '#00FF00', '#FF00DD', '#FF8F00');
+		    shuffle($colors);
+		    $color= $colors[0];
+	      }
+	    }
+	  }
       $tmp2 = array();
       $j=0;
       foreach($value AS $v) {
 	$tmp2[$j] = "[$v[label],$v[value]]";
 	$j++;
       }
-      array_push($tmp,"{label:'$key',data:[".implode(',',$tmp2)."]}");
+      array_push($tmp,"{label:'$key',color:'$color',data:[".implode(',',$tmp2)."]}");
     }
     return $json = "[".implode(',',$tmp)."]";    
   }
@@ -94,8 +104,19 @@ class Viz extends Model {
    */  
   function load_vizs($modid, $vizs) {
     foreach($vizs as $viz) {
+	  $modvizid= $viz['modvizid'];
       $data_set_results = $this->get_dataset_results($viz['modvizid'],$_SESSION['userid']);
-      $json = $this->viz->format_json($data_set_results);
+      $data_sets= $this->module->get_data_sets($modid);     
+
+	  for($i=0; $i<count($data_sets); $i++) {
+		foreach($this->viz->get_datasets($modvizid) AS $ds) {
+	  if($data_sets[$i]["dataid"] == $ds["moddataid"]) {
+		$data_sets[$i]["color"]= $ds['moddataid_color'];
+	  }
+		}
+	  }      
+
+      $json = $this->viz->format_json($data_set_results, $data_sets);
       $data = array("json"=>$json,'viz'=>$viz);
       $this->load->view('/modules/bar_chart', $data);
     }
