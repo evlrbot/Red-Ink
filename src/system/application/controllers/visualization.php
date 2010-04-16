@@ -39,45 +39,13 @@ class Visualization extends Controller {
 
   function edit($modid,$modvizid) {
     $data_sets= $this->module->get_data_sets($modid); 
-
     if($_SERVER['REQUEST_METHOD'] == "POST") {
-      // these need to be moved into model and optimized
-      $q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
-      $this->db->query($q);
-      foreach($data_sets as $d) {	
-	if($moddataid = $this->db->escape($this->input->post($d['dataid']))) {
-	  // needs optimization
-	  $moddataid_color= $d['dataid'] . "_color";
-	  $moddataid_color= $_POST[$moddataid_color];
-	  $q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddataid_color) VALUES ($modid, $modvizid, $moddataid, '$moddataid_color')";
-	  $this->db->query($q);
-	}
-      }
-      $viz_name= $this->db->escape($this->input->post('viz_name_field'));
-      $q= "UPDATE public.module_visualization SET viz_name=$viz_name WHERE id= $modvizid";
-      $this->db->query($q);
-      $viz_stacked= $this->db->escape($this->input->post('viz_stacked_field'));
-      $q= "UPDATE public.module_visualization SET stacked= $viz_stacked WHERE id= $modvizid";
-      $this->db->query($q);
-      if($this->db->escape($this->input->post('submit2'))) {
-	$redirect= "/campaign/edit/$modid";
-	redirect($redirect);
-      }
+	  $this->viz->save_mod_viz_form($modid, $modvizid, $data_sets);
     }
     $data_set_results = $this->viz->get_dataset_results($modvizid,$_SESSION['userid']);  // *NEW* THE REAL TIME SERIES DATA QUERY
     // SET THE ACTIVE DATASETS FOR THIS VISUALIZATION FOR THIS MODULE
-    // also needed for colors in frontpage, this should be moved into the model
-    for($i=0; $i<count($data_sets); $i++) {
-      foreach($this->viz->get_datasets($modvizid) AS $ds) {
-	if($data_sets[$i]["dataid"] == $ds["moddataid"]) {
-	  $data_sets[$i]["checked"] = 'checked';
-	  $data_sets[$i]["color"]= $ds['moddataid_color'];
-	}
-      }
-    }
-    
+	$data_sets= $this->viz->format_viz_datasets($modvizid, $data_sets);
     $json = $this->viz->format_json($data_set_results, $data_sets);                                  // FORMAT TIME SERIES DATA INTO FLOT JSON
-    
     // PREPARE DATA TO LOAD IN VIEW
     $data['modid'] = $modid;
     $data['modvizid'] = $modvizid;

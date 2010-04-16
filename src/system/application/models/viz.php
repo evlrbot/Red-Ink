@@ -107,19 +107,28 @@ class Viz extends Model {
 	  $modvizid= $viz['modvizid'];
       $data_set_results = $this->get_dataset_results($viz['modvizid'],$_SESSION['userid']);
       $data_sets= $this->module->get_data_sets($modid);     
-
-	  for($i=0; $i<count($data_sets); $i++) {
-		foreach($this->viz->get_datasets($modvizid) AS $ds) {
-	  if($data_sets[$i]["dataid"] == $ds["moddataid"]) {
-		$data_sets[$i]["color"]= $ds['moddataid_color'];
-	  }
-		}
-	  }      
-
+	  $data_sets= $this->format_viz_datasets($modvizid, $data_sets);
       $json = $this->viz->format_json($data_set_results, $data_sets);
       $data = array("json"=>$json,'viz'=>$viz);
       $this->load->view('/modules/bar_chart', $data);
     }
+  }
+
+  /* PARAMS: $modid - id of the module in question
+   *         $vizs - visualizations available to this module
+   * DESCRP: 
+   */    
+  function format_viz_datasets($modvizid, $data_sets) {
+  // SET THE ACTIVE DATASETS FOR THIS VISUALIZATION FOR THIS MODULE
+    for($i=0; $i<count($data_sets); $i++) {
+      foreach($this->viz->get_datasets($modvizid) AS $ds) {
+	if($data_sets[$i]["dataid"] == $ds["moddataid"]) {
+	  $data_sets[$i]["checked"] = 'checked';
+	  $data_sets[$i]["color"]= $ds['moddataid_color'];
+	}
+      }
+    }  
+    return $data_sets;
   }
   
   
@@ -146,5 +155,29 @@ class Viz extends Model {
       $query = "DELETE FROM module_visualization WHERE id=$modvizid";
       $this->db->query($query);
     }
+  }
+
+  function save_mod_viz_form($modid, $modvizid, $data_sets) {
+	$q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
+	$this->db->query($q);
+	foreach($data_sets as $d) {	
+	  if($moddataid = $this->db->escape($this->input->post($d['dataid']))) {
+		// needs optimization
+		$moddataid_color= $d['dataid'] . "_color";
+		$moddataid_color= $_POST[$moddataid_color];
+		$q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddataid_color) VALUES ($modid, $modvizid, $moddataid, '$moddataid_color')";
+		$this->db->query($q);
+	  }
+	}	
+	$viz_name= $this->db->escape($this->input->post('viz_name_field'));
+	$q= "UPDATE public.module_visualization SET viz_name=$viz_name WHERE id= $modvizid";
+	$this->db->query($q);
+	//$viz_stacked= $this->db->escape($this->input->post('viz_stacked_field'));
+	//$q= "UPDATE public.module_visualization SET stacked= $viz_stacked WHERE id= $modvizid";
+	//$this->db->query($q);
+	if($this->db->escape($this->input->post('submit2'))) {
+	  $redirect= "/campaign/edit/$modid";
+	  redirect($redirect);
+	}  
   }
 }
