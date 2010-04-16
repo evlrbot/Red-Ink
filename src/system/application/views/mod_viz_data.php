@@ -14,7 +14,9 @@ $(function () {
      xaxis: {
        mode: 'time',
        timeformat: "%b"
-     }
+     },
+  
+     colors: ["#0000FF", "#FF0000", "#F7FF00", "#00FF00", "#FF00DD", "#FF8F00"]
   };
   var data = <?php echo $json ?>;
   $.plot($("#placeholder"), data, options);
@@ -32,7 +34,33 @@ echo "<thead><tr><td>Active</td><td>Label</td><td>Color</td></tr></thead><tbody>
 echo "<tr>";
 foreach($data_sets as $d) {
   echo "<td><input name= '" . $d['dataid'] . "' value='" . $d['dataid'] ."' type='checkbox' ". $d['checked'] . "></td><td>" . $d['name'] . "</td>";
-  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='0000FF'>Blue</option><option value='FF0000'>Red</option><option value='F7FF00'>Yellow</option><option value='00FF00'>Green</option><option value='FF00DD'>Purple</option><option value='FF8F00'>Orange</option></select></td>\n";
+
+  switch($d['color']) {
+    case '#0000FF':
+	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF' selected>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";
+	  break;
+	case '#FF0000':
+	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000' selected>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";	
+	  break;
+	case '#F7FF00':
+	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00' selected>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";		
+	  break;
+	case '#00FF00':
+	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00' selected>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";		
+	  break;	  
+	case '#FF00DD':
+	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD' selected>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";		
+	  break;
+	case '#FF8F00':
+	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00' selected>Orange</option></select></td>\n";		
+	  break;	
+	case 'random':
+	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random' selected>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";		
+	  break;
+	case '':
+	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random' selected>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";		
+	  break;	
+  }
   echo "</tr>\n";
 }
 ?>

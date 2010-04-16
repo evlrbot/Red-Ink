@@ -72,6 +72,7 @@ class Visualization extends Controller {
       foreach($this->viz->get_datasets($modvizid) AS $ds) {
 	if($data_sets[$i]["dataid"] == $ds["moddataid"]) {
 	  $data_sets[$i]["checked"] = 'checked';
+	  $data_sets[$i]["color"]= $ds['moddataid_color'];
 	}
       }
     }
