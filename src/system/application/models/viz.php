@@ -158,26 +158,24 @@ class Viz extends Model {
   }
 
   function save_mod_viz_form($modid, $modvizid, $data_sets) {
-	$q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
+    $q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
+    $this->db->query($q);
+    foreach($data_sets as $d) {	
+      if($moddataid = $this->db->escape($this->input->post($d['dataid']))) {
+	$moddataid_color= $_POST[$d['dataid']."_color"];
+	$q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddataid_color) VALUES ($modid, $modvizid, $moddataid, '$moddataid_color')";
 	$this->db->query($q);
-	foreach($data_sets as $d) {	
-	  if($moddataid = $this->db->escape($this->input->post($d['dataid']))) {
-		// needs optimization
-		$moddataid_color= $d['dataid'] . "_color";
-		$moddataid_color= $_POST[$moddataid_color];
-		$q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddataid_color) VALUES ($modid, $modvizid, $moddataid, '$moddataid_color')";
-		$this->db->query($q);
-	  }
-	}	
-	$viz_name= $this->db->escape($this->input->post('viz_name_field'));
-	$q= "UPDATE public.module_visualization SET viz_name=$viz_name WHERE id= $modvizid";
-	$this->db->query($q);
-	//$viz_stacked= $this->db->escape($this->input->post('viz_stacked_field'));
-	//$q= "UPDATE public.module_visualization SET stacked= $viz_stacked WHERE id= $modvizid";
-	//$this->db->query($q);
-	if($this->db->escape($this->input->post('submit2'))) {
-	  $redirect= "/campaign/edit/$modid";
-	  redirect($redirect);
-	}  
+      }
+    }	
+    $viz_name= $this->db->escape($this->input->post('viz_name_field'));
+    $q= "UPDATE public.module_visualization SET viz_name=$viz_name WHERE id= $modvizid";
+    $this->db->query($q);
+    //$viz_stacked= $this->db->escape($this->input->post('viz_stacked_field'));
+    //$q= "UPDATE public.module_visualization SET stacked= $viz_stacked WHERE id= $modvizid";
+    //$this->db->query($q);
+    if($this->db->escape($this->input->post('submit2'))) {
+      $redirect= "/campaign/edit/$modid";
+      redirect($redirect);
+    }  
   }
 }

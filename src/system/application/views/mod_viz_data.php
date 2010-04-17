@@ -35,32 +35,20 @@ echo "<tr>";
 foreach($data_sets as $d) {
   echo "<td><input name= '" . $d['dataid'] . "' value='" . $d['dataid'] ."' type='checkbox' ". $d['checked'] . "></td><td>" . $d['name'] . "</td>";
 
-  switch($d['color']) {
-    case '#0000FF':
-	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF' selected>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";
-	  break;
-	case '#FF0000':
-	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000' selected>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";	
-	  break;
-	case '#F7FF00':
-	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00' selected>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";		
-	  break;
-	case '#00FF00':
-	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00' selected>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";		
-	  break;	  
-	case '#FF00DD':
-	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD' selected>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";		
-	  break;
-	case '#FF8F00':
-	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random'>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00' selected>Orange</option></select></td>\n";		
-	  break;	
-	case 'random':
-	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random' selected>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";		
-	  break;
-	case '':
-	  echo "<td><select name='" . $d['dataid'] . "_color'><option value='random' selected>Random</option><option value='#0000FF'>Blue</option><option value='#FF0000'>Red</option><option value='#F7FF00'>Yellow</option><option value='#00FF00'>Green</option><option value='#FF00DD'>Purple</option><option value='#FF8F00'>Orange</option></select></td>\n";		
-	  break;	
+  $colors = array('Random'=>'random',
+		  'Red'=>'#CC0000',
+		  'Blue'=>'#0033CC',
+		  'Yellow'=>'#FFEA00',
+		  'Green'=>'#006600',
+		  'Purple'=>'#660066',
+		  'Orange'=>'#FF9900');
+
+  echo "<td><select name='" . $d['dataid'] . "_color'>";
+  foreach($colors AS $key=>$value) {
+    $selected = $d['color'] == $value ? "selected" : "";
+    echo "<option value='$value'$selected>$key</option>\n";
   }
+  echo "</select></td>\n";
   echo "</tr>\n";
 }
 ?>
