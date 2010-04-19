@@ -28,7 +28,7 @@ class Viz extends Model {
    * DESCRP: list datasets associated with this visualization
    */ 
   function get_datasets($modvizid) {
-    $query = "SELECT mvd.moddataid, mvd.moddataid_color, d.name FROM public.data AS d, public.mod_viz_data as mvd WHERE mvd.moddataid = d.id AND mvd.modvizid= $modvizid;";
+    $query = "SELECT mvd.moddataid, mvd.moddataid_color, mvd.timeframe, mvd.interval, d.name FROM public.data AS d, public.mod_viz_data as mvd WHERE mvd.moddataid = d.id AND mvd.modvizid= $modvizid;";
     $result = $this->db->query($query);
     return $result->result_array();
   }
@@ -163,7 +163,9 @@ class Viz extends Model {
     foreach($data_sets as $d) {	
       if($moddataid = $this->db->escape($this->input->post($d['dataid']))) {
 	$moddataid_color= $_POST[$d['dataid']."_color"];
-	$q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddataid_color) VALUES ($modid, $modvizid, $moddataid, '$moddataid_color')";
+	$timeframe= $_POST['timeframe'];
+	$interval= $_POST['interval'];
+	$q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddataid_color, timeframe, interval) VALUES ($modid, $modvizid, $moddataid, '$moddataid_color', '$timeframe', '$interval')";
 	$this->db->query($q);
       }
     }	

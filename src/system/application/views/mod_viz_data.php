@@ -24,10 +24,24 @@ $(function () {
 </script>
 
 <?php
+
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Timeframe</td><td>Interval</td></tr></thead>";
 
-echo "<tbody><tr><td><select name='timeframe'><option value='year'>Year</option><option value='6month'>6 Months</option><option value='3month'>3 Months</option></select></td>\n";
-echo "<td><select name='interval'><option value='month'>Month</option><option value='week'>Week</option><option value='day'>Day</option></select></td></tr></tbody></table>\n";
+echo "<tbody><tr><td><select name='timeframe'>";
+$timeframes= array('Year'=>'year', '6 Months'=>'6month', '3 Months'=>'3month');
+foreach($timeframes as $key=>$value) {
+  $timeframe_select= $timeframe== $value ? "selected" : "";
+  echo "<option value='$value' $timeframe_select>$key</option>\n";
+}
+echo "</select></td>\n";
+
+echo "<td><select name='interval'>";
+$intervals= array('Month'=>'month', 'Week'=>'week', 'Day'=>'day');
+foreach($intervals as $key=>$value) {
+  $interval_select= $interval== $value ? "selected" : "";
+  echo "<option value='$value' $interval_select>$key</option>\n";
+}
+echo "</select></td></tr></tbody></table>\n";
 
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>\n";
 echo "<thead><tr><td>Active</td><td>Label</td><td>Color</td></tr></thead><tbody>\n";

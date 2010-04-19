@@ -38,10 +38,12 @@ class Visualization extends Controller {
   }
 
   function edit($modid,$modvizid) {
+  
     $data_sets= $this->module->get_data_sets($modid); 
     if($_SERVER['REQUEST_METHOD'] == "POST") {
 	  $this->viz->save_mod_viz_form($modid, $modvizid, $data_sets);
     }
+    $viz_data_sets= $this->viz->get_datasets($modvizid);
     $data_set_results = $this->viz->get_dataset_results($modvizid,$_SESSION['userid']);  // *NEW* THE REAL TIME SERIES DATA QUERY
     // SET THE ACTIVE DATASETS FOR THIS VISUALIZATION FOR THIS MODULE
 	$data_sets= $this->viz->format_viz_datasets($modvizid, $data_sets);
@@ -52,6 +54,8 @@ class Visualization extends Controller {
     $data['json'] = $json;
     $data['data_sets'] = $data_sets;
     $data['viz'] = $this->module->get_visualization($modvizid);  // get the info for this vis for this module
+    $data['timeframe'] = $viz_data_sets[0]['timeframe'];
+    $data['interval'] = $viz_data_sets[0]['interval'];
     $this->load->view('site_nav',$this->user->get_account($_SESSION['userid']));	
     $this->user->load_nav($_SESSION['userid']);    
     $this->load->view('user_body_start');
