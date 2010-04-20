@@ -38,7 +38,7 @@ class Viz extends Model {
    *         settings for period and frequency of aggregation.
    * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
    */ 
-  function get_dataset_results($modvizid,$userid) {
+  function get_dataset_results($modvizid,$userid, $timeframe= 'year', $interval='month') {
     // GET VISUALIZATION'S DATASETS
     $datasets = $this->get_datasets($modvizid);   
     // GET MEMO STRINGS FROM DATASETS
@@ -53,6 +53,11 @@ class Viz extends Model {
       $frequency = 'month';
       $query = "SELECT date_part('epoch', date_trunc('month',created))*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction";
       $query .= " WHERE $memos ";
+      switch($timeframe) {
+        case 'year':
+		  $query .= "AND current_date > (date_trunc('day', created) - interval '1 year') ";
+          break;
+      }
       $query .= "GROUP BY date_part('epoch', date_trunc('month',created))*1000 ORDER BY label ASC";
       $result = $this->db->query($query);
       $results[$ds['name']] = $result->result_array();
