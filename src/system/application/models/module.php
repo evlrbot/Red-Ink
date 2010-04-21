@@ -76,7 +76,7 @@ class Module extends Model {
    * DESCRP: add module to user account
    */
   function add_user($userid,$modid) {
-    $query = "INSERT INTO public.user_module (userid,modid,viewid) VALUES ($userid,$modid,13)";
+    $query = "INSERT INTO public.user_module (userid,modid) VALUES ($userid,$modid)";
     $this->db->query($query);
   }
 
@@ -111,47 +111,24 @@ class Module extends Model {
    * DESCRP: Loads the appropriate module/view/data given the above params
    */
   function load($modid,$viewid,$userid) {
-  
     $data['mod'] = $this->get_module($modid);
     $data['data'] = $this->get_data_sets_results($this->get_data_sets($modid),$userid);  
     if(count($data['data']) > 0) {
-    	$data['viz']= $this->get_visualizations($modid);
-    	
-    	foreach($data['viz'] as $viz) {
-    	
-			$modvizid= $viz['modvizid'];
-			$this->viz->load_viz($modid, $modvizid);
-    	}
-    	
-		//$this->load->view("modules/$template",$data);
-		//$this->load->view("modules/bar_chart",$data);
+      $data['viz']= $this->get_visualizations($modid);
+      foreach($data['viz'] as $viz) {
+	$modvizid= $viz['modvizid'];
+	$this->viz->load_viz($modid, $modvizid);
+      }
     }
   }
-
- /* PARAMS: $modid
+  
+  /* PARAMS: $modid
    * DESCRP: return associative array of data ids, labels and query strings
    */
   function get_data_sets($modid) {
     $query = "SELECT t2.name, t2.id AS dataid, t2.query, '' AS checked, '' AS color FROM public.module_data AS t1, public.data AS t2 WHERE modid=$modid AND t1.dataid = t2.id ORDER BY t1.order ASC";
     $result = $this->db->query($query);    
     return $result->result_array();
-  }
-
-  /* PARAMS: $modid
-   * DESCRP: return associative array of data labels and data result arrays
-   */
-  function get_data_sets_results($datasets,$userid) {
-    $data = array();
-    foreach($datasets AS $ds) {
-      if($ds['query']!= '0') {
-        $result = $this->db->query($ds['query'],array($userid));
-        $data[$ds['name']] = $result->result_array();
-      }
-      else {
-        $data[$ds['name']] = array();
-      }
-    }
-    return $data;
   }
 
   /* PARAMS: $viewid
@@ -204,73 +181,17 @@ class Module extends Model {
     $query = "INSERT INTO public.mod_viz_data (modid,modvizid,moddataid) VALUES ($modid,$modvizid,$moddataid)";
     $this->db->query($query);
   }  
-  
-  /* PARAMS: $type - single, multi, combo
-   * DESCRP: generates the xml to be loaded in charts.  
-   */  
-  function write_xml($type, $data, $mod) {
 
-	switch($type) {
-	
-		case 'single':
-			
-			$xml= "<chart caption='".htmlentities($mod['name'])."' xAxisName='Month' yAxisName='$' showValues='0' numberPrefix='$' canvasbgColor='FFFFFF' canvasBorderColor='000000' canvasBorderThickness='2'>";
-			$colors = array("FF0000","AA0000","0000FF","0E2964");
-			date_default_timezone_set('America/New_York');
-			$keys = array_keys($data);
-			
-			foreach($data[$keys[0]] as $d) {
-			
-				$xml .= "<set label= '0' value='" .abs($d['value']). "'/>";
-			}
-			
-			
-			$xml.= "</chart>";
-	
-			break;
-			
-		case 'multi':
-			
-			$xml= "<chart caption='".htmlentities($mod['name'])."' xAxisName='Month' yAxisName='$' showValues='0' numberPrefix='$' canvasbgColor='FFFFFF' canvasBorderColor='000000' canvasBorderThickness='2'>";
-			$colors = array("FF0000","AA0000","0000FF","0E2964");
-			date_default_timezone_set('America/New_York');
-			$keys = array_keys($data);
-			$xml.= "<categories>";
-			
-			foreach($data[$keys[0]] AS $d) {
-			  $d['label'] = date_format(date_create($d['label']), "M y");
-			  $xml.= "<category label='$d[label]'/>";
-			}
-			
-			$xml.="</categories>";
-			$i = 0;
-			
-			foreach($keys AS $index) {
-			  $xml.= "<dataset seriesName='$index' color='$colors[$i]'>";
-			  foreach($data[$index] AS $d) {
-				$xml.= "<set value='".abs($d['value'])."'/>";
-			  }
-			  $xml.="</dataset>";
-			  $i++;
-			}
-			
-			foreach($data[$keys[0]] as $d) {
-			
-				$xml .= "<set label= '0' value='" .abs($d['value']). "'/>";
-			}
-			
-			
-			$xml.= "</chart>";
-			
-			
-			break;
-		
-		case 'combo':
-		
-			break;
-	}
-	
-	return $xml;
-	
+  /* PARAMS: $modid - id of the module to lookup
+   * DESCRP: return array of users who have activated this module
+   */
+  function get_users($modid) {
+    $query = "SELECT userid FROM public.user_module WHERE modid = $modid";
+    $result = $this->db->query($query);
+    $userids = array();
+    foreach($result->result_array() AS $u) {
+      array_push($userids,$u['userid']);
+    }
+    return $userids;
   }
 }

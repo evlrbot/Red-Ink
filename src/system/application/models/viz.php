@@ -38,27 +38,40 @@ class Viz extends Model {
    *         settings for period and frequency of aggregation.
    * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
    */ 
-  function get_dataset_results($modvizid,$userid, $timeframe= 'year', $interval='month') {
-    // GET VISUALIZATION'S DATASETS
+  function get_dataset_results($modid, $modvizid, $userid, $period='year', $frequency='month') {
     $datasets = $this->get_datasets($modvizid);   
-    // GET MEMO STRINGS FROM DATASETS
     $results = array();
     foreach($datasets AS $ds) {                   
+      // CONSTRUCT SELECT STATEMENT
+      $query = "SELECT date_part('epoch', date_trunc('$frequency',created))*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction";
+
+      // CONTSRUCT MEMO STRING SQL FROM THE ASSOCIATED DATASETS
       $memos = $this->data->get_memos($ds['moddataid']);
-      // CONVERT MEMOS STRINGS INTO SQL STATEMENT
-      for($i=0;$i<count($memos);$i++) {  
+      for($i=0;$i<count($memos);$i++) {
 	$memos[$i] = "memo ILIKE '%$memos[$i]%' OR merchant ILIKE '%$memos[$i]%'";
       }
       $memos = implode(' OR ',$memos);
-      $frequency = 'month';
-      $query = "SELECT date_part('epoch', date_trunc('month',created))*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction";
       $query .= " WHERE $memos ";
-      switch($timeframe) {
-        case 'year':
-		  $query .= "AND current_date > (date_trunc('day', created) - interval '1 year') ";
-          break;
+
+      // APPEND PERIOD AND FREQUENCY PARAMS
+      switch($period) {
+      case 'year':
+	$query .= "AND current_date > (date_trunc('day', created) - interval '1 year') ";
+	break;
+      default:
+	break;
       }
-      $query .= "GROUP BY date_part('epoch', date_trunc('month',created))*1000 ORDER BY label ASC";
+
+      // LIMIT USERS TO LOOK AT
+      $q = array();
+      foreach($this->module->get_users($modid) AS $id) {
+	array_push($q,"userid=$id");
+      }
+      $users = implode(' OR ',$q);
+      $query .= " AND $users ";
+
+      // AGGREGATE BY...
+      $query .= "GROUP BY date_part('epoch', date_trunc('$frequency',created))*1000 ORDER BY label ASC";
       $result = $this->db->query($query);
       $results[$ds['name']] = $result->result_array();
     }    
