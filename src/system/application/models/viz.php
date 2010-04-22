@@ -55,7 +55,7 @@ class Viz extends Model {
 
       // APPEND PERIOD AND FREQUENCY PARAMS
       switch($period) {
-      case 'year':
+      case 'as':
 	$query .= "AND current_date > (date_trunc('day', created) - interval '1 year') ";
 	break;
       default:
@@ -68,7 +68,7 @@ class Viz extends Model {
 	array_push($q,"userid=$id");
       }
       $users = implode(' OR ',$q);
-      $query .= " AND $users ";
+      $users ? $query .= " AND $users " : $query .= "";
 
       // AGGREGATE BY...
       $query .= "GROUP BY date_part('epoch', date_trunc('$frequency',created))*1000 ORDER BY label ASC";
@@ -123,7 +123,7 @@ class Viz extends Model {
   function load_vizs($modid, $vizs) {
     foreach($vizs as $viz) {
 	  $modvizid= $viz['modvizid'];
-      $data_set_results = $this->get_dataset_results($viz['modvizid'],$_SESSION['userid']);
+      $data_set_results = $this->get_dataset_results($viz['modvizid'],$modvizid, $_SESSION['userid']);
       $data_sets= $this->module->get_data_sets($modid);     
 	  $data_sets= $this->format_viz_datasets($modvizid, $data_sets);
       $json = $this->viz->format_json($data_set_results, $data_sets);
