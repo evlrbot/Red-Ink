@@ -68,7 +68,7 @@ class Viz extends Model {
 	array_push($q,"userid=$id");
       }
       $users = implode(' OR ',$q);
-      $users ? $query .= " AND $users " : $query .= "";
+      $query .= $users ? " AND $users " : "";
 
       // AGGREGATE BY...
       $query .= "GROUP BY date_part('epoch', date_trunc('$frequency',created))*1000 ORDER BY label ASC";
