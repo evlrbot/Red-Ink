@@ -2,31 +2,11 @@
 <?php
 echo form_open(site_url("visualization/edit/$modid/$modvizid"),array('id'=>'bigform'));
 echo "<input name='viz_name_field' value='$viz[viz_name]' id='viz_name_field' size='30'>\n";
-?>
-<div id="placeholder" style="width:700px;height:300px; margin-bottom: 40px;"></div>
-<script id="source" language="javascript" type="text/javascript">
-$(function () {
-  var options = {
-     series: {
-       lines: { show: true, fill: true },
-       points: { show: true }
-     },
-     xaxis: {
-       mode: 'time',
-       timeformat: "%b"
-     },
-  
-     colors: ["#0000FF", "#FF0000", "#F7FF00", "#00FF00", "#FF00DD", "#FF8F00"]
-  };
-  var data = <?php echo $json ?>;
-  $.plot($("#placeholder"), data, options);
-});
-</script>
+echo "<style>h3#visname { visibility:hidden; position:absolute; }</style>\n";
 
-<?php
+include('modules/bar_chart.php');
 
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Timeframe</td><td>Interval</td></tr></thead>";
-
 echo "<tbody><tr><td><select name='timeframe'>";
 $timeframes= array('Year'=>'year', '6 Months'=>'6month', '3 Months'=>'3month');
 foreach($timeframes as $key=>$value) {
