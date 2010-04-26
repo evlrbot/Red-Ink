@@ -1,13 +1,16 @@
 <?php
 
 class Login extends Controller {
- 
+  
   function Login() {
     parent::Controller();
   }
   
   function index() {
+    $this->load->view('site_head');
+    $this->load->view('site_nav');
     $this->load->view('login');
+    $this->load->view('site_foot');
   }
   
   function auth() {
@@ -22,25 +25,25 @@ class Login extends Controller {
       $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
       // FORM DOES NOT VALIDATE...RE-PROMPT
       if($this->form_validation->run() == FALSE) {
-	    $this->load->view('login');   
+	$this->load->view('login');   
       }
-        else {
-	     // FORM VALIDATES...CHECK IF USER EXISTS AND ACCOUNT IS VERIFIED
-	     $this->load->model("auth");
-	       if($uid = $this->auth->authorize()) {
-	         //USER EXISTS AND ACCOUNT IS VERIFIED...START SESSION
-	         $this->auth->start_session($uid);
-	         redirect('me');
-	       }
-	         else {
-	           //USER DOES NOT EXIST... DISPLAY ERROR 
-	           $data = array('msg'=>'<p><span class="error">The username or password for that user was incorrect.</span></p>');
-	           $this->load->view('login',$data);
-	         }
-        }
-    }
       else {
-        redirect('login');
-      } 
+	// FORM VALIDATES...CHECK IF USER EXISTS AND ACCOUNT IS VERIFIED
+	$this->load->model("auth");
+	if($uid = $this->auth->authorize()) {
+	  //USER EXISTS AND ACCOUNT IS VERIFIED...START SESSION
+	  $this->auth->start_session($uid);
+	  redirect('me');
+	}
+	else {
+	  //USER DOES NOT EXIST... DISPLAY ERROR 
+	  $data = array('msg'=>'<p><span class="error">The username or password for that user was incorrect.</span></p>');
+	  $this->load->view('login',$data);
+	}
+      }
+    }
+    else {
+      redirect('login');
+    } 
   }
 }
