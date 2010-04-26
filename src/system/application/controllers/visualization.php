@@ -15,17 +15,15 @@ class Visualization extends Controller {
       $this->viz->add($modid,$vizid);
       redirect("/campaign/edit/$modid");
     }
-	elseif($modid) { // LIST VIZS
+    elseif($modid) { // LIST VIZS
       $data['modid'] = $modid;
       $data['user'] = $this->user->get_account($_SESSION['userid']);
-      $this->load->view('site_nav',$data['user']);
-      $this->user->load_nav($_SESSION['userid']);
-      $this->load->view('user_body_start');
-      
-	  $this->viz->load_sample_vizs($modid);
-      
-      $this->load->view('user_body_stop');
-      $this->load->view('site_foot');    
+      $this->load->view('site/head');
+      $this->load->view('site/nav',$data['user']);
+      $this->load->view('site/body_start');
+      $this->viz->load_sample_vizs($modid);
+      $this->load->view('site/body_stop');
+      $this->load->view('site/foot');    
     }
     else {} // NOTHING WAS PASSED, DO NOTHING
   }
@@ -49,6 +47,7 @@ class Visualization extends Controller {
     $data_sets = $this->viz->format_viz_datasets($modvizid, $data_sets); // SET DATASET PARAMS
     $json = $this->viz->format_json($data_set_results, $data_sets);  // FORMAT TIME SERIES DATA INTO FLOT JSON
 
+    $data['user'] = $this->user->get_account($_SESSION['userid']);
     $data['modid'] = $modid;
     $data['modvizid'] = $modvizid;
     $data['json'] = $json;
@@ -57,12 +56,12 @@ class Visualization extends Controller {
     $data['timeframe'] = $timeframe;
     $data['interval'] = $interval;
 
-    $this->load->view('site_nav',$this->user->get_account($_SESSION['userid']));	
-    $this->user->load_nav($_SESSION['userid']);    
-    $this->load->view('user_body_start');
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$data['user']);
+    $this->load->view('site/body_start');
     $this->load->view('mod_viz_data',$data);
-    $this->load->view('user_body_stop');
-    $this->load->view('site_foot');   
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');   
   }
 
   function json($modid,$modvizid) {  
