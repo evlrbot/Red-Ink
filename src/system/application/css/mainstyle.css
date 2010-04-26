@@ -15,6 +15,7 @@ h2 { font-weight:normal; font-size:1.2em; }
 #bigform p { margin:0px; }
 #bigform p em { font-weight:bold; }
 #bigform tfoot td { text-align:center; }
+#bigform.login { margin-top:300px; }
 
 #site_nav { margin-bottom:20px; padding:5px; border-bottom:1px solid #AAA; text-align:left; }
 #site_nav em { font-style:normal; font-weight:bold; }
@@ -38,6 +39,8 @@ h2 { font-weight:normal; font-size:1.2em; }
 #user_body #modulelist li { margin:15px 0px; }
 #user_body h1 a.small { font-size:14px; vertical-align:middle; }
 #user_body .vis { width:90%; height:350px; margin:0px auto; }
+
+#body { width:800px; border:px solid black; position:absolute; left:300px; top:100px; }
 
 table#list { margin:0px auto; }
 table#list thead { font-weight:bold; text-align:center; }

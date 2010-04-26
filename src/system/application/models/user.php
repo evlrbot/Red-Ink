@@ -143,7 +143,7 @@ class User extends Model {
     foreach($mods AS $mod) {
       array_push($data['modules'],$this->module->get_module($mod['modid']));
     }
-    $this->load->view('user_nav',$data);
+    $this->load->view('site/nav_user',$data);
   }
 
 /************************************************************************

@@ -1,0 +1,61 @@
+body { margin:0px; background-color:#fff; font-family:Georgia,sans-serif; font-size:11pt; background-image:url('http://www.make-them-think.org/uploads/Admin/redink4.jpg'); background-repeat:no-repeat; vertical-align:top; line-height:1.8em; }
+h1 { font-weight:normal; color:#9d1f14; font-style:italic; margin-top:50px;}
+h2,h3,h4 { font-weight:normal; color:#9d1f14; border-bottom:1px solid #9d1f14; }
+h2 { font-size:1.2em; }
+a { color:#9d1f14; text-decoration:none; }
+a:hover { font-style:italic; }
+
+.nav { vertical-align:top; width:300px; padding-top:250px; font-size:1.5em; }
+.nav li { list-style-type:none; margin:5px 0px; color:#9d1f14; }
+.nav a { color:#9d1f14; text-decoration:none; }
+.nav a:hover { font-style:italic; }
+.nav .login { border:dashed 1px #9d1f14; border-left:0px; border-right:0px; margin:20px 0px; padding:5px 0px; display:block; width:51%; text-align:center; }
+.nav ul ul { padding:0px; }
+.nav ul ul li { font-size:0.7em; list-style-type:square; list-style-position:inside; margin:0px; padding:0px; }
+.nav #sponsors { padding-left:40px; }
+.nav #sponsors img { width:170px; display:block; margin:15px 0px; border:0px; }
+.nav #sponsors h1 { font-size:12px; margin:0px;  }
+
+.error { text-align:center; color:red; font-weight:normal; }
+.success { text-algin:center; font-weight:bold; }
+
+#bigform { margin:0px auto 0px auto; text-align:center; font-size:1.5em; }
+#bigform label { clear:right; display:block; }
+#bigform input { font-size:1.5em; margin:15px 10px; text-align:center; color:#9d1f14; }
+#bigform textarea { font-size:1.5em; font-family:inherit; }
+#bigform select { font-size:1.5em; padding:0px 25px; }
+#bigform p { margin:0px; }
+#bigform p em { font-weight:bold; }
+#bigform tfoot td { text-align:center; }
+#bigform.login { margin-top:300px; }
+
+#body { width:800px; border:0px solid black; position:absolute; left:300px; top:100px; }
+#body h1 { color:#9D1F14; text-align:center; }
+#body h3 { margin:60px 0px 0px 0px; }
+#body object, 
+#body embed { margin:25px auto; }
+#body #module { border:text-align:center;}
+#body #modulelist em { font-weight:bold;  }
+#body #modulelist li { margin:15px 0px; }
+#body h1 a.small { font-size:14px; vertical-align:middle; }
+#body .vis { width:90%; height:350px; margin:0px auto; }
+
+table#list { margin:0px auto; }
+table#list thead { font-weight:bold; text-align:center; }
+table#list .c1 { background-color:#EEE; }
+table#list .c2 { background-color:#FFF; }
+table#list a { margin:0px 5px; }
+ul#list li { margin:10px 0px; }
+ul#list em { font-weight:bold; }
+
+#individual_transactions { margin:0px auto; }
+
+#bizlist li { margin: 10px 0px; }
+#bizlist li a { margin:0px 15px 0px 0px; }
+
+#viz_stacked {margin-left:120px;}
+#viz_stacked input {margin:20px;}
+
+#wikicmds { text-align:right; }
+#wikicmds li { display:inline; list-style-type:none; }
+#wikicmds a { text-decoration:none; color:#9d1f14; }

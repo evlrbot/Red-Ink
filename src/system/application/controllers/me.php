@@ -5,29 +5,26 @@ class Me extends Controller {
   {
     parent::Controller();
     $this->load->model("auth");
-    $this->auth->access();
+    if( $this->auth->access() == false) {
+      redirect(site_url('login'));
+    }
     $this->load->model("user");
     $this->load->model("api");
     $this->load->model("module");
     $this->load->model("viz");
   }
   
-  function index()
-  {
-    $user_data = $this->user->get_account($_SESSION['userid']);
-    $this->load->view('site_nav',$user_data);
-    $this->user->load_nav($_SESSION['userid']);
-    $this->load->view('user_body_start');
+  function index() {
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
     if($modules = $this->user->get_modules($_SESSION['userid']) ) {    	
       foreach($modules as $mod) {
 	$vizs = $this->module->get_visualizations($mod['modid']);
 	$this->viz->load_vizs($mod['modid'], $vizs);
       }
     }
-    $this->load->view('user_body_stop');
-    $this->load->view('site_foot');
-  }
-  
+  } 
 
   function account() {
     $user_data = $this->user->get_account($_SESSION['userid']);
@@ -37,10 +34,12 @@ class Me extends Controller {
       $user_data[$api['name'].'_username'] = count($api_login) ? $api_login['username'] : '';
       $user_data[$api['name'].'_password'] = count($api_login) ? $api_login['password'] : '';
     }
-    $this->load->view('site_nav',$user_data);
-    $this->user->load_nav($_SESSION['userid']);
-    $this->load->view('account_info',$user_data);
-    $this->load->view('site_foot');
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
+    $this->load->view('templates/account_info',$user_data);
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
   }
 
   function account_update() {

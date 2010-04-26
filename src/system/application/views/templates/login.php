@@ -1,4 +1,5 @@
-<?=form_open('login/auth',array('id'=>'bigform'));?>
+<div id="body">
+<?=form_open('login/auth',array('id'=>'bigform','class'=>'login'));?>
 <?=form_label('<p>Username</p>','username');?>
 <?= form_error('username'); ?>
 <?=form_input(array('id'=>'username','name'=>'username','value'=>''));?>
@@ -11,4 +12,4 @@
 <?=isset($msg) ? $msg : '';?>
 <p>If you don't have a login, you may sign-up for one <a href="/registerusercheck">here</a>.
 <?=form_close();?>
-<p id="rendertime">Page rendered in {elapsed_time} seconds.</p>
+</div>

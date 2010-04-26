@@ -4,13 +4,15 @@ class Login extends Controller {
   
   function Login() {
     parent::Controller();
+    $this->load->model("auth");
+    $this->load->model("user");
   }
   
   function index() {
-    $this->load->view('site_head');
-    $this->load->view('site_nav');
-    $this->load->view('login');
-    $this->load->view('site_foot');
+    $this->load->view('site/head');
+    $this->load->view('site/nav');
+    $this->load->view('templates/login');
+    $this->load->view('site/foot');
   }
   
   function auth() {
@@ -29,7 +31,6 @@ class Login extends Controller {
       }
       else {
 	// FORM VALIDATES...CHECK IF USER EXISTS AND ACCOUNT IS VERIFIED
-	$this->load->model("auth");
 	if($uid = $this->auth->authorize()) {
 	  //USER EXISTS AND ACCOUNT IS VERIFIED...START SESSION
 	  $this->auth->start_session($uid);
