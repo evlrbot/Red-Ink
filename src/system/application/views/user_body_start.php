@@ -1,1 +1,0 @@
-<div id='user_body'><!-- START USER BODY-->
