@@ -6,7 +6,7 @@ echo "<style>h3#visname { visibility:hidden; position:absolute; }</style>\n";
 
 include('modules/bar_chart.php');
 
-echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Timeframe</td><td>Interval</td></tr></thead>";
+echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Timeframe</td><td>Interval</td><td>Stacked</td></tr></thead>";
 echo "<tbody><tr><td><select name='timeframe'>";
 $timeframes= array('Year'=>'year', '6 Months'=>'6month', '3 Months'=>'3month');
 foreach($timeframes as $key=>$value) {
@@ -21,7 +21,9 @@ foreach($intervals as $key=>$value) {
   $interval_select= $interval== $value ? "selected" : "";
   echo "<option value='$value' $interval_select>$key</option>\n";
 }
-echo "</select></td></tr></tbody></table>\n";
+echo "</select></td>\n";
+echo "<td><input type='checkbox' name='viz_stacked_fied' valued='checked'></td>\n";
+echo "</tr></tbody></table>\n";
 
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>\n";
 echo "<thead><tr><td>Active</td><td>Label</td><td>Color</td></tr></thead><tbody>\n";
