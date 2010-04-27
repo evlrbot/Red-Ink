@@ -18,16 +18,15 @@ class Dataset extends Controller {
       $this->db->query($q);
       redirect("campaign/edit/$modid");
     }
-    $user_data = $this->user->get_account($_SESSION['userid']);
-    $this->load->view('site_nav',$user_data);
-    $this->user->load_nav($_SESSION['userid']);
-    $this->load->view('user_body_start');
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
     $data = $this->data->get_data_set($dataid);
     $data['modid'] = $modid;
     $data['filters'] = $this->data->get_filters($dataid);
     $this->load->view('edit_dataset',$data);
-    $this->load->view('user_body_stop');
-    $this->load->view('site_foot');
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
   }
 
   function create($modid) {
@@ -41,13 +40,12 @@ class Dataset extends Controller {
       $this->db->query($q);
       redirect("campaign/edit/$modid");
     }
-    $user_data = $this->user->get_account($_SESSION['userid']);
-    $this->load->view('site_nav',$user_data);
-    $this->user->load_nav($_SESSION['userid']);
-    $this->load->view('user_body_start');
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
     $this->load->view('create_dataset',array('modid'=>$modid));
-    $this->load->view('user_body_stop');
-    $this->load->view('site_foot');
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
   }
 
   function addfilter($dataset_id,$filter_id=0,$modid) {
@@ -55,16 +53,15 @@ class Dataset extends Controller {
       $this->data->add_filter($dataset_id,$filter_id);
     }
     if($dataset_id) {
-      $data = $this->user->get_account($_SESSION['userid']);
-      $this->load->view('site_nav',$data);
-      $this->user->load_nav($_SESSION['userid']);
-      $this->load->view('user_body_start');
+      $this->load->view('site/head');
+      $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+      $this->load->view('site/body_start');
       $data['bizs'] = $this->biz->get_bizs();
       $data['modid'] = $modid;
       $data['dataset_id'] = $dataset_id;
       $this->load->view('add_filter',$data);
-      $this->load->view('user_body_stop');
-      $this->load->view('site_foot');      
+      $this->load->view('site/body_stop');
+      $this->load->view('site/foot');      
     }
     else {
       redirect(site_url()."campaign/index");
@@ -79,14 +76,12 @@ class Dataset extends Controller {
   }
 
   function add() {
-    $user_data = $this->user->get_account($_SESSION['userid']);
-    $this->load->view('site_nav',$user_data);
-    $this->user->load_nav($_SESSION['userid']);
-    $this->load->view('user_body_start');
-    $data['datasets'] = $this->data->get_data_sets();
-    $this->load->view('list_datasets',$data);
-    $this->load->view('user_body_stop');
-    $this->load->view('site_foot');   
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
+    $this->load->view('list_datasets',array('datasets'=>$this->data->get_data_sets()));
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');   
   }
 
   function remove($modid,$dataid) {
