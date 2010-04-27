@@ -24,6 +24,8 @@ class Me extends Controller {
 	$this->viz->load_vizs($mod['modid'], $vizs);
       }
     }
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
   } 
 
   function account() {
