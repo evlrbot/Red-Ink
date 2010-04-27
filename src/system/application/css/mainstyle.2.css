@@ -63,7 +63,5 @@ ul#list em { font-weight:bold; }
 
 .body { vertical-align:top; }
 .body p { margin:20px 0px; }
-.body h3 + p:first-letter { font-size:1.7em; }
 .body ul {  padding:0px; }
 .body li { list-style-position:inside; }
-
