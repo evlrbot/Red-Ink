@@ -4,7 +4,7 @@
 <script id="source" language="javascript" type="text/javascript">
 $(function () {
    var options = {
-      series: { lines: { show: true, fill: true }, points: { show: true } },
+      series: { lines: { show: true, fill: true }, points: { show: true }, stack: stack },
       xaxis: { mode: "time", timeformat: '%b' },
       yaxis: { tickFormatter: function(v,axis) {return '$'+v.toFixed(axis.tickDecimals)} },
       grid: { clickable:true, hoverable:true, autoHighlight:true }

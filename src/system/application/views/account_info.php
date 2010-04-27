@@ -27,12 +27,11 @@
 <h1>Expensify Account</h1>
 <p><?= form_label('Login','expensify_login'); ?></p>
 <?= form_error('expensify_login'); ?>
- <?= form_input(array('id'=>'expensify_login','name'=>'expensify_login','value'=>$expensify_username)); ?>
+<?= form_input(array('id'=>'expensify_login','name'=>'expensify_login','value'=>$expensify_username)); ?>
 
 <p><?= form_label('Password','expensify_password'); ?></p>
 <?= form_error('expensify_password'); ?>
 <?= form_password(array('id'=>'expensify_password','name'=>'expensify_password','value'=>$expensify_password)); ?>
-
 <p><?= form_submit(array('id'=>'submit','value'=>'Update')); ?></p>
 
 <h1>Wesabe Account</h1>
