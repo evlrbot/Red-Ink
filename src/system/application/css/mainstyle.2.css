@@ -56,6 +56,14 @@ ul#list em { font-weight:bold; }
 #viz_stacked {margin-left:120px;}
 #viz_stacked input {margin:20px;}
 
+/* WIKI */
 #wikicmds { text-align:right; }
 #wikicmds li { display:inline; list-style-type:none; }
 #wikicmds a { text-decoration:none; color:#9d1f14; }
+
+.body { vertical-align:top; }
+.body p { margin:20px 0px; }
+.body h3 + p:first-letter { font-size:1.7em; }
+.body ul {  padding:0px; }
+.body li { list-style-position:inside; }
+

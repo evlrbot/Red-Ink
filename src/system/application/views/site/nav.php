@@ -24,9 +24,9 @@ if($logged_in) {
 
 <div id="sponsors">
 <h1>Sponsored in part by:</h1>
-<a href='http://civic.media.mit.edu' target='_blank'><img src='/system/application/img/c4.jpg'></a>
-<a href='http://knightfoundation.org' target='_blank'><img src='/system/application/img/knight.gif'></a>
-<a href='http://media.mit.edu' target='_blank'><img src='/system/application/img/medialablogo.jpg'></a>
+<a href='http://civic.media.mit.edu' target='_blank'><img src='/system/application/img/c4.jpg' alt='Center for Future Civic Media'></a>
+<a href='http://knightfoundation.org' target='_blank'><img src='/system/application/img/knight.gif' alt='John S. and James L. Knight Foundation'></a>
+<a href='http://media.mit.edu' target='_blank'><img src='/system/application/img/medialab.jpg' alt='MIT Media Lab'></a>
 </div>
 
 </div>
