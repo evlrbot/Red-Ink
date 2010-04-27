@@ -1,10 +1,12 @@
 <div id="module">
 <h3 id='visname'><?=$viz['viz_name']?></h3>
 <div id="<?=$viz['modvizid']?>" class="vis"></div>
+
 <script id="source" language="javascript" type="text/javascript">
+
 $(function () {
    var options = {
-      series: { lines: { show: true, fill: true }, points: { show: true }, stack: stack },
+      series: { stack: 0, lines: { show: true, fill: true, steps: false }, points: { show: true } },
       xaxis: { mode: "time", timeformat: '%b' },
       yaxis: { tickFormatter: function(v,axis) {return '$'+v.toFixed(axis.tickDecimals)} },
       grid: { clickable:true, hoverable:true, autoHighlight:true }
