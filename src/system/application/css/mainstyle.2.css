@@ -38,6 +38,7 @@ a:hover { font-style:italic; }
 #body #modulelist em { font-weight:bold;  }
 #body #modulelist li { margin:15px 0px; }
 #body h1 a.small { font-size:14px; vertical-align:middle; }
+#body h1 a.small:hover { color:white; background-color:#9d1f14; }
 #body .vis { width:90%; height:350px; margin:0px auto; }
 
 table#list { margin:0px auto; }
