@@ -1,4 +1,4 @@
-<table id="stats" cellpadding='10' cellspacing='10'>
+<table id="stats" cellpadding='10' cellspacing='0'>
 <tr>
 <td>
 <p><b>Number of Members:</b> 50</p>
@@ -9,21 +9,21 @@
 <td>
 <p><b>Top Spenders (Total)</b></p>
 <ol>
-<li>Ryan O'Toole</li>
-<li>Josh Levinger</li>
-<li>Adam Whiton</li>
-<li>Noah Vawter</li>
-<li>Christina Xu</li>
+<li>Ryan O'Toole ~ $500.00</li>
+<li>Josh Levinger ~ $400.00</li>
+<li>Adam Whiton ~ $300.00</li>
+<li>Noah Vawter ~ $200.00</li>
+<li>Christina Xu ~ $100.00</li>
 </ol>
 </td>
 <td>
 <p><b>Top Spenders (Current Month)</b></p>
 <ol>
-<li>Christina Xu</li>
-<li>Adam Whiton</li>
-<li>Josh Levinger</li>
-<li>Ryan O'Toole</li>
-<li>Noah Vawter</li>
+<li>Christina Xu ~ $100.00</li>
+<li>Adam Whiton ~ $75.00</li>
+<li>Josh Levinger ~ $50.00</li>
+<li>Ryan O'Toole ~ $25.00</li>
+<li>Noah Vawter ~ $10.00</li>
 </ol>
 </td>
 </tr>
