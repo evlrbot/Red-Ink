@@ -135,7 +135,7 @@ class Module extends Model {
    * DESCRP: For a given view returns the view's associate template file path
    */
   function get_template($modviewid) {
-    $query = "SELECT v.template, v.multidata, v.stacked FROM visualization AS v, module_visualization AS mv WHERE mv.id=$modviewid AND mv.vizid= v.id LIMIT 1";
+    $query = "SELECT v.template, v.multidata, v.stack FROM visualization AS v, module_visualization AS mv WHERE mv.id=$modviewid AND mv.vizid= v.id LIMIT 1";
     $result = $this->db->query($query);
     $tmp = $result->row_array();
     return $tmp;

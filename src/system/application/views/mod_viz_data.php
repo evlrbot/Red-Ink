@@ -22,7 +22,7 @@ foreach($intervals as $key=>$value) {
   echo "<option value='$value' $interval_select>$key</option>\n";
 }
 echo "</select></td>\n";
-echo "<td><input type='checkbox' name='viz_stacked_fied' valued='checked'></td>\n";
+echo "<td><input type='checkbox' name='viz_stacked_field' value='checked'" . $viz['viz_stacked'] . "></td>\n";
 echo "</tr></tbody></table>\n";
 
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>\n";
@@ -59,38 +59,3 @@ echo "</tbody></table>";
 echo form_close();
 ?>
 </table>
-
-<script id="source" language="javascript" type="text/javascript">
-
-var ajax_options = { 
-	success: showResponse,  // post-submit callback 
-	url: <?php echo "'" .site_url("visualization/json/$modid/$modvizid"). "'," ?>         // override for form's 'action' attribute 
-	//dataType: 'json'        // 'xml', 'script', or 'json' (expected server response type)
-}; 
-
-$('input:checkbox').click(function() {
-	$('#bigform').ajaxSubmit(ajax_options); 
-});
-
-function showResponse(responseText) {
-
-  var options = {
-     series: {
-       lines: { show: true, fill: true },
-       points: { show: true }
-     },
-     xaxis: {
-       mode: 'time',
-       timeformat: "%b"
-     }
-  };
-  
-//  alert(responseText);
-  
-  var data= [];
-  data.push(responseText);
-  alert(data);
-  $.plot($("#placeholder"), data, options);
-}
-
-</script>

@@ -6,7 +6,7 @@
 
 $(function () {
    var options = {
-      series: { stack: 0, lines: { show: true, fill: true, steps: false }, points: { show: true } },
+      series: { <?php if($viz['viz_stacked']) { echo "stack: 0,"; } ?>lines: { show: true, fill: true, steps: false }, points: { show: true } },
       xaxis: { mode: "time", timeformat: '%b' },
       yaxis: { tickFormatter: function(v,axis) {return '$'+v.toFixed(axis.tickDecimals)} },
       grid: { clickable:true, hoverable:true, autoHighlight:true }
