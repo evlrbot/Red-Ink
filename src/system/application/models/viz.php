@@ -28,7 +28,7 @@ class Viz extends Model {
    * DESCRP: return data for a particular visualization
    */
   function get_visualization($vis_id) {  
-    $query = "SELECT t1.name, t1.template, t2.id AS modvizid, t2.viz_name, t2.stacked AS viz_stacked FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.id=$vis_id";    	
+    $query = "SELECT t1.name, t1.template, t2.id AS modvizid, t2.viz_name, t2.stack AS viz_stacked FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.id=$vis_id";    	
     $result = $this->db->query($query);
     return $result->row_array();      
   }

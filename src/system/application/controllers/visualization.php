@@ -57,7 +57,7 @@ class Visualization extends Controller {
     $data['modvizid'] = $modvizid;
     $data['json'] = $json;
     $data['data_sets'] = $data_sets;
-    $data['viz'] = $this->module->get_visualization($modvizid);  // get the info for this vis for this module
+    $data['viz'] = $this->viz->get_visualization($modvizid);  // get the info for this vis for this module
     $data['timeframe'] = $timeframe;
     $data['interval'] = $interval;
 
