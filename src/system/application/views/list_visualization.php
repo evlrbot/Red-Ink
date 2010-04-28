@@ -1,83 +1,48 @@
-<?php
+<?php echo "<li>Area Chart - <a href='/visualization/add/$modid/1'>add</a></li>"; ?>
+<div id='area' style='height: 300px;'></div>
 
-	echo "<li>$viz[name] - <a href='/visualization/add/$modid/$viz[id]'>add</a></li>";
+<?php echo "<li>Bar Chart - <a href='/visualization/add/$modid/2'>add</a></li>"; ?>
+<div id='bar' style='height: 300px;'></div>
 
-	  $colors= array('FF0000', '00FF00', '0000FF', 'AA0000', '0E2964');
-	  shuffle($colors);
-	  $palette_colors= implode(",", $colors);
-	
-	$xml= 
-"<chart caption='Sample Viz' bgColor= 'FFFFFF' plotGradientColor='' showBorder= '0' showValues='0' numberPrefix='$' canvasbgColor='000000' canvasBorderColor='000000' canvasBorderThickness='2' showPlotBorder='0' useRoundEdges='1' canvasBorderThickness= '0' chartTopMargin= '0' paletteColors= '$palette_colors'>
-	<styles>
-		<definition>
-			<style name='Title' type='font' face='Arial' size='15' color='000000' bold='1'/>
-			<style name='Labels' type='font' face='Arial' size='15' color='000000' bold='1'/>
-			<style name='Values' type='font' face='Arial' size='13' color='000000' bold='0'/>
-			<style name='YValues' type='font' face='Arial' size='24' color='000000' bold='1'/>
-			<style name='Bevel' type='bevel' distance='0'/>
-			<style name='Shadow' type='shadow' angle='45' distance='0'/>
-		</definition>
-		<application>
-			<apply toObject='Caption' styles='Title' />
-			<apply toObject='Datalabels' styles='Values' />
-			<apply toObject='Datavalues' styles='Values' />         
-			<apply toObject='Xaxisname' styles='Labels' />
-			<apply toObject='Yaxisname' styles='YValues' />
-			<apply toObject='Yaxisvalues' styles='Values' />            		
-			<apply toObject='DataPlot' styles='Bevel, Shadow' />
-		</application>    
-	  </styles>
+<?php echo "<li>Line Chart - <a href='/visualization/add/$modid/3'>add</a></li>"; ?>
+<div id='line' style='height: 300px;'></div>
 
-   <categories>
-      <category label='Jan' />
-      <category label='Feb' />
-      <category label='Mar' />
-      <category label='Apr' />
-      <category label='May' />
-      <category label='Jun' />
-      <category label='Jul' />
-      <category label='Aug' />
-      <category label='Sep' />
-      <category label='Oct' />
-      <category label='Nov' />
-      <category label='Dec' />
-   </categories>
+<script id="source" language="javascript" type="text/javascript">
 
-   <dataset seriesName='2006' >
-      <set value='27400' />
-      <set value='29800' />
-      <set value='25800' />
-      <set value='26800' />
-      <set value='29600' />
-      <set value='32600' />
-      <set value='31800' />
-      <set value='36700' />
-      <set value='29700' />
-      <set value='31900' />
-      <set value='34800' />
-      <set value='24800' />
-   </dataset>
+$(function () {
 
-   <dataset seriesName='2005'>
-      <set value='10000' />
-      <set value='11500' />
-      <set value='12500' />
-      <set value='15000' />
-      <set value='11000' />
-      <set value='9800'  />
-      <set value='11800' />
-      <set value='19700' />
-      <set value='21700' />
-      <set value='21900' />
-      <set value='22900' />
-      <set value='20800' />
-   </dataset>
-
-</chart>";
-	
-	
+   var data = [
+        {label: 'foo', data: [[1,300], [2,300], [3,300], [4,300], [5,300]]},
+        {label: 'bar', data: [[1,800], [2,600], [3,400], [4,200], [5,0]]},
+        {label: 'baz', data: [[1,100], [2,200], [3,300], [4,400], [5,500]]},
+    ];
+    
+   var options_area = {
+      series: { lines: { show: true, fill: true, steps: false }, points: { show: true } },
+      xaxis: { mode: "time", timeformat: '%b' },
+      yaxis: { tickFormatter: function(v,axis) {return '$'+v.toFixed(axis.tickDecimals)} },
+      grid: { clickable:true, hoverable:true, autoHighlight:true }
+   };
    
-   	echo renderChartHTML("/system/application/libraries/$viz[multidata]", "", "$xml", "chart", 700, 300, false);
+   var options_bar = {
+      series: { lines: { show: false, fill: true, steps: false }, points: { show: true }, bars: {show: true, barWidth: 0.9, align: 'center'} },
+      xaxis: { mode: "time", timeformat: '%b' },
+      yaxis: { tickFormatter: function(v,axis) {return '$'+v.toFixed(axis.tickDecimals)} },
+      grid: { clickable:true, hoverable:true, autoHighlight:true }
+   };
+   
+   var options_line = {
+      series: { lines: { show: true, fill: false, steps: false }, points: { show: true } },
+      xaxis: { mode: "time", timeformat: '%b' },
+      yaxis: { tickFormatter: function(v,axis) {return '$'+v.toFixed(axis.tickDecimals)} },
+      grid: { clickable:true, hoverable:true, autoHighlight:true }
+   };   
+   
+   $.plot($("#area"), data, options_area);
+   $.plot($("#bar"), data, options_bar);
+   $.plot($("#line"), data, options_line);   
 
+});
+   
+</script>
 
-?>

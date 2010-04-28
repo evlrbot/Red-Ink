@@ -40,9 +40,14 @@ class Visualization extends Controller {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
       $this->viz->save_mod_viz_form($modid, $modvizid, $data_sets);
     }
-    $viz_data_sets= $this->viz->get_datasets($modvizid);
-    $timeframe= $viz_data_sets[0]['timeframe'];
-    $interval= $viz_data_sets[0]['interval'];
+    if($viz_data_sets= $this->viz->get_datasets($modvizid)) {
+      $timeframe= $viz_data_sets[0]['timeframe'];
+      $interval= $viz_data_sets[0]['interval'];
+    }
+    else {
+      $timeframe= 'year';
+      $interval= 'month';
+    }
     $data_set_results = $this->viz->get_dataset_results($modid,$modvizid,$_SESSION['userid']);  // *NEW* THE REAL TIME SERIES DATA QUER
     $data_sets = $this->viz->format_viz_datasets($modvizid, $data_sets); // SET DATASET PARAMS
     $json = $this->viz->format_json($data_set_results, $data_sets);  // FORMAT TIME SERIES DATA INTO FLOT JSON

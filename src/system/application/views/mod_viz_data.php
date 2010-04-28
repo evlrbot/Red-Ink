@@ -4,7 +4,7 @@ echo form_open(site_url("visualization/edit/$modid/$modvizid"),array('id'=>'bigf
 echo "<input name='viz_name_field' value='$viz[viz_name]' id='viz_name_field' size='30'>\n";
 echo "<style>h3#visname { visibility:hidden; position:absolute; }</style>\n";
 
-include('modules/bar_chart.php');
+include($viz['template']);
 
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Timeframe</td><td>Interval</td><td>Stacked</td></tr></thead>";
 echo "<tbody><tr><td><select name='timeframe'>";

@@ -138,11 +138,13 @@ class Viz extends Model {
    * DESCRP:
    */
   function load_sample_vizs($modid) {
-    $vizs= $this->viz->get_vizs();
-    foreach($vizs as $viz) {
-      $data= array("viz"=>$viz, "modid"=>$modid);
-      $this->load->view('/list_visualization', $data);
-    }
+    //$vizs= $this->viz->get_vizs();
+    //foreach($vizs as $viz) {
+    //  $data= array("viz"=>$viz, "modid"=>$modid);
+    //  $this->load->view('/list_visualization', $data);
+    //}
+    $data['modid']= $modid;
+	$this->load->view('/list_visualization', $data);
   }
 
   /* PARAMS: $modid - id of the module in question
@@ -161,8 +163,7 @@ class Viz extends Model {
       $data_sets = $this->format_viz_datasets($modvizid, $data_sets);
       $json = $this->viz->format_json($results, $data_sets);
       $data = array("json"=>$json,'viz'=>$viz);
-      echo $template = $this->get_template($viz['vis_id']);
-      $this->load->view('/modules/bar_chart', $data);
+      $this->load->view($viz['template'], $data);
     }
   }
   

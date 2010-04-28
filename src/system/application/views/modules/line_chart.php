@@ -6,7 +6,7 @@
 
 $(function () {
    var options = {
-      series: { <?php if($viz['viz_stacked']) { echo "stack: 0,"; } ?>lines: { show: false, fill: true, steps: false }, bars: {show: true, barWidth: .9, align: 'center'}, points: { show: true } },
+      series: { <?php if($viz['viz_stacked']) { echo "stack: 0,"; } ?>lines: { show: true, fill: false, steps: false }, points: { show: true } },
       xaxis: { mode: "time", timeformat: '%b' },
       yaxis: { tickFormatter: function(v,axis) {return '$'+v.toFixed(axis.tickDecimals)} },
       grid: { clickable:true, hoverable:true, autoHighlight:true }
@@ -69,6 +69,3 @@ $(function () {
 });
 </script>
 </div>
-
-
-
