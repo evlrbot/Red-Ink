@@ -40,6 +40,12 @@ a:hover { font-style:italic; }
 #body h1 a.small { font-size:14px; vertical-align:middle; }
 #body h1 a.small:hover { color:white; background-color:#9d1f14; }
 #body .vis { width:90%; height:350px; margin:0px auto; }
+#body #module #stats p { margin:0px; }
+#body #module #stats td { vertical-align:top; }
+#body #module #stats ol { margin:0px; padding:0px; }
+#body #module #stats li { list-style-position:inside; }
+
+
 
 table#list { margin:0px auto; }
 table#list thead { font-weight:bold; text-align:center; }

@@ -68,4 +68,6 @@ $(function () {
      });
 });
 </script>
+
+<? include('stats.php'); ?>
 </div>
