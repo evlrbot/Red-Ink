@@ -11,14 +11,13 @@ class Business extends Controller {
   }
 
   function index() {
-    $data = $this->user->get_account($_SESSION['userid']);
-    $this->load->view('site_nav',$data);
-    $this->user->load_nav($_SESSION['userid']);
-    $this->load->view('user_body_start');
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
     $data['bizs'] = $this->biz->get_bizs();
     $this->load->view('list_businesses',$data);
-    $this->load->view('user_body_stop');
-    $this->load->view('site_foot');
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
   }
 
   function add() {
@@ -53,13 +52,12 @@ class Business extends Controller {
 	}
       }
     }
-    $user_data = $this->user->get_account($_SESSION['userid']);
-    $this->load->view('site_nav',$user_data);
-    $this->user->load_nav($_SESSION['userid']);
-    $this->load->view('user_body_start'); 
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
     $this->load->view('create_business',$data);
-    $this->load->view('user_body_stop');
-    $this->load->view('site_foot'); 
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
   }
   
   function edit($id) {
@@ -90,15 +88,14 @@ class Business extends Controller {
 	}
       }
     }
-    $user_data = $this->user->get_account($_SESSION['userid']);
-    $this->load->view('site_nav',$user_data);
-    $this->user->load_nav($_SESSION['userid']);
-    $this->load->view('user_body_start'); 
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
     $data['biz'] = $this->biz->get_biz($id);
     $data['memo'] = $this->biz->get_memos($id);
     $this->load->view('edit_business',$data);
-    $this->load->view('user_body_stop');
-    $this->load->view('site_foot');    
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
   }
   
   function deletememo($bizid,$memoid) {

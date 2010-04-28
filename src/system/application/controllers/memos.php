@@ -26,13 +26,12 @@ class Memos extends Controller {
 	}
       }
     }
-    $user_data = $this->user->get_account($_SESSION['userid']);
-    $this->load->view('site_nav',$user_data);
-    $this->user->load_nav($_SESSION['userid']);
-    $this->load->view('user_body_start');
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
     $this->load->view('create_memo',array('bizid'=>$bizid));
-    $this->load->view('user_body_stop');
-    $this->load->view('site_foot');
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
   }
 
   function remove($bizid,$memoid) {
