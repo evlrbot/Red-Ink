@@ -52,15 +52,27 @@ class Viz extends Model {
     return $result->result_array();
   }
 
+  /* PARAMS: $modvis_id
+   * DESCRP: load the template for the visualization.
+   */  
+  function load($modvizid) {
+      $results = $this->get_dataset_results($modid,$modvizid,$_SESSION['userid']);
+      $data_sets = $this->module->get_data_sets($modid); // GET ALL 
+      $data_sets = $this->format_viz_datasets($modvizid, $data_sets);
+      $json = $this->viz->format_json($results, $data_sets);
+      $data = array("json"=>$json,'viz'=>$viz);
+      $this->load->view($viz['template'], $data);
+  }
+
   /* PARAMS: $modid - id of the module
    *         $modvizid - id of the mod_viz
    *         $userid - id of the user to lookup
-   *         $period - number used to determine the # of months to look back at.
-   *         $frequency - the rate at which transactions should be folded up, i.e. monthly, daily, yearly, etc...
-   * DESCRP: constructs a query using the filters associated with a vis and the vis' 
-   *         settings for period and frequency of aggregation.
+   *         $period - number used to determine the # of months to look back at
+   *         frequency - the rate at which transactions should be folded up, i.e. monthly, daily, yearly, etc...
+   * DESCRP: constructs a query using the filters associated with a vis and the vis settings for period and frequency of aggregation.
    * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
    */ 
+
   function get_dataset_results($modid, $modvizid, $userid, $period='year', $frequency='month') {
     $datasets = $this->get_datasets($modvizid);   
     $results = array();
@@ -144,9 +156,9 @@ class Viz extends Model {
     //  $this->load->view('/list_visualization', $data);
     //}
     $data['modid']= $modid;
-	$this->load->view('/list_visualization', $data);
+    $this->load->view('/list_visualization', $data);
   }
-
+  
   /* PARAMS: $modid - id of the module in question
    *         $vizs - visualizations available to this module
    * DESCRP: load the templates for this module

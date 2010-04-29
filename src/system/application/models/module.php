@@ -106,22 +106,14 @@ class Module extends Model {
  *                               ACCESSOR METHODS
  ********************************************************************************/
   /* PARAMS: $modid - id of the module to load
-   *         $viewid - id of the view to load
-   *         $userid - id of the user loading the module/view
    * DESCRP: Loads the appropriate module/view/data given the above params
    */
-  function load($modid,$viewid,$userid) {
-    $data['mod'] = $this->get_module($modid);
-    $data['data'] = $this->get_data_sets_results($this->get_data_sets($modid),$userid);  
-    if(count($data['data']) > 0) {
-      $data['viz']= $this->get_visualizations($modid);
-      foreach($data['viz'] as $viz) {
-	$modvizid= $viz['modvizid'];
-	$this->viz->load_viz($modid, $modvizid);
-      }
+  function load($modid) {
+    foreach($this->get_visualizations($modid) as $viz) {
+      $this->viz->load($viz['modvizid']);
     }
   }
-  
+
   /* PARAMS: $modid
    * DESCRP: return associative array of data ids, labels and query strings
    */

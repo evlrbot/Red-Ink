@@ -20,6 +20,7 @@ class Me extends Controller {
     $this->load->view('site/body_start');
     if($modules = $this->user->get_modules($_SESSION['userid']) ) {    	
       foreach($modules as $mod) {
+	//$this->module->load($mod['modid']);
 	$vizs = $this->module->get_visualizations($mod['modid']);
 	$this->viz->load_vizs($mod['modid'], $vizs);
       }
