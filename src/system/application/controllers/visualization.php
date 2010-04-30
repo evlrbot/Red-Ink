@@ -36,30 +36,25 @@ class Visualization extends Controller {
   }
 
   function edit($modid,$modvizid) {
-    $data_sets= $this->module->get_data_sets($modid); 
+    $data_sets = $this->module->get_data_sets($modid); 
     if($_SERVER['REQUEST_METHOD'] == "POST") {
       $this->viz->save_mod_viz_form($modid, $modvizid, $data_sets);
     }
-    if($viz_data_sets= $this->viz->get_datasets($modvizid)) {
-      $timeframe= $viz_data_sets[0]['timeframe'];
-      $interval= $viz_data_sets[0]['interval'];
+    if($viz_data_sets = $this->viz->get_datasets($modvizid)) {
+      $data['timeframe'] = $viz_data_sets[0]['timeframe'];
+      $data['interval'] = $viz_data_sets[0]['interval'];
     }
     else {
-      $timeframe= 'year';
-      $interval= 'month';
+      $data['timeframe'] = 'year';
+      $data['interval'] = 'month';
     }
-    $data_set_results = $this->viz->get_dataset_results($modid,$modvizid,$_SESSION['userid']);  // *NEW* THE REAL TIME SERIES DATA QUER
-    $data_sets = $this->viz->format_viz_datasets($modvizid, $data_sets); // SET DATASET PARAMS
-    $json = $this->viz->format_json($data_set_results, $data_sets);  // FORMAT TIME SERIES DATA INTO FLOT JSON
 
     $data['user'] = $this->user->get_account($_SESSION['userid']);
     $data['modid'] = $modid;
     $data['modvizid'] = $modvizid;
-    $data['json'] = $json;
-    $data['data_sets'] = $data_sets;
+    $data['data_sets'] = $this->viz->format_viz_datasets($modvizid, $data_sets);
     $data['viz'] = $this->viz->get_visualization($modvizid);  // get the info for this vis for this module
-    $data['timeframe'] = $timeframe;
-    $data['interval'] = $interval;
+    $data['model_viz'] = $this->viz;
 
     $this->load->view('site/head');
     $this->load->view('site/nav',$data['user']);

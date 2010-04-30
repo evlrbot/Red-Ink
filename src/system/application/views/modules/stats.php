@@ -1,29 +1,24 @@
 <table id="stats" cellpadding='10' cellspacing='0'>
 <tr>
 <td>
-<p><b>Number of Members:</b> 50</p>
-<p><b>Total Amount Spent:</b> $10,000.00</p>
-<p><b>Average Amount Spent:</b> $200.00</p>
-<p><b>Number of Visits:</b> 200</p>
+<h1>Us</h1>
+<p><b>Membership:</b> <?=$num_members?></p>
+<p><b>Total:</b> $<?=$total_spend?></p>
+<p><b>Average:</b> $<?=round(($total_spend/$num_members),2);?></p>
+<p><b>Activity:</b> N/A</p>
 </td>
 <td>
-<p><b>Top Spenders (Total)</b></p>
-<ol>
-<li>Ryan O'Toole ~ $500.00</li>
-<li>Josh Levinger ~ $400.00</li>
-<li>Adam Whiton ~ $300.00</li>
-<li>Noah Vawter ~ $200.00</li>
-<li>Christina Xu ~ $100.00</li>
-</ol>
+<h1>Me</h1>
+<p><b>Total:</b> $<?=$my_spend?></p>
 </td>
 <td>
-<p><b>Top Spenders (Current Month)</b></p>
+<h1>Members</h1>
 <ol>
-<li>Christina Xu ~ $100.00</li>
-<li>Adam Whiton ~ $75.00</li>
-<li>Josh Levinger ~ $50.00</li>
-<li>Ryan O'Toole ~ $25.00</li>
-<li>Noah Vawter ~ $10.00</li>
+<?php
+foreach($members as $member) {
+  echo "<li>$member[email]</li>\n";
+}
+?>
 </ol>
 </td>
 </tr>

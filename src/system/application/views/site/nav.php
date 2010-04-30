@@ -27,6 +27,7 @@ if($logged_in) {
 <a href='http://civic.media.mit.edu' target='_blank'><img src='/system/application/img/c4.jpg' alt='Center for Future Civic Media'></a>
 <a href='http://knightfoundation.org' target='_blank'><img src='/system/application/img/knight.gif' alt='John S. and James L. Knight Foundation'></a>
 <a href='http://media.mit.edu' target='_blank'><img src='/system/application/img/medialab.jpg' alt='MIT Media Lab'></a>
+<a href='http://www.mit.edu' target='_blank'><img src='/system/application/img/mit_logo.png' alt='MIT'></a>
 </div>
 
 </div>

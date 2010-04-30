@@ -105,15 +105,6 @@ class Module extends Model {
 /********************************************************************************
  *                               ACCESSOR METHODS
  ********************************************************************************/
-  /* PARAMS: $modid - id of the module to load
-   * DESCRP: Loads the appropriate module/view/data given the above params
-   */
-  function load($modid) {
-    foreach($this->get_visualizations($modid) as $viz) {
-      $this->viz->load($viz['modvizid']);
-    }
-  }
-
   /* PARAMS: $modid
    * DESCRP: return associative array of data ids, labels and query strings
    */

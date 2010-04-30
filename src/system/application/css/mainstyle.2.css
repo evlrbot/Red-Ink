@@ -13,7 +13,7 @@ a:hover { font-style:italic; }
 .nav ul ul { padding:0px; }
 .nav ul ul li { font-size:0.7em; list-style-type:square; list-style-position:inside; margin:0px; padding:0px; }
 .nav #sponsors { padding-left:40px; }
-.nav #sponsors img { width:170px; display:block; margin:15px 0px; border:0px; }
+.nav #sponsors img { width:170px; display:block; margin:0px 0px 20px 0px; border:0px solid red; }
 .nav #sponsors h1 { font-size:12px; margin:0px;  }
 
 .error { text-align:center; color:red; font-weight:normal; }
@@ -40,11 +40,13 @@ a:hover { font-style:italic; }
 #body h1 a.small { font-size:14px; vertical-align:middle; }
 #body h1 a.small:hover { color:white; background-color:#9d1f14; }
 #body .vis { width:90%; height:350px; margin:0px auto; }
+#body #module #stats { width:100%; }
 #body #module #stats p { margin:0px; }
-#body #module #stats td { vertical-align:top; }
+#body #module #stats b { margin:0px; margin-right:0px; }
+#body #module #stats td { vertical-align:top; width:33%; }
 #body #module #stats ol { margin:0px; padding:0px; }
 #body #module #stats li { list-style-position:inside; }
-
+#body #module #stats h1 { color:black; font-size:1.0em; margin:0px 0px 5px 0px; font-weight:normal; border-bottom:1px solid black; }
 
 
 table#list { margin:0px auto; }

@@ -52,16 +52,55 @@ class Viz extends Model {
     return $result->result_array();
   }
 
-  /* PARAMS: $modvis_id
+  /* PARAMS: $modid - module id
+   *         $vis - visualization object
    * DESCRP: load the template for the visualization.
    */  
-  function load($modvizid) {
-      $results = $this->get_dataset_results($modid,$modvizid,$_SESSION['userid']);
-      $data_sets = $this->module->get_data_sets($modid); // GET ALL 
-      $data_sets = $this->format_viz_datasets($modvizid, $data_sets);
-      $json = $this->viz->format_json($results, $data_sets);
-      $data = array("json"=>$json,'viz'=>$viz);
-      $this->load->view($viz['template'], $data);
+  function load($modid,$vis) {
+    // get average spend
+    // get individual total spend
+    // get individual average spend
+    // get total visits
+    // get total individual visits
+    // get average spend/visit
+
+    // GET INDIVIDUAL MEMBER DATA
+    $member_ids = $this->module->get_users($modid);
+    $data['members'] = array();
+    foreach($member_ids AS $mid) {
+      array_push($data['members'],$this->user->get_profile($mid));
+    }
+
+    // GET TOTAL NUMBER OF MEMBERS
+    $data['num_members'] = count($data['members']);       
+
+    // GET TIME SERIES DATA FOR ALL MEMBERS
+    $results = $this->get_dataset_results($modid,$vis['modvizid'],0);
+
+    // GET TOTAL AMOUNT SPENT BY ALL MEMBERS
+    $data['total_spend'] = 0;
+    foreach($results AS $ds) {
+      foreach($ds AS $d) {
+	$data['total_spend'] += $d['value'];	   
+      }
+    }
+
+    // GET TIME SERIES DATA FOR USER ONLY
+    $results = $this->get_dataset_results($modid,$vis['modvizid'],7);
+
+    // GET TOTAL AMOUNT SPENT BY USER ONLY
+    $data['my_spend'] = 0;
+    foreach($results AS $ds) {
+      foreach($ds AS $d) {
+	$data['my_spend'] += $d['value'];	   
+      }
+    }
+
+    $data_sets = $this->module->get_data_sets($modid); 
+    $data_sets = $this->format_viz_datasets($vis['modvizid'], $data_sets);
+    $data['json'] = $this->viz->format_json($results, $data_sets);
+    $data['vis'] = $vis;
+    $this->load->view($vis['template'], $data);
   }
 
   /* PARAMS: $modid - id of the module
@@ -73,7 +112,7 @@ class Viz extends Model {
    * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
    */ 
 
-  function get_dataset_results($modid, $modvizid, $userid, $period='year', $frequency='month') {
+  function get_dataset_results($modid, $modvizid, $userid=0, $period='year', $frequency='month') {
     $datasets = $this->get_datasets($modvizid);   
     $results = array();
     foreach($datasets AS $ds) {                   
@@ -98,15 +137,21 @@ class Viz extends Model {
       }
 
       // LIMIT USERS TO LOOK AT
-      $q = array();
-      foreach($this->module->get_users($modid) AS $id) {
-	array_push($q,"userid=$id");
+      if(!$userid) {
+	$q = array();
+	foreach($this->module->get_users($modid) AS $id) {
+	  array_push($q,"userid=$id");
+	}
+	$users = implode(' OR ',$q);
       }
-      $users = implode(' OR ',$q);
+      else {
+	$users = "userid=$userid";
+      }
       $query .= $users ? " AND ($users) " : "";
 
       // AGGREGATE BY...
       $query .= "GROUP BY date_part('epoch', date_trunc('$frequency',created))*1000 ORDER BY label ASC";
+      //echo "<p>$query</p>";
       $result = $this->db->query($query);
       $results[$ds['name']] = $result->result_array();
     }    
@@ -163,7 +208,7 @@ class Viz extends Model {
    *         $vizs - visualizations available to this module
    * DESCRP: load the templates for this module
    */  
-  function load_vizs($modid, $vizs) {
+  function load_visualizations($modid, $vizs) {
     foreach($vizs as $viz) {
       $modvizid = $viz['modvizid'];
       $results = $this->get_dataset_results($modid,$modvizid,$_SESSION['userid']);
@@ -221,14 +266,14 @@ class Viz extends Model {
   }
 
   function save_mod_viz_form($modid, $modvizid, $data_sets) {
-    $q= "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
+    $q = "DELETE FROM public.mod_viz_data WHERE modvizid=$modvizid";
     $this->db->query($q);
     foreach($data_sets as $d) {	
-      if($moddataid = $this->db->escape($this->input->post($d['dataid']))) {
-	$moddataid_color= $_POST[$d['dataid']."_color"];
-	$timeframe= $_POST['timeframe'];
-	$interval= $_POST['interval'];
-	$q= "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddataid_color, timeframe, interval) VALUES ($modid, $modvizid, $moddataid, '$moddataid_color', '$timeframe', '$interval')";
+      if(isset($_POST[$d['dataid']])) {
+	$moddataid_color = $_POST[$d['dataid']."_color"];
+	$timeframe = $_POST['timeframe'];
+	$interval = $_POST['interval'];
+	$q = "INSERT INTO public.mod_viz_data (modid, modvizid, moddataid, moddataid_color, timeframe, interval) VALUES ($modid, $modvizid, $d[dataid], '$moddataid_color', '$timeframe', '$interval')";
 	$this->db->query($q);
       }
     }	

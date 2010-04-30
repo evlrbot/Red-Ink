@@ -1,21 +1,21 @@
 <div id="module">
-<h3 id='visname'><?=$viz['viz_name']?></h3>
-<div id="<?=$viz['modvizid']?>" class="vis"></div>
+<h3 id='visname'><?=$vis['viz_name']?></h3>
+<div id="<?=$vis['modvizid']?>" class="vis"></div>
 
 <script id="source" language="javascript" type="text/javascript">
 
 $(function () {
    var options = {
-      series: { <?php if($viz['viz_stacked']) { echo "stack: 0,"; } ?>lines: { show: true, fill: true, steps: false }, points: { show: true } },
+      series: { <?php if($vis['viz_stacked']) { echo "stack: 0,"; } ?>lines: { show: true, fill: true, steps: false }, points: { show: true } },
       xaxis: { mode: "time", timeformat: '%b' },
       yaxis: { tickFormatter: function(v,axis) {return '$'+v.toFixed(axis.tickDecimals)} },
       grid: { clickable:true, hoverable:true, autoHighlight:true }
    };
    var data = <?php echo $json ?>;  
-   $.plot($("#<?=$viz['modvizid'] ?>"), data, options);
+   $.plot($("#<?=$vis['modvizid'] ?>"), data, options);
 
    // BIND INTERACTIVITY FUNCTIONS
-   $("#<?=$viz['modvizid']?>").bind("plotclick", function (event, pos, item) {
+   $("#<?=$vis['modvizid']?>").bind("plotclick", function (event, pos, item) {
        //alert("You clicked at " + pos.x + ", " + pos.y);
        if (item) {
 	highlight(item.series, item.datapoint);

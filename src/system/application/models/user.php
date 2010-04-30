@@ -97,6 +97,15 @@ class User extends Model {
     return $result->row_array();
   }
 
+  /* PARAMS: userid - account to lookup
+   * DESCRP: returns a hash of account information
+   */
+  function get_profile($userid) {
+    $query = "SELECT fname, lname, email FROM public.user WHERE id='$userid' LIMIT 1";
+    $result = $this->db->query($query);
+    return $result->row_array();
+  }
+
   /* PARAMS: void
    * DESCRP: returns hash of data for all user accounts
    */
