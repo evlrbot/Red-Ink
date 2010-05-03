@@ -1,6 +1,7 @@
 <ul class='divider'>
 <li><a href='/me'>My Dashboard</a></li>
 <li><a href='/me/account'>My Account</a></li>
+<li><a href='/business/'>Businesses</a></li>
 <li><a href='/campaign/index'>Campaigns</a></li>
 <ul>
 <?php
