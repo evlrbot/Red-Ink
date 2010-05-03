@@ -1,13 +1,5 @@
-<html>
-<head>
-<title>User Registration</title>
-<style type="text/css" media="all">
-@import url("/system/application/css/mainstyle.css");
-</style>
-<script language="javascript" src="/system/application/js/jquery-1.3.2.min.js"></script>
-</head>
-<body id="login">
-<?= form_open(site_url('registerusercheck'),array('id'=>'bigform')); ?>
+<div id='body'>
+<?= form_open(site_url('registerusercheck'),array('id'=>'bigform','class'=>'login')); ?>
 <p><?= form_label('E-Mail','email'); ?></p>
 <?= form_error('email'); ?>
 <?= form_input(array('id'=>'email','name'=>'email')); ?>
@@ -24,7 +16,4 @@
 <?=isset($msg) ? $msg : '';?>
 <p>If you already have a login, then you may sign-in <a href="<?=site_url('login');?>">here</a>.</p>
 <?= form_close(); ?>
-<p id="rendertime">Page rendered in {elapsed_time} seconds.</p>
-
-</body>
-</html>
+</div>
