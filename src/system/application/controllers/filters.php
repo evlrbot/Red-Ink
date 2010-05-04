@@ -92,14 +92,14 @@ class Filters extends Controller {
     $this->load->view('site/foot');
   }
   
-  function deletememo($bizid,$memoid) {
-    $this->biz->deletememo($bizid,$memoid);
-    redirect('/business/edit/$bizid');
+  function deletememo($filter_id,$memo_id) {
+    $this->filter->deletememo($filter_id,$memo_id);
+    redirect('/filters/edit/$filter_id');
   }
 
   function delete($id) {
     $this->filter->delete($id);
-    redirect('/filter/index');
+    redirect('/filters/index');
   }
 
   function deactivate($id) {

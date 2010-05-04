@@ -36,6 +36,6 @@ class Memos extends Controller {
 
   function remove($filter_id,$memo_id) {
     $this->memo->remove($filter_id,$memo_id);
-    redirect("/business/edit/$filter_id");
+    redirect("/filters/edit/$filter_id");
   }
 }

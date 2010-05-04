@@ -16,31 +16,43 @@ class Filter extends Model {
    * DESCRP: checks if already exists, if not creates it.
    */
   function create($data) {
-    // CHECK IF ALREADY EXISTS
-    $query = "SELECT * FROM public.filter WHERE address1='$data[address1]' AND address2='$data[address2]' AND name='$data[name]' AND city='$data[city]' AND state='$data[state]' AND zip1='$data[zip1]' AND zip2='$data[zip2]' LIMIT 1";
-    $result = $this->db->query($query);
-    // IF NOT EXISTS THEN ADD
-    if($result->num_rows() == 0) {
-      $values = array();
-      foreach($data AS $key=>$value) {
+    // ESCAPE PARAMS
+    foreach($data AS $key=>$value) {
+      if($data[$key] == '') {
+	unset($data[$key]);
+      }
+      else {
 	$data[$key] = $this->db->escape($value);
       }
-      $fields = implode(", ",array_keys($data));
-      $values = implode(", ",array_values($data));
-      $query = "INSERT INTO public.filter ($fields) VALUES ($values)";
-      $result = $this->db->query($query);
-      return true;
     }
-    else {
-      return false;
-    }
+    $values = array();
+    $fields = implode(", ",array_keys($data));
+    $values = implode(", ",array_values($data));
+    $query = "INSERT INTO public.filter ($fields) VALUES ($values)";
+    return $this->db->query($query);
   }
 
   /* PARAMS: $id - id of filter to delete
    * DESCRP: delete record of filter
    */
   function delete($id) {
+    // DELETE FILTER
     $query = "DELETE FROM public.filter WHERE id=$id";
+    $this->db->query($query);
+
+    // DELETE MEMOS
+    $query = "SELECT memo_id AS id FROM public.filter_memo WHERE filter_id=$id";
+    $result = $this->db->query($query);
+    $tmp = array();
+    foreach( $result->result_array() AS $memo) {
+      array_push($tmp, "id=$memo[id]");
+    }
+    $memo_ids = implode(" OR ", $tmp);
+    $query = "DELETE FROM public.memo WHERE $memo_ids";
+    $this->db->query($query);
+
+    // DELETE FILTER-MEMO
+    $query = "DELETE FROM public.filter_memo WHERE filter_id=$id";
     $this->db->query($query);
   }
 
@@ -91,8 +103,10 @@ class Filter extends Model {
   function update($id,$data) {
     $values = array();
     foreach($data AS $key=>$value) {
-      $value = $this->db->escape($value);
-      array_push($values, "$key=$value");
+      if(!empty($value)) {
+	$value = $this->db->escape($value);
+	array_push($values, "$key=$value");
+      }
     }
     $values = implode(", ",$values);
     $query = "UPDATE public.filter SET $values WHERE id=$id";

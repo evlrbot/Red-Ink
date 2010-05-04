@@ -17,16 +17,8 @@ class Memo extends Model {
    */
   function create($memo) {
     $memo = $this->db->escape($memo);
-    $query = "SELECT * FROM public.memo WHERE memo=$memo";
-    $result = $this->db->query($query);
-    if($result->num_rows()) {
-      return false;
-    }
-    else {
-      $query = "INSERT INTO public.memo (memo) VALUES ($memo)";
-      $this->db->query($query);
-      return true;
-    }
+    $query = "INSERT INTO public.memo (memo) VALUES ($memo)";
+    return $this->db->query($query);
   }
 
   /* PARAMS: $id - memo id
