@@ -159,6 +159,23 @@ class Module extends Model {
   /* PARAMS: $modid - id of the module to lookup
    * DESCRP: return array of users who have activated this module
    */
+  function add_filter($module_id,$filter_id) {
+    $query = "INSERT INTO public.module_filter (module_id,filter_id) VALUES ($module_id,$filter_id)";
+    $this->db->query($query);
+  }  
+
+  /* PARAMS: $modid - id of the module to lookup
+   * DESCRP: return array of filters for this module
+   */
+  function get_filters($module_id) {
+    $query = "SELECT * FROM public.module_filter AS t1, public.filter AS t2 WHERE module_id=$module_id AND t1.filter_id=t2.id";
+    $result = $this->db->query($query);
+    return $result->result_array();
+  }  
+
+  /* PARAMS: $modid - id of the module to lookup
+   * DESCRP: return array of users who have activated this module
+   */
   function get_users($modid) {
     $query = "SELECT userid FROM public.user_module WHERE modid = $modid";
     $result = $this->db->query($query);

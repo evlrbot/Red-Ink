@@ -9,6 +9,7 @@ class Campaign extends Controller {
     $this->load->model("user");
     $this->load->model("data");
     $this->load->model("viz");
+    $this->load->model("filter");
   }
   
   function index() {
@@ -24,7 +25,7 @@ class Campaign extends Controller {
     $this->load->view('site/head');
     $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
     $this->load->view('site/body_start');
-    $this->load->view('view_module',array('data'=>$this->module->get_module($modid)));
+    $this->load->view('module/view',array('data'=>$this->module->get_module($modid)));
     $this->load->view('site/body_stop');
     $this->load->view('site/foot');
   }
@@ -44,9 +45,6 @@ class Campaign extends Controller {
 
   function edit($modid) {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
-      /*
-       * ROT: ADD IN VALIDATION 
-       */
       $this->module->update_module($modid,array('name'=>$this->input->post('name'),'description'=>$this->input->post('description')));
     }
 
@@ -55,14 +53,14 @@ class Campaign extends Controller {
     $this->load->view('site/body_start');
 
     $mod = $this->module->get_module($modid);
-    $mod['data'] = $this->module->get_data_sets($modid);
+    $mod['filters'] = $this->module->get_filters($modid);
     $mod['viz'] = $this->module->get_visualizations($modid);
     $dataids= array();
     foreach($mod['viz'] as $v) {
       $modvizdata[$v['modvizid']] = $this->viz->get_datasets($v['modvizid']);
     }    
     $mod['modvizdata'] = $modvizdata;
-    $this->load->view('edit_module',$mod);
+    $this->load->view('modules/edit',$mod);
     $this->load->view('site/body_stop');
     $this->load->view('site/foot');
   }
@@ -80,5 +78,20 @@ class Campaign extends Controller {
   function remove($modid) {
     $this->module->remove_user($_SESSION['userid'],$modid);        
     redirect('campaign/index');
+  }
+
+  function add_filter($module_id,$filter_id=0) {
+    if($filter_id) {
+      $this->module->add_filter($module_id,$filter_id);
+      redirect(site_url("campaign/edit/$module_id"));
+    }
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
+    $data['filters'] = $this->filter->get_filters();
+    $data['module_id'] = $module_id;
+    $this->load->view('modules/add_filter',$data);
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
   }
 }

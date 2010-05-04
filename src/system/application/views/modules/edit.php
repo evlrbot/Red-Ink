@@ -11,22 +11,22 @@
 
 <p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
 
-<h1>Data Sets <a href='/dataset/create/<?=$id?>' class='small'>add</a></h1>
+<h1>Filters <a href='/campaign/add_filter/<?=$id?>' class='small'>add</a></h1>
 
 <?php 
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>";
-echo "<thead><tr><td>Label</td><td>Filters</td><td width='130px'>Actions</td></tr></thead><tbody>";
+echo "<thead><tr><td>Filter</td><td>Memos</td><td width='130px'>Actions</td></tr></thead><tbody>";
 $count = 0;
-foreach($data AS $d) {
+foreach($filters AS $d) {
   $rowclass = $count % 2 == 0 ? "c1" : "c2";
   $count++;
   echo "<tr class='$rowclass'><td>$d[name]</td>";
   echo "<td><ul>";
-  foreach($this->data->get_filters($d['dataid']) AS $f) {
-    echo "<li><a href='".site_url()."business/edit/$f[id]' target='_blank'>$f[name]</a></li>";
+  foreach($this->filter->get_memos($d['filter_id']) AS $f) {
+    echo "<li>$f[memo]</li>\n";
   }
   echo "</ul></td>";
-  echo "<td><a href='/dataset/edit/$id/$d[dataid]'>edit</a> <a href='/dataset/remove/$id/$d[dataid]'>remove</a></td></tr>";
+  echo "<td><a href='/filter/edit/$d[filter_id]'>edit</a> <a href='/campaign/remove_filter/$id/$d[filter_id]'>Remove</a></td></tr>";
 }
 echo "</tbody></table>";
 ?>
