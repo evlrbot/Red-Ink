@@ -7,54 +7,57 @@
 
 <p><?= form_label('Description','description'); ?></p>
 <?= form_error('description'); ?>
-<?= form_textarea(array('id'=>'description','name'=>'description','cols'=>40,'rows'=>5, 'value'=>"$description")); ?>
+<?= form_textarea(array('id'=>'description','name'=>'description','cols'=>37,'rows'=>2, 'value'=>"$description")); ?>
 
-<p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
-
-<!--- START INSERT -->
 <?php
 echo form_open(site_url("module/edit/$id"),array('id'=>'bigform'));
 $this->module->load($id);
-
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Timeframe</td><td>Interval</td><td>Stacked</td></tr></thead>";
-echo "<tbody><tr><td><select name='timeframe'>";
-$timeframes= array('Year'=>'year', '6 Months'=>'6month', '3 Months'=>'3month');
+echo "<tbody><tr><td><select name='period'>";
+$timeframes = array('Year'=>'year', '6 Months'=>'6month', '3 Months'=>'3month');
 foreach($timeframes as $key=>$value) {
-  $timeframe_select= $timeframe== $value ? "selected" : "";
+  $timeframe_select = $timeframe == $value ? "selected" : "";
   echo "<option value='$value' $timeframe_select>$key</option>\n";
 }
 echo "</select></td>\n";
-
-echo "<td><select name='interval'>";
-$intervals= array('Month'=>'month', 'Week'=>'week', 'Day'=>'day');
+echo "<td><select name='frequency'>";
+$intervals = array('Month'=>'month', 'Week'=>'week', 'Day'=>'day');
 foreach($intervals as $key=>$value) {
   $interval_select= $interval== $value ? "selected" : "";
   echo "<option value='$value' $interval_select>$key</option>\n";
 }
 echo "</select></td>\n";
-echo "<td><input type='checkbox' name='viz_stacked_field' value='checked'" . $viz['viz_stacked'] . "></td>\n";
+echo "<td><input type='checkbox' name='viz_stacked_field' value='checked'" . $module['stacked'] . "></td>\n";
 echo "</tr></tbody></table>\n";
 
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>\n";
-echo "<thead><tr><td>Active</td><td>Label</td><td>Color</td></tr></thead><tbody>\n";
-echo "<tr>";
-foreach($data_sets as $d) {
-  echo "<td><input name= '" . $d['dataid'] . "' value='" . $d['dataid'] ."' type='checkbox' ". $d['checked'] . "></td><td>" . $d['name'] . "</td>";
+echo "<thead><tr><td>Active</td><td>Label</td><td>Memos</td><td>Color</td><td>Actions</td></tr></thead><tbody>\n";
+$i=0;
+foreach($filters as $d) {
+  $row_class = $i++ % 2 == 0 ? 'c1' : 'c2';
+  $checked = $d['active'] ? 'checked' : '';
+  echo "<tr class='$row_class'><td><input type='checkbox' name='$d[filter_id]_active' value='$d[filter_id]'$checked></td><td>" . $d['name'] . "</td>";
+  echo "<td><ul>";
+  foreach($this->filter->get_memos($d['filter_id']) AS $f) {
+    echo "<li>$f[memo]</li>\n";
+  }
+  echo "</ul></td>";
 
-  $colors = array('Random'=>'random',
+
+  $colors = array('Green'=>'#006600',
 		  'Red'=>'#CC0000',
 		  'Blue'=>'#0033CC',
-		  'Yellow'=>'#FFEA00',
-		  'Green'=>'#006600',
+		  'Yellow'=>'#FFEA00',		  
 		  'Purple'=>'#660066',
 		  'Orange'=>'#FF9900');
 
-  echo "<td><select name='" . $d['dataid'] . "_color'>";
+  echo "<td><select name='" . $d['filter_id'] . "_color'>";
   foreach($colors AS $key=>$value) {
     $selected = $d['color'] == $value ? "selected" : "";
     echo "<option value='$value'$selected>$key</option>\n";
   }
   echo "</select></td>\n";
+  echo "<td><a href='/filter/edit/$d[filter_id]'>Edit</a> <a href='/campaign/remove_filter/$id/$d[filter_id]'>Remove</a></td></tr>";
   echo "</tr>\n";
 }
 ?>
@@ -69,48 +72,4 @@ echo "</tbody></table>";
 echo form_close();
 ?>
 </table>
-<!-- STOP INSERT -->
-
-<h1>Filters <a href='/campaign/add_filter/<?=$id?>' class='small'>add</a></h1>
-
-<?php 
-echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>";
-echo "<thead><tr><td>Filter</td><td>Memos</td><td width='130px'>Actions</td></tr></thead><tbody>";
-$count = 0;
-foreach($filters AS $d) {
-  $rowclass = $count % 2 == 0 ? "c1" : "c2";
-  $count++;
-  echo "<tr class='$rowclass'><td>$d[name]</td>";
-  echo "<td><ul>";
-  foreach($this->filter->get_memos($d['filter_id']) AS $f) {
-    echo "<li>$f[memo]</li>\n";
-  }
-  echo "</ul></td>";
-  echo "<td><a href='/filter/edit/$d[filter_id]'>edit</a> <a href='/campaign/remove_filter/$id/$d[filter_id]'>Remove</a></td></tr>";
-}
-echo "</tbody></table>";
-?>
-<p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
-
-<h1>Visualizations <a href='/visualization/add/<?= $id ?>' class='small'>add</a></h1>
-<table id='list' border='0' cellpadding='10' cellspacing='2'>
-<thead><tr><td width="300px">Viz Name</td><td width="300px">Chart Type</td><td width="300px">Data Sets</td><td>Actions</td></tr></thead>
-<?php
-$count = 0;
-foreach($viz AS $v) {
-  $style = $count++ % 2 ? "c1":"c2";	
-  echo "<tr class='$style'><td>$v[viz_name]</td>";	
-  echo "<td>$v[name]</td>";	
-  // load the dataids for each viz
-  echo "<td><ul>";  
-  foreach($modvizdata[$v['modvizid']] as $mvd) {
-    //echo "<li>$mvd[name]</li>\n";
-    echo "<li><a href='".site_url()."dataset/edit/$id/$mvd[moddataid]'>$mvd[name]</a></li>";
-  }
-  echo "</ul></td>";
-  echo "<td><a href='/visualization/edit/$id/$v[modvizid]'>edit</a> <a href='/visualization/remove/$id/$v[modvizid]'>remove</a></td></tr>\n";
-}
-?>
-</table>
-<p><?= form_submit(array('id'=>'submit','value'=>'Save')); ?></p>
 <?= form_close(); ?>

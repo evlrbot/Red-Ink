@@ -5,6 +5,7 @@ class Module extends Model {
  ********************************************************************************/
   function Module() {
     parent::Model();
+    $this->load->model('filter');
   }
 
 /********************************************************************************
@@ -33,14 +34,26 @@ class Module extends Model {
    * DESCRP: update the module with the data
    */
   function update_module($modid,$data) {
-    // NEED TO ADD ADDITIONAL CHECKS FOR MALICIOUS CODE INSERTIONS
+    // UPDATE MODULE DATA
+    $module['name'] = $data['name'];
+    $module['description'] = $data['description'];
+    $module['period'] = $data['period'];
+    $module['frequency'] = $data['frequency'];
     $values = array();
-    foreach($data AS $key=>$value) {
+    foreach($module AS $key=>$value) {
       array_push($values,"$key=".$this->db->escape($data[$key]));
     }
     $values = implode(", ",$values);
     $query = "UPDATE public.module SET $values WHERE id=$modid";
     $this->db->query($query);
+
+    // UPDATE FILTER DATA
+    foreach($this->module->get_filters as $d) {	
+      $filter['active'] = isset($_POST[$d['filter_id']."_active"]) ? true : false; 
+      $filter['color'] = $_POST[$d['filter_id']."_color"];
+      $this->filter->update($d['filter_id'],$filter);      
+    }    
+    redirect(site_url('campaign/edit/$modid'));
   }
 
   /* PARAMS: $modid - module to delete
@@ -196,6 +209,9 @@ class Module extends Model {
     // get total individual visits
     // get average spend/visit
 
+    // GET MODULE DATA
+    $data['module'] = $this->get_module($modid);
+
     // GET INDIVIDUAL MEMBER DATA
     $member_ids = $this->module->get_users($modid);
     $data['members'] = array();
@@ -218,23 +234,22 @@ class Module extends Model {
     }
 
     // GET TIME SERIES DATA FOR USER ONLY
-    $results = $this->get_dataset_results($modid,$vis['modvizid'],7);
+    $time_series = $this->get_dataset_results($modid,$_SESSION['userid']);
 
     // GET TOTAL AMOUNT SPENT BY USER ONLY
     $data['my_spend'] = 0;
-    foreach($results AS $ds) {
+    foreach($time_series AS $ds) {
       foreach($ds AS $d) {
 	$data['my_spend'] += $d['value'];	   
       }
     }
 
-    $data_sets = $this->module->get_data_sets($modid); 
-    $data_sets = $this->format_viz_datasets($vis['modvizid'], $data_sets);
-    $data['json'] = $this->viz->format_json($results, $data_sets);
-    $data['vis'] = $vis;
-    $this->load->view($vis['template'], $data);
+    $data['filters'] = $this->get_filters($modid); 
+    $data['json'] = $this->format_json($time_series);
+    echo ($data['json']);
+    $this->load->view("modules/bar_chart", $data);
   }
-
+  
   /* PARAMS: $modid - id of the module
    *         $userid - id of the user to lookup
    *         $period - number used to determine the number of months to look back at
@@ -242,7 +257,6 @@ class Module extends Model {
    * DESCRP: constructs a query using the filters associated with a vis and the vis settings for period and frequency of aggregation.
    * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
    */ 
-
   function get_dataset_results($module_id, $userid=0, $period='year', $frequency='month') {
     $filters = $this->get_filters($module_id);   
     $results = array();
@@ -252,10 +266,11 @@ class Module extends Model {
 
       // CONTSRUCT MEMO STRING SQL FROM THE ASSOCIATED DATASETS
       $memos = $this->filter->get_memos($ds['filter_id']);
-      for($i=0;$i<count($memos);$i++) {
-	$memos[$i] = "memo ILIKE '%$memos[$i]%' OR merchant ILIKE '%$memos[$i]%'";
+      $tmp = array();
+      foreach($memos AS $m) {
+	array_push($tmp,"memo ILIKE '%$m[memo]%' OR merchant ILIKE '%$m[memo]%'");
       }
-      $memos = implode(' OR ',$memos);
+      $memos = implode(' OR ',$tmp);
       $query .= " WHERE $memos ";
 
       // APPEND PERIOD AND FREQUENCY PARAMS
@@ -270,7 +285,7 @@ class Module extends Model {
       // LIMIT USERS TO LOOK AT
       if(!$userid) {
 	$q = array();
-	foreach($this->get_users($modid) AS $id) {
+	foreach($this->get_users($module_id) AS $id) {
 	  array_push($q,"userid=$id");
 	}
 	$users = implode(' OR ',$q);
@@ -285,6 +300,8 @@ class Module extends Model {
       //echo "<p>$query</p>";
       $result = $this->db->query($query);
       $results[$ds['name']] = $result->result_array();
+      $results[$ds['name']]['active'] = $ds['active'];
+      $results[$ds['name']]['color'] = $ds['color'];
     }    
     return $results;
   }
@@ -293,19 +310,13 @@ class Module extends Model {
    *         $data_sets - dataset meta data
    * DESCRP: returns json object of serialized data
    */
-  function format_json($data, $data_sets) {  
+  function format_json($data) {  
     $tmp = array();
     foreach($data AS $key=>$value) {
-      foreach($data_sets as $ds) {
-	if($key== $ds['name']) {
-	  $color= $ds['color'];
-	  if($color== 'random') {
-	    $colors= array('#0000FF', '#FF0000', '#F7FF00', '#00FF00', '#FF00DD', '#FF8F00');
-	    shuffle($colors);
-	    $color= $colors[0];
-	  }
-	}
-      }
+      $color = $value['color'];
+      unset($value['color']);   // remove from array so doesn't get interprested as time-series data
+      unset($value['active']);  // ditto
+      $key = addslashes($key);
       $tmp2 = array();
       $j=0;
       foreach($value AS $v) {
@@ -313,7 +324,11 @@ class Module extends Model {
 	$j++;
       }
       array_push($tmp,"{label:'$key',color:'$color',data:[".implode(',',$tmp2)."]}");
-    }
-    return $json = "[".implode(',',$tmp)."]";    
+    }    
+    return $json = "[".implode(',',$tmp)."]";
   }
+
+  function save_mod_viz_form($modid, $modvizid, $data_sets) {
+  }
+
 }

@@ -40,22 +40,17 @@ class Campaign extends Controller {
 
   function edit($modid) {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
-      $this->module->update_module($modid,array('name'=>$this->input->post('name'),'description'=>$this->input->post('description')));
+      $this->module->update_module($modid,$_POST);
     }
 
     $this->load->view('site/head');
     $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
     $this->load->view('site/body_start');
 
-    $mod = $this->module->get_module($modid);
-    $mod['filters'] = $this->module->get_filters($modid);
-    $mod['viz'] = $this->module->get_visualizations($modid);
-    $dataids= array();
-    foreach($mod['viz'] as $v) {
-      $modvizdata[$v['modvizid']] = $this->viz->get_datasets($v['modvizid']);
-    }    
-    $mod['modvizdata'] = $modvizdata;
-    $this->load->view('modules/edit',$mod);
+    $data = $this->module->get_module($modid);
+    $data['filters'] = $this->module->get_filters($modid);
+    $data['module'] = $this->module->get_module($modid);
+    $this->load->view('modules/edit',$data);
     $this->load->view('site/body_stop');
     $this->load->view('site/foot');
   }
