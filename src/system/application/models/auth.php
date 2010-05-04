@@ -4,7 +4,6 @@ class Auth extends Model {
   function Auth() {
     parent::Model();
     session_start();
-    $this->load->database();
   }
 
   function authorize() {

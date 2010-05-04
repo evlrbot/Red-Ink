@@ -10,8 +10,6 @@ class User extends Model {
    */
   function User() {
     parent::Model();
-    $this->load->database();
-    $this->load->model('module');
   }
 
   /* METHOD: account_check
@@ -133,28 +131,15 @@ class User extends Model {
     return $result->result_array();
   }
 
+  /* PARAMS: $userid - account to lookup
+   * DESCRP: return a complete list of the user's modules
+   */
   function get_modules($userid) {
     $query = "SELECT * FROM public.user_module WHERE userid='$userid'";
     $result = $this->db->query($query);
     return $result->result_array();
   }
-
-  function load_modules($userid) {
   
-    //foreach($this->get_modules($userid) AS $mod) {
-      //$this->module->load($mod['modid'],$mod['viewid'],$_SESSION['userid']);
-    //}
-  }
-  
-  function load_nav($userid) {
-    $data['modules'] = array();
-    $mods = $this->user->get_modules($userid);
-    foreach($mods AS $mod) {
-      array_push($data['modules'],$this->module->get_module($mod['modid']));
-    }
-    $this->load->view('site/nav_user',$data);
-  }
-
 /************************************************************************
  *                               WRITE METHODS
  ************************************************************************/

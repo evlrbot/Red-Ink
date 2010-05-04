@@ -9,7 +9,6 @@ class Filter extends Model {
    */
   function Filter() {
     parent::Model();
-    $this->load->database();
   }
 
   /* PARAMS: $data - hash of data to insert

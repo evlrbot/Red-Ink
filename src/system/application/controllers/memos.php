@@ -4,9 +4,7 @@ class Memos extends Controller {
   function Memos() {
     parent::Controller();
     $this->load->model("auth");
-    $this->auth->access();
-    $this->load->model("memo");
-    $this->load->model("user");
+    $this->auth->access() ? "" : redirect(site_url('login'));
   }
   
   function index() {

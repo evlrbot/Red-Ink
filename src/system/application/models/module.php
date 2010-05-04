@@ -5,7 +5,6 @@ class Module extends Model {
  ********************************************************************************/
   function Module() {
     parent::Model();
-    $this->load->database();
   }
 
 /********************************************************************************
@@ -184,5 +183,137 @@ class Module extends Model {
       array_push($userids,$u['userid']);
     }
     return $userids;
+  }
+
+  /* PARAMS: $modid - module id
+   * DESCRP: load the template for the visualization.
+   */  
+  function load($modid) {
+    // get average spend
+    // get individual total spend
+    // get individual average spend
+    // get total visits
+    // get total individual visits
+    // get average spend/visit
+
+    // GET INDIVIDUAL MEMBER DATA
+    $member_ids = $this->module->get_users($modid);
+    $data['members'] = array();
+    foreach($member_ids AS $mid) {
+      array_push($data['members'],$this->user->get_profile($mid));
+    }
+
+    // GET TOTAL NUMBER OF MEMBERS
+    $data['num_members'] = count($data['members']);       
+
+    // GET TIME SERIES DATA FOR ALL MEMBERS
+    $results = $this->get_dataset_results($modid);
+
+    // GET TOTAL AMOUNT SPENT BY ALL MEMBERS
+    $data['total_spend'] = 0;
+    foreach($results AS $ds) {
+      foreach($ds AS $d) {
+	$data['total_spend'] += $d['value'];	   
+      }
+    }
+
+    // GET TIME SERIES DATA FOR USER ONLY
+    $results = $this->get_dataset_results($modid,$vis['modvizid'],7);
+
+    // GET TOTAL AMOUNT SPENT BY USER ONLY
+    $data['my_spend'] = 0;
+    foreach($results AS $ds) {
+      foreach($ds AS $d) {
+	$data['my_spend'] += $d['value'];	   
+      }
+    }
+
+    $data_sets = $this->module->get_data_sets($modid); 
+    $data_sets = $this->format_viz_datasets($vis['modvizid'], $data_sets);
+    $data['json'] = $this->viz->format_json($results, $data_sets);
+    $data['vis'] = $vis;
+    $this->load->view($vis['template'], $data);
+  }
+
+  /* PARAMS: $modid - id of the module
+   *         $userid - id of the user to lookup
+   *         $period - number used to determine the number of months to look back at
+   *         $frequency - the rate at which transactions should be folded up, i.e. monthly, daily, yearly, etc...
+   * DESCRP: constructs a query using the filters associated with a vis and the vis settings for period and frequency of aggregation.
+   * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
+   */ 
+
+  function get_dataset_results($module_id, $userid=0, $period='year', $frequency='month') {
+    $filters = $this->get_filters($module_id);   
+    $results = array();
+    foreach($filters AS $ds) {                   
+      // CONSTRUCT SELECT STATEMENT
+      $query = "SELECT date_part('epoch', date_trunc('$frequency',created))*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction";
+
+      // CONTSRUCT MEMO STRING SQL FROM THE ASSOCIATED DATASETS
+      $memos = $this->filter->get_memos($ds['filter_id']);
+      for($i=0;$i<count($memos);$i++) {
+	$memos[$i] = "memo ILIKE '%$memos[$i]%' OR merchant ILIKE '%$memos[$i]%'";
+      }
+      $memos = implode(' OR ',$memos);
+      $query .= " WHERE $memos ";
+
+      // APPEND PERIOD AND FREQUENCY PARAMS
+      switch($period) {
+      case 'as':
+	$query .= "AND current_date > (date_trunc('day', created) - interval '1 year') ";
+	break;
+      default:
+	break;
+      }
+
+      // LIMIT USERS TO LOOK AT
+      if(!$userid) {
+	$q = array();
+	foreach($this->get_users($modid) AS $id) {
+	  array_push($q,"userid=$id");
+	}
+	$users = implode(' OR ',$q);
+      }
+      else {
+	$users = "userid=$userid";
+      }
+      $query .= $users ? " AND ($users) " : "";
+
+      // AGGREGATE BY...
+      $query .= "GROUP BY date_part('epoch', date_trunc('$frequency',created))*1000 ORDER BY label ASC";
+      //echo "<p>$query</p>";
+      $result = $this->db->query($query);
+      $results[$ds['name']] = $result->result_array();
+    }    
+    return $results;
+  }
+
+  /* PARAMS: $data - serialized data from the query
+   *         $data_sets - dataset meta data
+   * DESCRP: returns json object of serialized data
+   */
+  function format_json($data, $data_sets) {  
+    $tmp = array();
+    foreach($data AS $key=>$value) {
+      foreach($data_sets as $ds) {
+	if($key== $ds['name']) {
+	  $color= $ds['color'];
+	  if($color== 'random') {
+	    $colors= array('#0000FF', '#FF0000', '#F7FF00', '#00FF00', '#FF00DD', '#FF8F00');
+	    shuffle($colors);
+	    $color= $colors[0];
+	  }
+	}
+      }
+      $tmp2 = array();
+      $j=0;
+      foreach($value AS $v) {
+	$tmp2[$j] = "[$v[label],$v[value]]";
+	$j++;
+      }
+      array_push($tmp,"{label:'$key',color:'$color',data:[".implode(',',$tmp2)."]}");
+    }
+    return $json = "[".implode(',',$tmp)."]";    
   }
 }

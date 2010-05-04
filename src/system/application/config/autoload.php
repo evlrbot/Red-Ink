@@ -108,8 +108,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('user','module','viz','auth');
-
+$autoload['model'] = array('user','module','viz','auth','api','memo');
 
 
 /* End of file autoload.php */

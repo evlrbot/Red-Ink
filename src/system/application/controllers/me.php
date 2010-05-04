@@ -5,13 +5,7 @@ class Me extends Controller {
   {
     parent::Controller();
     $this->load->model("auth");
-    if( $this->auth->access() == false) {
-      redirect(site_url('login'));
-    }
-    $this->load->model("user");
-    $this->load->model("api");
-    $this->load->model("module");
-    $this->load->model("viz");
+    $this->auth->access() ? "" : redirect(site_url('login'));
   }
   
   function index() {
@@ -76,7 +70,6 @@ class Me extends Controller {
 	$this->user->update($user_data);
 
 	// UPDATE API LOGINS
-	$this->load->model("api");
 	$apis = $this->api->list_apis();
 	foreach($apis as $api) {
 	  $user_data = array(

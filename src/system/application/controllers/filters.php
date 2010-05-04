@@ -4,10 +4,7 @@ class Filters extends Controller {
   function Filters() {
     parent::Controller();
     $this->load->model("auth");
-    $this->auth->access();
-    $this->load->model("user");
-    $this->load->model("filter");
-    $this->load->model("module");
+    $this->auth->access() ? "" : redirect(site_url('login'));
   }
 
   function index() {

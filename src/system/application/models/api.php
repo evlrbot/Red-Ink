@@ -3,7 +3,6 @@ class Api extends Model {
 
   function Api() {
     parent::Model();
-    $this->load->database();
   }
 
   function list_apis() {

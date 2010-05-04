@@ -5,9 +5,14 @@
 <li><span class='login'><?= $logged_in ? "<a href='".site_url('logout')."'>LOGOUT</a>" : "<a href='".site_url('me')."'>LOGIN</a>";?></span></li>
 </ul>
 <?php 
-if($logged_in) { 
-  $this->user->load_nav($_SESSION['userid']);
-  echo "<ul><li><span class='login'><img width='15px' src='".site_url('/system/application/img/redink_drop.png')."'></span></li></ul>";
+if($logged_in) {
+    $data['modules'] = array();
+    $mods = $this->user->get_modules($_SESSION['userid']);
+    foreach($mods AS $mod) {
+      array_push($data['modules'],$this->module->get_module($mod['modid']));
+    }
+    $this->load->view('site/nav_user',$data);
+    echo "<ul><li><span class='login'><img width='15px' src='".site_url('/system/application/img/redink_drop.png')."'></span></li></ul>";
 }
 ?>
 <ul>

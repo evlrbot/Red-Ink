@@ -4,12 +4,7 @@ class Campaign extends Controller {
   function Campaign() {
     parent::Controller();
     $this->load->model("auth");
-    $this->auth->access();
-    $this->load->model("module");
-    $this->load->model("user");
-    $this->load->model("data");
-    $this->load->model("viz");
-    $this->load->model("filter");
+    $this->auth->access() ? "" : redirect(site_url('login'));
   }
   
   function index() {

@@ -9,7 +9,6 @@ class Memo extends Model {
    */
   function Memo() {
     parent::Model();
-    $this->load->database();
   }
 
   /* PARAMS: $memo - memo string
