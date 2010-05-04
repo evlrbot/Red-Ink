@@ -1,17 +1,17 @@
-<?= form_open(site_url("campaign/edit/$id"),array('id'=>'bigform')); ?>
+<?= form_open(site_url("campaign/edit/$module[id]"),array('id'=>'bigform')); ?>
 
 <h1>Edit Campaign <a href='<?=site_url().'campaign/index'?>' class='small'>back</a></h1>
 <p><?= form_label('Name','name'); ?></p>
 <?= form_error('name'); ?>
-<?= form_input(array('id'=>'name','name'=>'name','value'=>"$name",'size'=>30)); ?>
+<?= form_input(array('id'=>'name','name'=>'name','value'=>"$module[name]",'size'=>30)); ?>
 
 <p><?= form_label('Description','description'); ?></p>
 <?= form_error('description'); ?>
-<?= form_textarea(array('id'=>'description','name'=>'description','cols'=>37,'rows'=>2, 'value'=>"$description")); ?>
+<?= form_textarea(array('id'=>'description','name'=>'description','cols'=>37,'rows'=>2, 'value'=>"$module[description]")); ?>
 
 <?php
-echo form_open(site_url("module/edit/$id"),array('id'=>'bigform'));
-$this->module->load($id);
+echo form_open(site_url("module/edit/$module[id]"),array('id'=>'bigform'));
+$this->module->load($module['id']);
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Timeframe</td><td>Interval</td><td>Stacked</td></tr></thead>";
 echo "<tbody><tr><td><select name='period'>";
 $timeframes = array('Year'=>'year', '6 Months'=>'6month', '3 Months'=>'3month');
@@ -27,7 +27,7 @@ foreach($intervals as $key=>$value) {
   echo "<option value='$value' $interval_select>$key</option>\n";
 }
 echo "</select></td>\n";
-echo "<td><input type='checkbox' name='viz_stacked_field' value='checked'" . $module['stacked'] . "></td>\n";
+echo "<td><input type='checkbox' name='stacked' value='checked' $module[stacked]></td>\n";
 echo "</tr></tbody></table>\n";
 
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>\n";
@@ -57,7 +57,7 @@ foreach($filters as $d) {
     echo "<option value='$value'$selected>$key</option>\n";
   }
   echo "</select></td>\n";
-  echo "<td><a href='/filter/edit/$d[filter_id]'>Edit</a> <a href='/campaign/remove_filter/$id/$d[filter_id]'>Remove</a></td></tr>";
+  echo "<td><a href='/filter/edit/$d[filter_id]'>Edit</a> <a href='/campaign/remove_filter/$module[id]/$d[filter_id]'>Remove</a></td></tr>";
   echo "</tr>\n";
 }
 ?>

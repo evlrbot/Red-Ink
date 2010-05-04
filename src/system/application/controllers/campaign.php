@@ -42,12 +42,9 @@ class Campaign extends Controller {
     if($_SERVER['REQUEST_METHOD'] == "POST") {
       $this->module->update_module($modid,$_POST);
     }
-
     $this->load->view('site/head');
     $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
     $this->load->view('site/body_start');
-
-    $data = $this->module->get_module($modid);
     $data['filters'] = $this->module->get_filters($modid);
     $data['module'] = $this->module->get_module($modid);
     $this->load->view('modules/edit',$data);

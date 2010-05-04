@@ -39,6 +39,8 @@ class Module extends Model {
     $module['description'] = $data['description'];
     $module['period'] = $data['period'];
     $module['frequency'] = $data['frequency'];
+    $module['stacked'] = isset($data['stacked']) ? $data['stacked'] : "false";
+    print_r($module);
     $values = array();
     foreach($module AS $key=>$value) {
       array_push($values,"$key=".$this->db->escape($data[$key]));
@@ -48,12 +50,13 @@ class Module extends Model {
     $this->db->query($query);
 
     // UPDATE FILTER DATA
-    foreach($this->module->get_filters as $d) {	
-      $filter['active'] = isset($_POST[$d['filter_id']."_active"]) ? true : false; 
-      $filter['color'] = $_POST[$d['filter_id']."_color"];
-      $this->filter->update($d['filter_id'],$filter);      
+    foreach($this->module->get_filters($modid) as $d) {	
+      $active = isset($_POST[$d['filter_id']."_active"]) ? 'true' : 'false'; 
+      $color = $_POST[$d['filter_id']."_color"];
+      $query = "UPDATE public.module_filter SET active='$active' AND color='$color' WHERE filter_id=$d[filter_id]";
+      $this->db->query($query);
     }    
-    redirect(site_url('campaign/edit/$modid'));
+    redirect(site_url("campaign/edit/$modid"));
   }
 
   /* PARAMS: $modid - module to delete
