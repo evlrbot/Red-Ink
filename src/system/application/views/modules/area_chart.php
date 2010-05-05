@@ -1,11 +1,10 @@
 <div id="module">
 <div id="<?=$module['id']?>" class="vis"></div>
-   <?=print_r($module);?>
 <script id="source" language="javascript" type="text/javascript">
 
 $(function () {
    var options = {
-      series: { <?php if($module['stacked'] == "checked") { echo "stack: 0,"; } ?>lines: { show: true, fill: true, steps: false }, points: { show: true } },
+      series: { <?php if($module['stacked'] == "t") { echo "stack: 0,"; } ?>lines: { show: true, fill: true, steps: false }, points: { show: true } },
       xaxis: { mode: "time", timeformat: '%b' },
       yaxis: { tickFormatter: function(v,axis) {return '$'+v.toFixed(axis.tickDecimals)} },
       grid: { clickable:true, hoverable:true, autoHighlight:true }

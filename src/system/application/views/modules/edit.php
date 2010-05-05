@@ -26,7 +26,7 @@ foreach($frequency as $key=>$value) {
   echo "<option value='$value' $selected>$key</option>\n";
 }
 echo "</select></td>\n";
-$selected = $module['stacked'] ? " checked" : "";
+$selected = $module['stacked'] == 't' ? " checked" : "";
 echo "<td><input type='checkbox' name='stacked' value='checked'$selected></td>\n";
 echo "</tr></tbody></table>\n";
 ?>

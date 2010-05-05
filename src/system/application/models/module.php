@@ -225,23 +225,23 @@ class Module extends Model {
     $data['num_members'] = count($data['members']);       
 
     // GET TIME SERIES DATA FOR ALL MEMBERS
-    $results = $this->get_dataset_results($modid,0,$data['module']['period'],$data['module']['frequency']);
+    $time_series = $this->get_dataset_results($modid,0,$data['module']['period'],$data['module']['frequency']);
 
     // GET TOTAL AMOUNT SPENT BY ALL MEMBERS
     $data['total_spend'] = 0;
-    foreach($results AS $ds) {
-      foreach($ds AS $d) {
+    foreach($time_series AS $ds) {
+      foreach($ds['data'] AS $d) {
 	$data['total_spend'] += $d['value'];	   
       }
     }
 
     // GET TIME SERIES DATA FOR USER ONLY
-    $time_series = $this->get_dataset_results($modid,$_SESSION['userid'],$data['module']['period'],$data['module']['frequency']);
+    $time_series_user = $this->get_dataset_results($modid,$_SESSION['userid'],$data['module']['period'],$data['module']['frequency']);
 
     // GET TOTAL AMOUNT SPENT BY USER ONLY
     $data['my_spend'] = 0;
-    foreach($time_series AS $ds) {
-      foreach($ds AS $d) {
+    foreach($time_series_user AS $ds) {
+      foreach($ds['data'] AS $d) {
 	$data['my_spend'] += $d['value'];	   
       }
     }
@@ -259,11 +259,20 @@ class Module extends Model {
    * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
    */ 
   function get_dataset_results($module_id, $userid=0, $period='12', $frequency='month') {
-    $filters = $this->get_filters($module_id);   
+    $filters = array();
+    foreach($this->get_filters($module_id) AS $filter) {
+      if($filter['active'] == 't') {
+	array_push($filters,$filter);
+      }      
+    }
+
     $results = array();
     foreach($filters AS $ds) {                   
       // CONSTRUCT SELECT STATEMENT
-      $query = "SELECT date_part('epoch', date_trunc('$frequency',created))*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction";
+      $query = "SELECT date_part('epoch', date_trunc('$frequency',created))*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction ";
+
+      // APPEND PERIOD AND FREQUENCY PARAMS
+      $query .= "WHERE created > current_date - interval '$period months'";
 
       // CONTSRUCT MEMO STRING SQL FROM THE ASSOCIATED DATASETS
       $memos = $this->filter->get_memos($ds['filter_id']);
@@ -272,10 +281,7 @@ class Module extends Model {
 	array_push($tmp,"memo ILIKE '%$m[memo]%' OR merchant ILIKE '%$m[memo]%'");
       }
       $memos = implode(' OR ',$tmp);
-      $query .= " WHERE $memos ";
-
-      // APPEND PERIOD AND FREQUENCY PARAMS
-      $query .= "AND date_trunc('$frequency',created) > date_trunc('$frequency',current_date - interval '$period months')";
+      $query .= " AND $memos ";
 
       // LIMIT USERS TO LOOK AT
       if(!$userid) {
@@ -292,12 +298,22 @@ class Module extends Model {
 
       // AGGREGATE BY...
       $query .= "GROUP BY date_part('epoch', date_trunc('$frequency',created))*1000 ORDER BY label ASC";
-      echo "<p>$query</p>";
+      //echo "<p>$query</p>";
       $result = $this->db->query($query);
-      $results[$ds['name']] = $result->result_array();
+      $results[$ds['name']]['data'] = $result->result_array();
       $results[$ds['name']]['active'] = $ds['active'];
       $results[$ds['name']]['color'] = $ds['color'];
     }    
+    
+    for($i=$period;$i>=0;$i--) {
+      $query = "SELECT date_part('epoch',date_trunc('$frequency',current_date - interval '$i months')) AS offset";
+      $result = $this->db->query($query);
+      $offset = $result->row_array();
+      $offset = $offset['offset'];
+      foreach(array_keys($results) AS $key) {
+	//	foreach($results[$key] AS 
+      }
+    }
     return $results;
   }
 
@@ -309,21 +325,15 @@ class Module extends Model {
     $tmp = array();
     foreach($data AS $key=>$value) {
       $color = $value['color'];
-      unset($value['color']);   // remove from array so doesn't get interprested as time-series data
-      unset($value['active']);  // ditto
       $key = addslashes($key);
       $tmp2 = array();
       $j=0;
-      foreach($value AS $v) {
-	$tmp2[$j] = "[$v[label],$v[value]]";
+      foreach($value['data'] AS $d) {
+	$tmp2[$j] = "[$d[label],$d[value]]";
 	$j++;
       }
-      array_push($tmp,"{label:'$key',color:'$color',data:[".implode(',',$tmp2)."]}");
+      array_push($tmp,"{label:'$key',color:'$color', data:[".implode(',',$tmp2)."]}");
     }    
     return $json = "[".implode(',',$tmp)."]";
   }
-
-  function save_mod_viz_form($modid, $modvizid, $data_sets) {
-  }
-
 }
