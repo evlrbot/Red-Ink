@@ -19,18 +19,18 @@ a:hover { font-style:italic; }
 .error { text-align:center; color:red; font-weight:normal; }
 .success { text-algin:center; font-weight:bold; }
 
-#bigform { margin:0px auto 0px auto; text-align:center; font-size:1.5em; }
+#bigform { margin:0px auto 0px auto; text-align:center; font-size:1.0em; }
 #bigform label { clear:right; display:block; }
-#bigform input { font-size:1.5em; margin:15px 10px; text-align:center; color:#9d1f14; }
-#bigform textarea { font-size:1.5em; font-family:inherit; }
+#bigform input { font-size:1.5em; margin:15px 10px; text-align:center; color:#000; font-family:inherit; }
+#bigform textarea { font-size:1.5em; color:#000; font-family:inherit; }
 #bigform select { font-size:1.5em; padding:0px 25px; }
 #bigform p { margin:0px; }
 #bigform p em { font-weight:bold; }
 #bigform tfoot td { text-align:center; }
 #bigform.login { margin-top:300px; }
 
-#body { width:800px; border:0px solid black; position:absolute; left:300px; top:100px; }
-#body h1 { color:#9D1F14; text-align:center; }
+#body { width:800px; border:0px solid black; position:absolute; left:300px; top:25px; }
+#body h1 { color:#9D1F14; text-align:center; margin:25px; }
 #body h3 { margin:60px 0px 0px 0px; }
 #body object, 
 #body embed { margin:25px auto; }
@@ -39,7 +39,7 @@ a:hover { font-style:italic; }
 #body #modulelist li { margin:15px 0px; }
 #body h1 a.small { font-size:14px; vertical-align:middle; }
 #body h1 a.small:hover { color:white; background-color:#9d1f14; }
-#body .vis { width:90%; height:350px; margin:0px auto; }
+#body .vis { width:90%; height:350px; margin:20px auto; }
 #body #module #stats { width:100%; }
 #body #module #stats p { margin:0px; }
 #body #module #stats b { margin:0px; margin-right:0px; }

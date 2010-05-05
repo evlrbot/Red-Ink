@@ -39,21 +39,20 @@ class Module extends Model {
     $module['description'] = $data['description'];
     $module['period'] = $data['period'];
     $module['frequency'] = $data['frequency'];
-    $module['stacked'] = isset($data['stacked']) ? $data['stacked'] : "false";
-    print_r($module);
+    $module['stacked'] = isset($data['stacked']) ? "true" : "false";
     $values = array();
     foreach($module AS $key=>$value) {
-      array_push($values,"$key=".$this->db->escape($data[$key]));
+      array_push($values,"$key=".$this->db->escape($module[$key]));
     }
     $values = implode(", ",$values);
     $query = "UPDATE public.module SET $values WHERE id=$modid";
     $this->db->query($query);
 
     // UPDATE FILTER DATA
-    foreach($this->module->get_filters($modid) as $d) {	
+    foreach($this->module->get_filters($modid) as $d) {      
       $active = isset($_POST[$d['filter_id']."_active"]) ? 'true' : 'false'; 
       $color = $_POST[$d['filter_id']."_color"];
-      $query = "UPDATE public.module_filter SET active='$active' AND color='$color' WHERE filter_id=$d[filter_id]";
+      $query = "UPDATE public.module_filter SET active='$active', color='$color' WHERE filter_id=$d[filter_id]";
       $this->db->query($query);
     }    
     redirect(site_url("campaign/edit/$modid"));
@@ -183,7 +182,7 @@ class Module extends Model {
    * DESCRP: return array of filters for this module
    */
   function get_filters($module_id) {
-    $query = "SELECT * FROM public.module_filter AS t1, public.filter AS t2 WHERE module_id=$module_id AND t1.filter_id=t2.id";
+    $query = "SELECT *, t1.active AS active FROM public.module_filter AS t1, public.filter AS t2 WHERE module_id=$module_id AND t1.filter_id=t2.id";
     $result = $this->db->query($query);
     return $result->result_array();
   }  
@@ -226,7 +225,7 @@ class Module extends Model {
     $data['num_members'] = count($data['members']);       
 
     // GET TIME SERIES DATA FOR ALL MEMBERS
-    $results = $this->get_dataset_results($modid);
+    $results = $this->get_dataset_results($modid,0,$data['module']['period'],$data['module']['frequency']);
 
     // GET TOTAL AMOUNT SPENT BY ALL MEMBERS
     $data['total_spend'] = 0;
@@ -237,7 +236,7 @@ class Module extends Model {
     }
 
     // GET TIME SERIES DATA FOR USER ONLY
-    $time_series = $this->get_dataset_results($modid,$_SESSION['userid']);
+    $time_series = $this->get_dataset_results($modid,$_SESSION['userid'],$data['module']['period'],$data['module']['frequency']);
 
     // GET TOTAL AMOUNT SPENT BY USER ONLY
     $data['my_spend'] = 0;
@@ -249,8 +248,7 @@ class Module extends Model {
 
     $data['filters'] = $this->get_filters($modid); 
     $data['json'] = $this->format_json($time_series);
-    echo ($data['json']);
-    $this->load->view("modules/bar_chart", $data);
+    $this->load->view("modules/area_chart", $data);
   }
   
   /* PARAMS: $modid - id of the module
@@ -260,7 +258,7 @@ class Module extends Model {
    * DESCRP: constructs a query using the filters associated with a vis and the vis settings for period and frequency of aggregation.
    * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
    */ 
-  function get_dataset_results($module_id, $userid=0, $period='year', $frequency='month') {
+  function get_dataset_results($module_id, $userid=0, $period='12', $frequency='month') {
     $filters = $this->get_filters($module_id);   
     $results = array();
     foreach($filters AS $ds) {                   
@@ -277,13 +275,7 @@ class Module extends Model {
       $query .= " WHERE $memos ";
 
       // APPEND PERIOD AND FREQUENCY PARAMS
-      switch($period) {
-      case 'as':
-	$query .= "AND current_date > (date_trunc('day', created) - interval '1 year') ";
-	break;
-      default:
-	break;
-      }
+      $query .= "AND date_trunc('$frequency',created) > date_trunc('$frequency',current_date - interval '$period months')";
 
       // LIMIT USERS TO LOOK AT
       if(!$userid) {
@@ -300,7 +292,7 @@ class Module extends Model {
 
       // AGGREGATE BY...
       $query .= "GROUP BY date_part('epoch', date_trunc('$frequency',created))*1000 ORDER BY label ASC";
-      //echo "<p>$query</p>";
+      echo "<p>$query</p>";
       $result = $this->db->query($query);
       $results[$ds['name']] = $result->result_array();
       $results[$ds['name']]['active'] = $ds['active'];
