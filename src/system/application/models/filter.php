@@ -62,7 +62,7 @@ class Filter extends Model {
    * DESCRP: return hash of all filters info
    */
   function get_filters() {
-    $query = "SELECT * FROM public.filter WHERE active=true ORDER BY name ASC";
+    $query = "SELECT * FROM public.filter ORDER BY name ASC";
     $result = $this->db->query($query);
     return $result->result_array();
   }
@@ -71,7 +71,7 @@ class Filter extends Model {
    * DESCRP: return hash of the given filters info
    */
   function get_filter($id) {
-    $query = "SELECT * FROM public.filter WHERE id=$id AND active=true ORDER BY name ASC";
+    $query = "SELECT * FROM public.filter WHERE id=$id ORDER BY name ASC";
     $result = $this->db->query($query);
     return $result->row_array();
   }

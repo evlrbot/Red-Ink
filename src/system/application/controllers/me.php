@@ -14,11 +14,12 @@ class Me extends Controller {
     $this->load->view('site/body_start');
     if($modules = $this->user->get_modules($_SESSION['userid']) ) {    	
       foreach($modules as $mod) {
-	$vizs = $this->module->get_visualizations($mod['modid']);
+	$this->module->load($mod['modid']);
+	//$vizs = $this->module->get_visualizations($mod['modid']);
 	//$this->viz->load_visualizations($mod['modid'], $vizs);
-	foreach($vizs as $vis) {
-	  $this->viz->load($mod['modid'], $vis);
-	}
+	//foreach($vizs as $vis) {
+	// $this->viz->load($mod['modid'], $vis);
+	//}
       }
     }
     $this->load->view('site/body_stop');

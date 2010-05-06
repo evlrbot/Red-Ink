@@ -142,7 +142,7 @@ class Module extends Model {
    * DESCRP: return list of all modules except sample module id 1
    */
   function get_modules() {
-    $query = "SELECT * FROM public.module WHERE id<> 1";
+    $query = "SELECT * FROM public.module WHERE active=true ORDER BY name ASC";
     $result = $this->db->query($query);
     return $result->result_array();
   }
@@ -156,20 +156,6 @@ class Module extends Model {
     return $result->row_array();
   }
  
-  /* PARAMS: $modid - module id
-   * DESCRP: list all visualizations associated with this module.
-   */
-  function get_visualizations($modid) {  
-    $query = "SELECT t1.id AS vis_id, t1.name, t1.template, t2.id AS modvizid, t2.viz_name, t2.stack AS viz_stacked FROM public.visualization AS t1, public.module_visualization AS t2 WHERE t1.id = t2.vizid AND t2.modid = $modid";
-    $result = $this->db->query($query);
-    return $result->result_array();    	
-  }
-  
-  function add_mod_dataid($modid,$modvizid,$moddataid) {
-    $query = "INSERT INTO public.mod_viz_data (modid,modvizid,moddataid) VALUES ($modid,$modvizid,$moddataid)";
-    $this->db->query($query);
-  }  
-
   /* PARAMS: $modid - id of the module to lookup
    * DESCRP: return array of users who have activated this module
    */
@@ -259,6 +245,7 @@ class Module extends Model {
    * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
    */ 
   function get_dataset_results($module_id, $userid=0, $period='12', $frequency='month') {
+    // DISCARD INACTIVE FILTERS
     $filters = array();
     foreach($this->get_filters($module_id) AS $filter) {
       if($filter['active'] == 't') {
@@ -266,7 +253,7 @@ class Module extends Model {
       }      
     }
 
-    $results = array();
+    $results = array(); // ONE INDEX OF TIME SERIES DATA PER FILTER
     foreach($filters AS $ds) {                   
       // CONSTRUCT SELECT STATEMENT
       $query = "SELECT date_part('epoch', date_trunc('$frequency',created))*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction ";
@@ -278,7 +265,8 @@ class Module extends Model {
       $memos = $this->filter->get_memos($ds['filter_id']);
       $tmp = array();
       foreach($memos AS $m) {
-	array_push($tmp,"memo ILIKE '%$m[memo]%' OR merchant ILIKE '%$m[memo]%'");
+	$m['memo'] = $this->db->escape("%$m[memo]%");
+	array_push($tmp,"memo ILIKE $m[memo] OR merchant ILIKE $m[memo]");
       }
       $memos = implode(' OR ',$tmp);
       $query .= " AND $memos ";
@@ -304,7 +292,7 @@ class Module extends Model {
       $results[$ds['name']]['active'] = $ds['active'];
       $results[$ds['name']]['color'] = $ds['color'];
     }    
-    
+    /*    
     for($i=$period;$i>=0;$i--) {
       $query = "SELECT date_part('epoch',date_trunc('$frequency',current_date - interval '$i months')) AS offset";
       $result = $this->db->query($query);
@@ -314,6 +302,7 @@ class Module extends Model {
 	//	foreach($results[$key] AS 
       }
     }
+    */
     return $results;
   }
 

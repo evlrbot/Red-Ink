@@ -67,6 +67,7 @@ foreach($filters as $d) {
 ?>
 
 <tfoot><tr><td colspan='5'>
+<a href='/campaign/add_filter/<?=$module['id']?>'>Add Filter</a>
 <?=form_submit(array('id'=>'submit','value'=>'Save')); ?>
 </td></tr></tfoot>
 

@@ -11,7 +11,7 @@ class Campaign extends Controller {
     $this->load->view('site/head');
     $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
     $this->load->view('site/body_start');
-    $this->load->view('list_modules',array('data'=>$this->module->get_modules()));
+    $this->load->view('modules/list',array('data'=>$this->module->get_modules()));
     $this->load->view('site/body_stop');
     $this->load->view('site/foot');
   }
@@ -20,7 +20,7 @@ class Campaign extends Controller {
     $this->load->view('site/head');
     $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
     $this->load->view('site/body_start');
-    $this->load->view('module/view',array('data'=>$this->module->get_module($modid)));
+    $this->load->view('modules/view',array('module'=>$this->module->get_module($modid)));
     $this->load->view('site/body_stop');
     $this->load->view('site/foot');
   }
