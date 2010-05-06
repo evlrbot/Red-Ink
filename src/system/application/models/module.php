@@ -269,7 +269,7 @@ class Module extends Model {
       $query = "SELECT date_part('epoch', date_trunc('$frequency',created))*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction ";
 
       // APPEND PERIOD AND FREQUENCY PARAMS
-      $query .= "WHERE created > current_date - interval '$period months'";
+      $query .= "WHERE (created > current_date - interval '$period months')";
 
       // CONTSRUCT MEMO STRING SQL FROM THE ASSOCIATED DATASETS
       $memos = $this->filter->get_memos($ds['filter_id']);
@@ -279,7 +279,7 @@ class Module extends Model {
 	array_push($tmp,"memo ILIKE $m[memo] OR merchant ILIKE $m[memo]");
       }
       $memos = implode(' OR ',$tmp);
-      $query .= !empty($memos) ? " AND $memos " : '';
+      $query .= !empty($memos) ? " AND ($memos) " : '';
 
       // LIMIT USERS TO LOOK AT
       if(!$userid) {
@@ -307,22 +307,26 @@ class Module extends Model {
 
     // STUFF RESULTS WITH EMPTY VALUES FOR NULL SETS
     $offsets = array();
+    $interval = 0;
     switch($frequency) {
     case 'day':
+      $interval = $period * 30;
+      break;
+    case 'week':
+      $interval = ($period * 30) / 7;
       break;
     case 'month':
-      break;
-    case 'year':
+      $interval = $period;
       break;
     default:
     }
-    for($i=($period-1);$i>=0;$i--) {
+
+    for($i=$interval;$i>=0;$i--) {
       $query = "SELECT date_part('epoch',date_trunc('$frequency',current_date - interval '$i $frequency'))*1000 AS offset";
       $r = $this->db->query($query);
       $r = $r->row_array();
       array_push($offsets,$r['offset']);
     }
-    echo count($offsets)."\n";
     foreach(array_keys($results) AS $filter) { // filters
       $tmp = array();
       foreach($results[$filter]['data'] AS $d) { // time series data points
@@ -334,7 +338,6 @@ class Module extends Model {
 	}
       }
       ksort($tmp);
-      echo count($tmp)."\n";
       $tmp2 = array();
       foreach($tmp AS $label=>$value) {
 	array_push($tmp2,array('label'=>$label,'value'=>$value));	

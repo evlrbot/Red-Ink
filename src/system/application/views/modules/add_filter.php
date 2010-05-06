@@ -1,4 +1,4 @@
-<h1>Filters <a class='small' href='<?=site_url()."campaign/edit/$module_id"?>'>Back</a></h1>
+<h1><a class='small' href='<?=site_url()."filters/add"?>'>New</a>  Filters <a class='small' href='<?=site_url()."campaign/edit/$module_id"?>'>Back</a></h1>
 <ul id="filter_list">
 <?php
 foreach($filters AS $b) {
