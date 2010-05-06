@@ -298,21 +298,49 @@ class Module extends Model {
       $query .= "GROUP BY date_part('epoch', date_trunc('$frequency',created))*1000 ORDER BY label ASC";
       //echo "<p>$query</p>";
       $result = $this->db->query($query);
+
+      // PREPARE RETURN RESULTS
       $results[$ds['name']]['data'] = $result->result_array();
       $results[$ds['name']]['active'] = $ds['active'];
       $results[$ds['name']]['color'] = $ds['color'];
     }    
-    /*    
-    for($i=$period;$i>=0;$i--) {
-      $query = "SELECT date_part('epoch',date_trunc('$frequency',current_date - interval '$i months')) AS offset";
-      $result = $this->db->query($query);
-      $offset = $result->row_array();
-      $offset = $offset['offset'];
-      foreach(array_keys($results) AS $key) {
-	//	foreach($results[$key] AS 
-      }
+
+    // STUFF RESULTS WITH EMPTY VALUES FOR NULL SETS
+    $offsets = array();
+    switch($frequency) {
+    case 'day':
+      break;
+    case 'month':
+      break;
+    case 'year':
+      break;
+    default:
     }
-    */
+    for($i=($period-1);$i>=0;$i--) {
+      $query = "SELECT date_part('epoch',date_trunc('$frequency',current_date - interval '$i $frequency'))*1000 AS offset";
+      $r = $this->db->query($query);
+      $r = $r->row_array();
+      array_push($offsets,$r['offset']);
+    }
+    echo count($offsets)."\n";
+    foreach(array_keys($results) AS $filter) { // filters
+      $tmp = array();
+      foreach($results[$filter]['data'] AS $d) { // time series data points
+	$tmp[$d['label']] = $d['value'];
+      }
+      foreach($offsets AS $offset) {
+	if(!isset($tmp[$offset])) {
+	  $tmp[$offset] = 0;
+	}
+      }
+      ksort($tmp);
+      echo count($tmp)."\n";
+      $tmp2 = array();
+      foreach($tmp AS $label=>$value) {
+	array_push($tmp2,array('label'=>$label,'value'=>$value));	
+      }
+      $results[$filter]['data'] = $tmp2;
+    }
     return $results;
   }
 
