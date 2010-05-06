@@ -4,12 +4,11 @@
 <h1>Us</h1>
 <p><b>Membership:</b> <?=$num_members?></p>
 <p><b>Total:</b> $<?=$total_spend?></p>
-<p><b>Average:</b> $<?=round(($total_spend/$num_members),2);?></p>
-<p><b>Activity:</b> N/A</p>
+<p><b>Average:</b> $<?= ($total_spend && $num_members) ? round(($total_spend/$num_members),2) : 0; ?></p>
 </td>
 <td>
 <h1>Me</h1>
-<p><b>Total:</b> $<?=$my_spend?></p>
+<p><b>My Total:</b> $<?=$my_spend?></p>
 </td>
 <td>
 <h1>Members</h1>

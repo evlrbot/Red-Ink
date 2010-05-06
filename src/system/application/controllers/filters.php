@@ -39,7 +39,8 @@ class Filters extends Controller {
 		      'zip2'=>$this->input->post('zipcode2')
 		      );
       	if($this->filter->create($data)) {
-	  $data = array('msg'=>"<p class='success'><a href='/filters/edit/".$this->db->insert_id()."'>$data[name]</a> has been successfully added.</p>");
+	  redirect(site_url('filters/edit/'.$this->db->insert_id()));
+	  //$data = array('msg'=>"<p class='success'><a href='/filters/edit/".$this->db->insert_id()."'>$data[name]</a> has been successfully added.</p>");
 	}
       	else {
 	  $data = array('msg'=>'<p class="error">That businss is already registered in our system.</p>');

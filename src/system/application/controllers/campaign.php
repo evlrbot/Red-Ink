@@ -67,6 +67,13 @@ class Campaign extends Controller {
     redirect('campaign/index');
   }
 
+  function remove_filter($module_id,$filter_id=0) {
+    if($filter_id && $module_id) {
+      $this->module->remove_filter($module_id,$filter_id);
+      redirect(site_url("campaign/edit/$module_id"));
+    }
+  }
+
   function add_filter($module_id,$filter_id=0) {
     if($filter_id) {
       $this->module->add_filter($module_id,$filter_id);

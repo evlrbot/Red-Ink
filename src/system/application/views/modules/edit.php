@@ -61,7 +61,7 @@ foreach($filters as $d) {
     echo "<option value='$value'$selected>$key</option>\n";
   }
   echo "</select></td>\n";
-  echo "<td><a href='/filter/edit/$d[filter_id]'>Edit</a> <a href='/campaign/remove_filter/$module[id]/$d[filter_id]'>Remove</a></td></tr>";
+  echo "<td><a href='/filters/edit/$d[filter_id]'>Edit</a> <a href='/campaign/remove_filter/$module[id]/$d[filter_id]'>Remove</a></td></tr>";
   echo "</tr>\n";
 }
 ?>

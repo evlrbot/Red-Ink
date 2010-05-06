@@ -156,11 +156,21 @@ class Module extends Model {
     return $result->row_array();
   }
  
-  /* PARAMS: $modid - id of the module to lookup
-   * DESCRP: return array of users who have activated this module
+  /* PARAMS: $module_id - id of the module
+   *         $filter_id - id of the filter
+   * DESCRP: make the filter available to the module
    */
   function add_filter($module_id,$filter_id) {
     $query = "INSERT INTO public.module_filter (module_id,filter_id) VALUES ($module_id,$filter_id)";
+    $this->db->query($query);
+  }  
+
+  /* PARAMS: $module_id - id of the module
+   *         $filter_id - id of the filter
+   * DESCRP: remove the filter from the module
+   */
+  function remove_filter($module_id,$filter_id) {
+    $query = "DELETE FROM public.module_filter WHERE module_id=$module_id AND filter_id=$filter_id";
     $this->db->query($query);
   }  
 
@@ -269,7 +279,7 @@ class Module extends Model {
 	array_push($tmp,"memo ILIKE $m[memo] OR merchant ILIKE $m[memo]");
       }
       $memos = implode(' OR ',$tmp);
-      $query .= " AND $memos ";
+      $query .= !empty($memos) ? " AND $memos " : '';
 
       // LIMIT USERS TO LOOK AT
       if(!$userid) {
