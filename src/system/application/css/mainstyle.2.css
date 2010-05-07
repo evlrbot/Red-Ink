@@ -34,14 +34,14 @@ a:hover { font-style:italic; }
 #body h3 { margin:60px 0px 0px 0px; }
 #body object, 
 #body embed { margin:25px auto; }
-#body #module { border:text-align:center;}
-#body #modulelist em { font-weight:bold;  }
-#body #modulelist li { margin:15px 0px; }
 #body h1 a.small { font-size:14px; vertical-align:middle; }
 #body h1 a.small:hover { color:white; background-color:#9d1f14; }
-#body .vis { width:90%; height:350px; margin:20px auto; }
+#body #modulelist em { font-weight:bold;  }
+#body #modulelist li { margin:15px 0px; }
+#body #module { }
+#body #module .vis { width:90%; height:350px; margin:20px auto; }
 #body #module #stats { width:100%; }
-#body #module #stats p { margin:0px; }
+#body #module #stats p { margin:5px 0px; }
 #body #module #stats b { margin:0px; margin-right:0px; }
 #body #module #stats td { vertical-align:top; width:33%; }
 #body #module #stats ol { margin:0px; padding:0px; }

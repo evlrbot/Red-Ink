@@ -1,0 +1,10 @@
+body { margin:0px; padding:0px; }
+#module { margin:0px; }
+#module .vis { width:90%; height:350px; margin:20px auto; }
+#module #stats { width:100%; }
+#module #stats p { margin:5px 0px; }
+#module #stats b { margin:0px; margin-right:0px; }
+#module #stats td { vertical-align:top; width:33%; }
+#module #stats ol { margin:0px; padding:0px; }
+#module #stats li { list-style-position:inside; }
+#module #stats h1 { color:black; font-size:1.0em; margin:0px 0px 5px 0px; font-weight:normal; border-bottom:1px solid black; }

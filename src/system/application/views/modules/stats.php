@@ -1,14 +1,34 @@
 <table id="stats" cellpadding='10' cellspacing='0'>
 <tr>
 <td>
-<h1>Us</h1>
-<p><b>Membership:</b> <?=$num_members?></p>
-<p><b>Total:</b> $<?=$total_spend?></p>
-<p><b>Average:</b> $<?= ($total_spend && $num_members) ? round(($total_spend/$num_members),2) : 0; ?></p>
+<h1>Module</h1>
+<p><b><?=$module['name']?>: </b><em><?=$module['description']?></em></p>
+<p>Period: <b><?=$module['period']?> Months</b> </p>
+<p>Frequency: <b> 
+<?php
+   switch($module['frequency']) {
+   case 'day':
+   echo "Daily";
+   break;
+   case 'week':
+   echo 'Weekly';
+   break;
+   case 'month':
+   echo 'Monthly';
+   break;
+   default:
+   }
+   ?>
+</b></p>
 </td>
 <td>
-<h1>Me</h1>
-<p><b>My Total:</b> $<?=$my_spend?></p>
+<h1>Me & Us</h1>
+<p>Members: <b><?=$num_members?></b></p>
+<p>Our Total: <b>$<?=$total_spend?></b></p>
+<p>My Total: <b>$<?=$my_spend?></b></p>
+<p>Avg/Interval: <b>$</b></p>
+<p>Avg/User: <b>$<?= ($total_spend && $num_members) ? round(($total_spend/$num_members),2) : 0; ?></b></p>
+
 </td>
 <td>
 <h1>Members</h1>

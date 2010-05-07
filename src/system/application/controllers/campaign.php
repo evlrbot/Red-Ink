@@ -88,4 +88,10 @@ class Campaign extends Controller {
     $this->load->view('site/body_stop');
     $this->load->view('site/foot');
   }
+
+  function embed($module_id) {
+    $this->load->view('site/head_embed');
+    $this->load->view('modules/embed',array('module'=>$this->module->get_module($module_id)));
+    $this->load->view('site/foot');
+  }
 }

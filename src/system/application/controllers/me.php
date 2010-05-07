@@ -14,7 +14,7 @@ class Me extends Controller {
     $this->load->view('site/body_start');
     if($modules = $this->user->get_modules($_SESSION['userid']) ) {    	
       foreach($modules as $mod) {
-	$this->load->view('modules/embed',array('module'=>$this->module->get_module($mod['modid'])));
+	$this->module->load($mod['modid']);
       }
     }
     $this->load->view('site/body_stop');

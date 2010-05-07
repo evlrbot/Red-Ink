@@ -1,7 +1,9 @@
 <div id="module">
 <div id="<?=$module['id']?>" class="vis"></div>
-<script id="source" language="javascript" type="text/javascript">
+<? include('stats.php'); ?>
+</div>
 
+<script id="source" language="javascript" type="text/javascript">
 $(function () {
    var options = {
       series: { <?php if($module['stacked'] == "t") { echo "stack: 0,"; } ?>
@@ -67,6 +69,3 @@ $(function () {
      });
 });
 </script>
-
-<? include('stats.php'); ?>
-</div>
