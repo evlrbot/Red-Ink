@@ -35,7 +35,8 @@
 <ol>
 <?php
 foreach($members as $member) {
-  echo "<li>$member[email]</li>\n";
+  $username = explode('@',$member['email']);
+  echo "<li>$username[0]</li>\n";
 }
 ?>
 </ol>
