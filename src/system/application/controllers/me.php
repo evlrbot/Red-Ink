@@ -17,6 +17,9 @@ class Me extends Controller {
 	$this->module->load($mod['modid']);
       }
     }
+    else {
+      $this->load->view('modules/welcome_message');
+    }
     $this->load->view('site/body_stop');
     $this->load->view('site/foot');
   } 

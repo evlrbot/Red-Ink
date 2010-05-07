@@ -1,10 +1,8 @@
 <?php
-
 class RegisterUserCheck extends Controller {
- 
+
   function RegisterUserCheck(){
     parent::Controller();
-    $this->load->model("user");
   }
     
   function index(){
@@ -22,9 +20,15 @@ class RegisterUserCheck extends Controller {
       $this->load->view('register_user_check');   
       $this->load->view('site/foot');
     }   
-    else{
-      $user_data = array('email'=>$this->input->post('email'),'password'=>$this->input->post('password1'));
-      $this->user->account_check($user_data);
+    elseif($this->user->account_check(array('email'=>$this->input->post('email'),'password'=>$this->input->post('password1')))) {
+      $this->load->view('site/head');
+      $this->load->view('site/nav');
+      $this->load->view('register_user_check',array('msg'=>'<p class="error">That email address is already assigned to a user account.</p>'));
+      $this->load->view('site/foot');
+    }
+    else { 
+      
+
     }
   }
 }
