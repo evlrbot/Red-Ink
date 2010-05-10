@@ -4,7 +4,7 @@
 <h1>Module</h1>
 <p><b><?=$module['name']?>: </b><em><?=$module['description']?></em></p>
 <p>Period: <b><?=$module['period']?> Months</b> </p>
-<p>Frequency: <b> 
+<p>Interval: <b> 
 <?php
    switch($module['frequency']) {
    case 'day':
@@ -25,8 +25,9 @@
 <h1>Me & Us</h1>
 <p>Members: <b><?=$num_members?></b></p>
 <p>Our Total: <b>$<?=$total_spend?></b></p>
-<p>My Total: <b>$<?=$my_spend?></b></p>
-<p>Avg/Interval: <b>$</b></p>
+<?if(isset($my_spend)) { echo "<p>My Total: <b>$$my_spend</b></p>"; }?>
+<p>Avg/Visit: <b>$<?=$avg_spend_per_visit?></b></p>
+<p>Avg/Interval: <b>$<?=$avg_spend_per_interval?></b></p>
 <p>Avg/User: <b>$<?= ($total_spend && $num_members) ? round(($total_spend/$num_members),2) : 0; ?></b></p>
 
 </td>

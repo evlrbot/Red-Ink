@@ -1,4 +1,22 @@
 <?php
+/*
+Red Ink - Consumer Analytics for People and Communities
+Copyright (C) 2010  Ryan O'Toole
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 class Module extends Model {
 /********************************************************************************
  *                                 CONSTRUCTOR
@@ -120,25 +138,6 @@ class Module extends Model {
 /********************************************************************************
  *                               ACCESSOR METHODS
  ********************************************************************************/
-  /* PARAMS: $modid
-   * DESCRP: return associative array of data ids, labels and query strings
-   */
-  function get_data_sets($modid) {
-    $query = "SELECT t2.name, t2.id AS dataid, t2.query, '' AS checked, '' AS color FROM public.module_data AS t1, public.data AS t2 WHERE modid=$modid AND t1.dataid = t2.id ORDER BY t1.order ASC";
-    $result = $this->db->query($query);    
-    return $result->result_array();
-  }
-
-  /* PARAMS: $viewid
-   * DESCRP: For a given view returns the view's associate template file path
-   */
-  function get_template($modviewid) {
-    $query = "SELECT v.template, v.multidata, v.stack FROM visualization AS v, module_visualization AS mv WHERE mv.id=$modviewid AND mv.vizid= v.id LIMIT 1";
-    $result = $this->db->query($query);
-    $tmp = $result->row_array();
-    return $tmp;
-  }
-
   /* PARAMS: void
    * DESCRP: return list of all modules except sample module id 1
    */
@@ -212,7 +211,7 @@ class Module extends Model {
   /* PARAMS: $modid - module id
    * DESCRP: load the template for the visualization.
    */  
-  function load($modid) {
+  function load($modid, $embed=0) {
     // get average spend
     // get individual total spend
     // get individual average spend
@@ -238,20 +237,43 @@ class Module extends Model {
 
     // GET TOTAL AMOUNT SPENT BY ALL MEMBERS
     $data['total_spend'] = 0;
+    $visits = 0;
     foreach($time_series AS $ds) {
       foreach($ds['data'] AS $d) {
-	$data['total_spend'] += $d['value'];	   
+	$data['total_spend'] += $d['value'];
+	if($d['value']) {
+	  $visits++;
+	}
       }
     }
 
-    // GET TIME SERIES DATA FOR USER ONLY
-    $time_series_user = $this->get_dataset_results($modid,$_SESSION['userid'],$data['module']['period'],$data['module']['frequency']);
-
-    // GET TOTAL AMOUNT SPENT BY USER ONLY
-    $data['my_spend'] = 0;
-    foreach($time_series_user AS $ds) {
-      foreach($ds['data'] AS $d) {
-	$data['my_spend'] += $d['value'];	   
+    // GET THE AVERAGE SPEND PER INTERVAL
+    $interval = 0;
+    $period = $data['module']['period'];
+    switch($data['module']['frequency']) {
+    case 'day':
+      $interval = $period * 30;
+      break;
+    case 'week':
+      $interval = ($period * 30) / 7;
+      break;
+    case 'month':
+      $interval = $period;
+      break;
+    default:
+    }
+    $data['avg_spend_per_interval'] = round($data['total_spend'] / $interval, 2);
+    $data['avg_spend_per_visit'] = round($data['total_spend'] / $visits, 2);
+    $userid = isset($_SESSION['userid']) ? $_SESSION['userid'] : 0;
+    if($this->has_user($data['module']['id'],$userid)) {
+      // GET TIME SERIES DATA FOR USER ONLY
+      $time_series_user = $this->get_dataset_results($modid,$_SESSION['userid'],$data['module']['period'],$data['module']['frequency']);
+      // GET TOTAL AMOUNT SPENT BY USER ONLY
+      $data['my_spend'] = 0;
+      foreach($time_series_user AS $ds) {
+	foreach($ds['data'] AS $d) {
+	  $data['my_spend'] += $d['value'];	   
+	}
       }
     }
 
