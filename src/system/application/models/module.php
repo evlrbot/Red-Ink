@@ -196,6 +196,18 @@ class Module extends Model {
     return $userids;
   }
 
+  /* PARAMS: $module_id - id of the module to lookup
+   *         $user_id - id of the user to lookup 
+   * DESCRP: return true if the user is a member of the module
+   */
+  function has_user($module_id, $user_id) {
+    $query = "SELECT count(userid) AS is_member FROM public.user_module WHERE modid = $module_id AND userid = $user_id";
+    $result = $this->db->query($query);
+    $result = $result->row_array();
+    return $result['is_member']
+;
+  }
+
   /* PARAMS: $modid - module id
    * DESCRP: load the template for the visualization.
    */  
