@@ -16,7 +16,9 @@ class Embed extends Controller {
       $this->load->view('site/foot');
     }
     else {
-      redirect(site_url('login'));
+      $this->load->view('site/head_embed');
+      $this->load->view('modules/unauthorized');
+      $this->load->view('site/foot');
     }
   }
 }

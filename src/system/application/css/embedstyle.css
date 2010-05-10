@@ -1,4 +1,8 @@
 body { margin:0px; padding:0px; }
+
+a { color:#9d1f14; text-decoration:none; }
+a:hover { font-style:italic; }
+
 #module { margin:0px; }
 #module .vis { width:90%; height:350px; margin:20px auto; }
 #module #stats { width:100%; }
@@ -8,3 +12,6 @@ body { margin:0px; padding:0px; }
 #module #stats ol { margin:0px; padding:0px; }
 #module #stats li { list-style-position:inside; }
 #module #stats h1 { color:black; font-size:1.0em; margin:0px 0px 5px 0px; font-weight:normal; border-bottom:1px solid black; }
+
+#unauthorized { background-color:#f6e5e5; text-align:center; border:2px dashed #9d1f14; padding:20px; color:#000; width:90%; height:90%; font-size:1.5em; }
+#unauthorized img { border:0px; }
