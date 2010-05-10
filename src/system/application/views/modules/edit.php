@@ -11,7 +11,7 @@
 <!-- START PERIOD / FREQUENCY / STACKED -->
 <?php
 $this->module->load($module['id']);  // LOAD VISUALIZATION
-echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Period</td><td>Frequency</td><td>Stacked</td></tr></thead>";
+echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Period</td><td>Frequency</td><td>Stacked</td><td>Public</td></tr></thead>";
 echo "<tbody><tr><td><select name='period'>";
 $periods = array('24 Months'=>'24','12 Months'=>'12', '6 Months'=>'6', '3 Months'=>'3');
 foreach($periods as $key=>$value) {
@@ -28,6 +28,8 @@ foreach($frequency as $key=>$value) {
 echo "</select></td>\n";
 $selected = $module['stacked'] == 't' ? " checked" : "";
 echo "<td><input type='checkbox' name='stacked' value='checked'$selected></td>\n";
+$selected = $module['public'] == 't' ? " checked" : "";
+echo "<td><input type='checkbox' name='public' value='checked'$selected></td>\n";
 echo "</tr></tbody></table>\n";
 ?>
 <!-- STOP PERIOD / FREQUENCY / STACKED -->

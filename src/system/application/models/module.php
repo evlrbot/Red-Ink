@@ -40,6 +40,7 @@ class Module extends Model {
     $module['period'] = $data['period'];
     $module['frequency'] = $data['frequency'];
     $module['stacked'] = isset($data['stacked']) ? "true" : "false";
+    $module['public'] = isset($data['public']) ? "true" : "false";
     $values = array();
     foreach($module AS $key=>$value) {
       array_push($values,"$key=".$this->db->escape($module[$key]));
