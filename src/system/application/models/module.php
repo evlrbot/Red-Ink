@@ -263,7 +263,12 @@ class Module extends Model {
     default:
     }
     $data['avg_spend_per_interval'] = round($data['total_spend'] / $interval, 2);
-    $data['avg_spend_per_visit'] = round($data['total_spend'] / $visits, 2);
+    if($visits) { 
+      $data['avg_spend_per_visit'] = round($data['total_spend'] / $visits, 2); 
+    }
+    else {
+      $data['avg_spend_per_visit'] = 0;
+    }
     $userid = isset($_SESSION['userid']) ? $_SESSION['userid'] : 0;
     if($this->has_user($data['module']['id'],$userid)) {
       // GET TIME SERIES DATA FOR USER ONLY
