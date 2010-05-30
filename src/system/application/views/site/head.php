@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </style>
 <script language="javascript" src="http://www.make-them-think.org/lib.js"></script>
 <script language="javascript" src="/system/application/js/jquery-1.3.2.min.js" ></script>
-<script language="javascript" src="/system/application/js/jquery.flot.min.js" ></script>
+<script language="javascript" src="/system/application/js/jquery.flot.js" ></script>
 <script language="javascript" src="/system/application/js/jquery.flot.stack.js" ></script>
 <script language="javascript" src="/system/application/js/jquery.form.js" ></script>
 <script language="javascript">

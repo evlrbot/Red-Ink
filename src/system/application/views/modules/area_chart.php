@@ -7,7 +7,7 @@
 $(function () {
    var options = {
       series: { <?php if($module['stacked'] == "t") { echo "stack: 0,"; } ?>
-      lines: { show: true, fill: true, steps: false }, points: { show: true } },
+		lines: { show: true, fill:0.1, steps: false }, points: { show: true } },
       xaxis: { mode: "time", timeformat: '%b' },
       yaxis: { tickFormatter: function(v,axis) {return '$'+v.toFixed(axis.tickDecimals)} },
       grid: { clickable:true, hoverable:true, autoHighlight:true }
