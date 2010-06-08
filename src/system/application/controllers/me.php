@@ -1,17 +1,28 @@
 <?php
+/*
+Red Ink - Consumer Analytics for People and Communities
+Copyright (C) 2010  Ryan O'Toole
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 class Me extends Controller {
  
   function Me()
   {
     parent::Controller();
-    $this->load->model("auth");
-    if( $this->auth->access() == false) {
-      redirect(site_url('login'));
-    }
-    $this->load->model("user");
-    $this->load->model("api");
-    $this->load->model("module");
-    $this->load->model("viz");
+    $this->auth->access() ? "" : redirect(site_url('login'));
   }
   
   function index() {
@@ -20,15 +31,33 @@ class Me extends Controller {
     $this->load->view('site/body_start');
     if($modules = $this->user->get_modules($_SESSION['userid']) ) {    	
       foreach($modules as $mod) {
-	$vizs = $this->module->get_visualizations($mod['modid']);
-	$this->viz->load_vizs($mod['modid'], $vizs);
+	$this->module->load($mod['modid']);
       }
+    }
+    else {
+      $this->load->view('modules/welcome_message');
     }
     $this->load->view('site/body_stop');
     $this->load->view('site/foot');
   } 
 
   function account() {
+    $user_data = $this->user->get_account($_SESSION['userid']);
+    $apis = $this->api->list_apis();
+    foreach($apis AS $api) {
+      $api_login = $this->user->get_api_login($_SESSION['userid'],$api['id']);
+      $user_data[$api['name'].'_username'] = count($api_login) ? $api_login['username'] : '';
+      $user_data[$api['name'].'_password'] = count($api_login) ? $api_login['password'] : '';
+    }
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
+    $this->load->view('templates/account_info',$user_data);
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
+  }
+
+  function account_update() {
     if($_SERVER['REQUEST_METHOD']=="POST") {
       // VALIDATE SUBMITTED DATA
       $this->load->library('form_validation');   
@@ -65,7 +94,6 @@ class Me extends Controller {
 	$this->user->update($user_data);
 
 	// UPDATE API LOGINS
-	$this->load->model("api");
 	$apis = $this->api->list_apis();
 	foreach($apis as $api) {
 	  $user_data = array(
@@ -81,24 +109,5 @@ class Me extends Controller {
 	redirect('me/account');
       }
     }
-    else {  // IF PAGE LOADED VIA GET REQUEST
-      $user_data = $this->user->get_account($_SESSION['userid']);
-      $apis = $this->api->list_apis();
-      foreach($apis AS $api) {
-	$api_login = $this->user->get_api_login($_SESSION['userid'],$api['id']);
-	$user_data[$api['name'].'_username'] = count($api_login) ? $api_login['username'] : '';
-	$user_data[$api['name'].'_password'] = count($api_login) ? $api_login['password'] : '';
-      }
-      $this->load->view('site/head');
-      $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
-      $this->load->view('site/body_start');
-      $this->load->view('templates/account_info',$user_data);
-      $this->load->view('site/body_stop');
-      $this->load->view('site/foot');
-    }
-  }
-
-  function account_update() {
-    
   }  
 }
