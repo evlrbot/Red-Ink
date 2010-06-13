@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <html>
 <head>
 <title><?php echo isset($webpagename) ? $webpagename : "Red Ink ~ Open Source Consumer Analytics for People and Communities";?></title>
+<link rel="shortcut icon" href="http://www.make-them-think.org/img/redink.ico.png" />
 <style type="text/css" media="all">
 @import url("http://www.make-them-think.org/mainstyle.css");
 </style>

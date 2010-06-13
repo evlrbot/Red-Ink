@@ -42,7 +42,7 @@ class Login extends Controller {
       $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
       // FORM DOES NOT VALIDATE...RE-PROMPT
       if($this->form_validation->run() == FALSE) {
-	$this->load->view('login');   
+	$this->load->view('templates/login');   
       }
       else {
 	// FORM VALIDATES...CHECK IF USER EXISTS AND ACCOUNT IS VERIFIED
@@ -54,7 +54,10 @@ class Login extends Controller {
 	else {
 	  //USER DOES NOT EXIST... DISPLAY ERROR 
 	  $data = array('msg'=>'<p><span class="error">The username or password for that user was incorrect.</span></p>');
-	  $this->load->view('login',$data);
+	  $this->load->view('site/head');
+	  $this->load->view('site/nav');
+	  $this->load->view('templates/login',$data);
+	  $this->load->view('site/foot');
 	}
       }
     }
