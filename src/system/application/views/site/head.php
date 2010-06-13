@@ -1,6 +1,6 @@
 <!--
-Red Ink - Consumer Analytics for People and Communities
-Copyright (C) 2010  Ryan O'Toole
+Red Ink ~ Open Source Consumer Analytics for People and Communities
+Copyright (C) 2010  Ryan O'Toole - ROT@MEDIA.MIT.EDU
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -17,9 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html>
 <head>
-<title><?php echo isset($webpagename) ? $webpagename : "RED INK";?></title>
+<title><?php echo isset($webpagename) ? $webpagename : "Red Ink ~ Open Source Consumer Analytics for People and Communities";?></title>
 <style type="text/css" media="all">
-@import url("/system/application/css/mainstyle.2.css");
+@import url("http://www.make-them-think.org/mainstyle.css");
 </style>
 <script language="javascript" src="http://www.make-them-think.org/lib.js"></script>
 <script language="javascript" src="/system/application/js/jquery-1.3.2.min.js" ></script>

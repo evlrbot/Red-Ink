@@ -35,4 +35,11 @@ if($logged_in) {
 <a href='http://www.mit.edu' target='_blank'><img src='/system/application/img/mit_logo.png' alt='MIT'></a>
 </div>
 
+<div id='secured'>
+<h1>Secured by:</h1>
+<span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=nZ6MWfESQf31oQXrm38WlnZIYIhdpQKDS8pcZgY8EPjz8tlTEVrNWs"></script></span>
+</div>
+
+
+</div>
 </div>
