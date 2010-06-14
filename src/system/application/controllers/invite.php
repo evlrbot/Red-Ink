@@ -33,8 +33,8 @@ class Invite extends Controller {
  function validate(){
     	$this->load->library('form_validation');
     	$rules= array(
-		array('field'=>'sender', 'label'=>'Your Email', 'rules'=>'required|valid_email'),
-		array('field'=>'receiver','label'=>'Send To', 'rules'=> 'required|valid_email')
+		array('field'=>'receiver', 'label'=>'Name:', 'rules'=>'required'),
+		array('field'=>'email','label'=>'Email:', 'rules'=> 'required|valid_email')
 		);
 	$this->form_validation->set_rules($rules);
 	
