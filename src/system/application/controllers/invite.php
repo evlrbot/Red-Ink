@@ -28,5 +28,21 @@ class Invite extends Controller {
     $this->load->view('site/nav');
     $this->load->view('templates/invite');
     $this->load->view('site/foot');
-  }
+  } 
+
+ function validate(){
+    	$this->load->library('form_validation');
+    	$rules= array(
+		array('field'=>'sender', 'label'=>'Your Email', 'rules'=>'required|valid_email'),
+		array('field'=>'receiver','label'=>'Send To', 'rules'=> 'required|valid_email')
+		);
+	$this->form_validation->set_rules($rules);
+	
+	
+
+}  
+ function sendMail(){
+
+}
+
 }
