@@ -29,6 +29,7 @@ class Invite extends Controller {
     $this->load->view('templates/invite');
     $this->load->view('site/foot');
   } 
+// VALIDATE USER INPUT
 
  function validate(){
     	$this->load->library('form_validation');
@@ -42,6 +43,20 @@ class Invite extends Controller {
 
 }  
  function sendMail(){
+	$this->load->helper('email');
+
+// STORE USER INPUT AND SEND EMAIL
+
+	$email = stripslashes($_POST['email']);
+	$name  = stripslashes($_POST['receiver']);
+	$message=stripslashes($_POST['message']);
+
+	if (valid_email($email)){	
+	$sent=mail($email,' Join '.$name.' on RedInk!', $message);
+	echo $sent ? "Invitation delivered!" : "Invitation failed. Pleasetry again.";
+	}
+	
+	
 
 }
 
