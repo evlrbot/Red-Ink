@@ -38,7 +38,7 @@ class Invite extends Controller {
 		array('field'=>'email','label'=>'Email:', 'rules'=> 'required|valid_email')
 		);
 	$this->form_validation->set_rules($rules);
-	$this->load->model('Model_invite');
+	$this->load->model('model_invite');
 	$this->Model_invite->sendMail($_POST['email'],$_POST['message'], $_POST['sender']); 
 		
 	
