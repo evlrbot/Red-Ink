@@ -38,23 +38,9 @@ class Invite extends Controller {
 		array('field'=>'email','label'=>'Email:', 'rules'=> 'required|valid_email')
 		);
 	$this->form_validation->set_rules($rules);
-	
-	
-
-}  
- function sendMail(){
-	$this->load->helper('email');
-
-// STORE USER INPUT AND SEND EMAIL
-
-	$email = stripslashes($_POST['email']);
-	$name  = stripslashes($_POST['receiver']);
-	$message=stripslashes($_POST['message']);
-
-	if (valid_email($email)){	
-	$sent=mail($email,' Join '.$name.' on RedInk!', $message);
-	echo $sent ? "Invitation delivered!" : "Invitation failed. Pleasetry again.";
-	}
+	$this->load->model('Model_invite');
+	$this->Model_invite->sendMail($_POST['email'],$_POST['message'], $_POST['sender']); 
+		
 	
 	
 
