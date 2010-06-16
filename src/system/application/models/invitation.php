@@ -23,8 +23,8 @@ class Invitation extends Model {
     parent::Model();
   }
   
-  function sendMail($mailList, $message) {    
-    $this->load->helper('email');
+  function sendMail($mailList, $message,$sender) {    
+	  $this->load->helper('email');
     $mailTokens = explode(",", $mailList);
     foreach($mailTokens as $receiver) {
       if(valid_email(stripslashes($receiver))) {
@@ -32,16 +32,18 @@ class Invitation extends Model {
 	$query = "INSERT INTO public.invites (date_sent) VALUES (current_timestamp)";
 	$this->db->query($query);
 	$email_id = $this->db->insert_id();
-
+	//$data_url = http_build_query(array('i_d'=>$email_id));
+	$base_url='http://www.make-them-think.org/registerusercheck/';
 	## timestamp, id, activated flag
-	# construct user sign up URL with email id: www.make-them-think.org/signup/#emailid
+	# construct user sign up URL with email id: www.make-them-think.org/registerusercheck/#email_id
 	# send email
 	# modify user registration page to update email db. 
-	
-	$subject = "Join me on Red Ink!";
-	$msg = "$message <a href='http://www.make-them-think.org/Main/Home'>Join me on RedInk!</a>";
+	$total_url=$base_url.$email_id;
+	$subject = "Join $sender on Red Ink!";
+	$msg = "$message <a href=$total_url>Join me on Red Ink!</a>";
 	$sent = mail(stripslashes($receiver),$subject,$msg);
 	echo $sent ? "Invitation sent!" : "Invitation failed. Please try again.";
+	
       }
     }
   }

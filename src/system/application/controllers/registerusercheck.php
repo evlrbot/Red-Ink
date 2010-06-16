@@ -24,7 +24,11 @@ class RegisterUserCheck extends Controller {
   }
     
   function index(){
-    $this->load->library('form_validation');   
+    $this->load->library('form_validation'); 
+    $this->load->library('URI'); 
+
+
+      
     $rules = array(
 		   array('field'=>'email','label'=>'E-Mail','rules'=>'required|valid_email'),
 		   array('field'=>'password1','label'=>'Password','rules'=>'required|matches[password2]'),
@@ -43,10 +47,33 @@ class RegisterUserCheck extends Controller {
       $this->load->view('site/nav');
       $this->load->view('register_user_check',array('msg'=>'<p class="error">That email address is already assigned to a user account.</p>'));
       $this->load->view('site/foot');
+      
     }
     else { 
       
 
     }
+    if ($this->uri->segment(1)==FALSE) {
+
+    } 
+    else {
+      $i_d = $this->uri->segment(1);
+      $this->db->where($i_d);
+      $this->db->update('public.invite', array('active'=>'TRUE'));	
+    }
   }
+
+ /* 
+  function update() {
+    # update email db once link is clicked
+    # redirect invite function to registerusercheck/index function
+    $this->load->helper('url');	
+    $email_id = $_GET['i_d']; 
+    $this->db->where('id',$email_id);
+    $this->db->update->('public.invites',array('active'=>'TRUE') );
+    $this->url->redirect('registerusercheck/index/','refresh');
+    
+  }
+ */
+ 
 }
