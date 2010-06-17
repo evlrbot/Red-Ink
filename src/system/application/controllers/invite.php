@@ -33,14 +33,15 @@ class Invite extends Controller {
 
  function validate(){
     	$this->load->library('form_validation');
+	$this->load->helper('url');
     	$rules= array(
-		array('field'=>'receiver', 'label'=>'Name:', 'rules'=>'required'),
-		array('field'=>'email','label'=>'Email:', 'rules'=> 'required|valid_email')
+		array('field'=>'sender', 'label'=>'Name:', 'rules'=>'required'),
+		array('field'=>'email','label'=>'Email:', 'rules'=> 'required')
 		);
 	$this->form_validation->set_rules($rules);
-	$this->load->model('model_invite');
-	$this->Model_invite->sendMail($_POST['email'],$_POST['message'], $_POST['sender']); 
-		
+	$this->load->model('invitation');
+	$this->invitation->sendMail($_POST['email'],$_POST['message'], $_POST['sender']); 
+	redirect('/login/index/', 'refresh');
 	
 	
 

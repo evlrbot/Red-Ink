@@ -59,7 +59,8 @@ class RegisterUserCheck extends Controller {
     else {
       $i_d = $this->uri->segment(1);
       $this->db->where($i_d);
-      $this->db->update('public.invite', array('active'=>'TRUE'));	
+      $this->db->update('public.invites', array('active'=>'TRUE'));
+      $this->db->insert('public.invites', array('date_active'=>current_timestamp));	
     }
   }
 
