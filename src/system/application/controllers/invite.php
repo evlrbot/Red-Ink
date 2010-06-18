@@ -17,7 +17,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class Invite extends Controller {
+class Invite extends Controller{
   
   function Invite() {
     parent::Controller();
@@ -29,22 +29,33 @@ class Invite extends Controller {
     $this->load->view('templates/invite');
     $this->load->view('site/foot');
   } 
-// VALIDATE USER INPUT
 
  function validate(){
     	$this->load->library('form_validation');
 	$this->load->helper('url');
     	$rules= array(
-		array('field'=>'sender', 'label'=>'Name:', 'rules'=>'required'),
-		array('field'=>'email','label'=>'Email:', 'rules'=> 'required')
+		array('field'=>'sender', 'label'=>'Name', 'rules'=>'required'),
+		array('field'=>'email','label'=>'Email', 'rules'=> 'required')
 		);
 	$this->form_validation->set_rules($rules);
+	// FORM DOES NOT VALIDATE, RELOAD VIEW
+	if ($this->form_validation->run()==FALSE){
+	  $this->load->view('site/head');
+   	  $this->load->view('site/nav');
+   	  $this->load->view('templates/invite');
+    	  $this->load->view('site/foot');
+ 	 }
+	// FORM VALIDATION SUCCESSFUL
+	else {
+
 	$this->load->model('invitation');
-	$this->invitation->sendMail($_POST['email'],$_POST['message'], $_POST['sender']); 
-	redirect('/login/index/', 'refresh');
+	$this->invitation->sendMail($_POST['email'],$_POST['message'], $_POST['sender']);
+	$this->load->view('site/head');
+	$this->load->view('site/nav');
+	$this->load->view('templates/login');
+    	$this->load->view('site/foot');
 	
-	
-
+	}	
+ }
 }
 
-}
