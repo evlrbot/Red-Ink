@@ -134,15 +134,6 @@ class Module extends Model {
     $this->db->query($q);
   }
 
- /* Load invitation popup
-    Params: $site_url - invitation view page
- */
-  function invite_popup($site_url) {
-
-
-
- }
-
   
 /********************************************************************************
  *                               ACCESSOR METHODS

@@ -23,14 +23,14 @@ class Invite extends Controller{
     parent::Controller();
   }
   
-  function index() {
-    $this->load->view('site/head');
-    $this->load->view('site/nav');
-    $this->load->view('templates/invite');
-    $this->load->view('site/foot');
+  function index($modid) {
+    $mod=$this->module->get_module($modid);
+    $data['mod_info']=array('name'=>$mod['name'],'description'=>$mod['description'],'pre_message'=>'Join Red Ink and use the '.$mod['name'].' module; '.$mod['description']);
+    $this->load->view('templates/invite',$data);
   } 
 
- function validate(){
+ function validate() {
+	$profile=$this->user->get_profile($_SESSION['userid']);
     	$this->load->library('form_validation');
 	$this->load->helper('url');
     	$rules= array(
@@ -40,22 +40,25 @@ class Invite extends Controller{
 	$this->form_validation->set_rules($rules);
 	// FORM DOES NOT VALIDATE, RELOAD VIEW
 	if ($this->form_validation->run()==FALSE){
-	  $this->load->view('site/head');
-   	  $this->load->view('site/nav');
    	  $this->load->view('templates/invite');
-    	  $this->load->view('site/foot');
  	 }
 	// FORM VALIDATION SUCCESSFUL
 	else {
 
 	$this->load->model('invitation');
-	$this->invitation->sendMail($_POST['email'],$_POST['message'], $_POST['sender']);
-	$this->load->view('site/head');
-	$this->load->view('site/nav');
-	$this->load->view('templates/login');
-    	$this->load->view('site/foot');
+	$this->invitation->sendMail($_POST['email'],$_POST['message'], $_POST['sender'],$_POST['pre_message'],$profile['email']);
 	
 	}	
  }
+
+/* function get_mod($mod_id) {
+   $modules=$this->module->get_modules();
+   foreach ($modules as $data) {
+     if ($data[id]==$mod_id) 
+         return $data;
+   }
+ }
+*/
+
 }
 

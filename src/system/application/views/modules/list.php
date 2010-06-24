@@ -2,7 +2,7 @@
 <script type="text/javascript">
 <!-- 
   function invite_popup(){
-   window.open("http://dev.make-them-think.org/invite/", "Invite", "status=1, height=600, width=1100 resizable=0")
+   window.open("http://dev.make-them-think.org/invite/", "Invite", "scrollbars=yes status=1, height=600, width=1100 resizable=0")
 }
 //-->
 </script>
@@ -17,4 +17,7 @@ foreach($data AS $mod) {
 }
 ?>
 </ul>
+<!--
 <b><em><a href="#" onclick="invite_popup()">Invite your friends to join you on Red Ink!</a></em></b>
+//-->
+

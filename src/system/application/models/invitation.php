@@ -19,11 +19,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Invitation extends Model {
 
-  function Invitation() {   
+  function Invitation() {
     parent::Model();
+    $this->load->model("auth");
+
+  }
+
+// get campaign information 
+  function get_camp_info() {
+    $this->load->controller('campaign');
   }
   
-  function sendMail($mailList, $message,$sender) { 
+  function sendMail($mailList, $message,$sender,$pre_message,$email) { 
 	$this->load->library('email');   
 	$this->load->helper('email');
     $mailTokens = explode(" ",$mailList);
@@ -41,8 +48,11 @@ class Invitation extends Model {
 	$total_url=$base_url.$email_id;
 	$subject = "Join $sender on Red Ink!";
 	Echo "<html>";
-	$msg =$message."\n\n"."Click on the link below to join me on Red Ink!\n\n".$total_url;
-	if (mail(stripslashes($receiver),$subject,$msg)){
+	$msg =$pre_message.' '.$message."\n\n"."Click on the link below to join me on Red Ink!\n\n".$total_url;
+	// temporary from field
+	$from='From:'.$email;
+	if (mail(stripslashes($receiver),$subject,$msg,$from)){
+	Echo "<p><b>Invitation sent!<b><p>";
 	}
 	Echo "</html>";
 	
