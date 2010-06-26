@@ -49,7 +49,7 @@ class Login extends Controller {
 	}
 	else {
 	  //USER DOES NOT EXIST... DISPLAY ERROR 
-	  $data = array('msg'=>'<p><span class="error">We were unable to find a matching account. Perhaps the username or password is misspelled, or you have not activated your account yet.</span></p>');
+	  $data = array('msg'=>'<p class="error">We were unable to find a matching account. Perhaps the username or password is misspelled, or you have not activated your account yet.</p>');
 	  $this->load->view('site/head');
 	  $this->load->view('site/nav');
 	  $this->load->view('templates/login',$data);
