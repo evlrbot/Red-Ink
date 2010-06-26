@@ -23,14 +23,7 @@ class Login extends Controller {
     parent::Controller();
   }
   
-  function index() {
-    $this->load->view('site/head');
-    $this->load->view('site/nav');
-    $this->load->view('templates/login');
-    $this->load->view('site/foot');
-  }
-  
-  function auth() {
+  function index($status=0) {
     // VALIDATE FORM
     if($_SERVER['REQUEST_METHOD'] == "POST") {
       $this->load->library('form_validation');   
@@ -42,7 +35,10 @@ class Login extends Controller {
       $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
       // FORM DOES NOT VALIDATE...RE-PROMPT
       if($this->form_validation->run() == FALSE) {
-	$this->load->view('templates/login');   
+	$this->load->view('site/head');
+	$this->load->view('site/nav');
+	$this->load->view('templates/login');
+	$this->load->view('site/foot');
       }
       else {
 	// FORM VALIDATES...CHECK IF USER EXISTS AND ACCOUNT IS VERIFIED
@@ -53,7 +49,7 @@ class Login extends Controller {
 	}
 	else {
 	  //USER DOES NOT EXIST... DISPLAY ERROR 
-	  $data = array('msg'=>'<p><span class="error">The username or password for that user was incorrect.</span></p>');
+	  $data = array('msg'=>'<p><span class="error">We were unable to find a matching account. Perhaps the username or password is misspelled, or you have not activated your account yet.</span></p>');
 	  $this->load->view('site/head');
 	  $this->load->view('site/nav');
 	  $this->load->view('templates/login',$data);
@@ -62,7 +58,18 @@ class Login extends Controller {
       }
     }
     else {
-      redirect('login');
+      $data = array();
+      switch($status) {
+      case '1':
+	$data['msg'] = '<p class="success">Your account has been verified. Go ahead and login.</p>';
+	break;
+      default:
+      }
+
+      $this->load->view('site/head');
+      $this->load->view('site/nav');
+      $this->load->view('templates/login',$data);
+      $this->load->view('site/foot');
     } 
   }
 }

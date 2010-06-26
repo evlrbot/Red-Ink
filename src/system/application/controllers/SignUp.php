@@ -70,6 +70,7 @@ class SignUp extends Controller {
   function Activate($user_id=0) {
     if($user_id) {
       $this->user->activate($user_id);
+     redirect(site_url('login/index/1'));
     }
   }
 }

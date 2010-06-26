@@ -119,7 +119,7 @@ class User extends Model {
 	"MIME-Version: 1.0\r\n" .
 	"Content-Type: text/html; charset=utf-8\r\n";
       $headers .= "Bcc: rot@mit.edu\r\n";
-      $headers .= 'From: no-reply@www.make-them-think.org';
+      $headers .= 'From: "Welcome to Red Ink" <welcome@www.make-them-think.org>';
       $msg = "<p>Click on the link below to confirm your email address for Red Ink!</p>";
       $msg .= "<p><a href='$confirm_url'>$confirm_url</a></p>";
       mail(stripslashes($user_data['email']),$subject,$msg,$headers);
@@ -132,7 +132,6 @@ class User extends Model {
   function activate($user_id) {
     $query = "UPDATE public.user SET verified='TRUE' WHERE id = '$user_id'";
     $this->db->query($query);
-    redirect(site_url('login',array('msg'=>'<p class="success">Your account has been activated.</p>')));
   }
 
   /* PARAMS: $user_data - array of user data to update
