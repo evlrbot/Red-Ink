@@ -51,26 +51,25 @@ class SignUp extends Controller {
     // CREATE NEW USER
     else {
       $this->user->account_create(array('email'=>$this->input->post('email'),'password'=>$this->input->post('password1')));
+
+      // IF THE USER WAS INVITED THROUGH THE INVITATION SYSTEM THEN UDPATE THOSE STATS
       if($invite_id) {
 	$user_id =  $this->db->insert_id();
 	$query = "UPDATE public.invite WHERE id=$invite_id SET (date_activated, user_id) VALUES (current_timestamp, $user_id)"; 
 	$this->db->query($query);
       }
 
+      // RELOAD PAGE WITH SUCCESS MESSAGE
       $this->load->view('site/head');
       $this->load->view('site/nav');
-      $this->load->view('SignUp',array('id'=>$invite_id, 'msg'=>'<p class="success">Your account has been created. Please proceed to the <a href="'.site_url('login').'">login page</a>.</p>'));
+      $this->load->view('SignUp',array('id'=>$invite_id, 'msg'=>'<p class="success">Your account has been created. An e-mail has been sent to the address you provided. Please follow the confirmation instructions, then proceed to the <a href="'.site_url('login').'">login page</a>.</p>'));
       $this->load->view('site/foot');
     }
   }
  
-  /*
-  function activate() {
-    $this->load->helper('url');	
-    $email_id = $_GET['i_d']; 
-    $this->db->where('id',$email_id);
-    $this->db->update->('public.invites',array('active'=>'TRUE') );
-    $this->url->redirect('registerusercheck/index/','refresh');
+  function Activate($user_id=0) {
+    if($user_id) {
+      $this->user->activate($user_id);
+    }
   }
-  */
 }

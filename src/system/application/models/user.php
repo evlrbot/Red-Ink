@@ -94,8 +94,7 @@ class User extends Model {
    * DESCRP: checks if an account exists, if not sends confirmation email to user.
    */
   function account_check($email) {    
-    echo "account check";
-    echo $query = "SELECT * FROM public.user WHERE email='$email' LIMIT 1";
+    $query = "SELECT * FROM public.user WHERE email='$email' LIMIT 1";
     $result = $this->db->query($query);  
     echo $result->num_rows();
     return $result->num_rows();
@@ -109,11 +108,32 @@ class User extends Model {
    * DESCRP: checks if an account exists, if not creates it.
    */
   function account_create($user_data) {
-      $password = md5($user_data['password']); // MOVE MD5 TO JQUERY FORM PRE PROCESSING
+      $password = md5($user_data['password']); //ROT: MOVE MD5 TO JQUERY FORM PRE PROCESSING
       $query = "INSERT INTO public.user (password,email,date_activated,verified) VALUES ('$password','$user_data[email]',current_timestamp,'FALSE')";
       $result = $this->db->query($query);
+
+      // send confirmation email
+      $subject = "Welcome to Red Ink! Please confirm your e-mail address.";
+      $confirm_url = site_url('SignUp/Activate/'.$this->db->insert_id());
+      $headers = 'X-Mailer: PHP/' . phpversion() . "\r\n" .
+	"MIME-Version: 1.0\r\n" .
+	"Content-Type: text/html; charset=utf-8\r\n";
+      $headers .= "Bcc: rot@mit.edu\r\n";
+      $headers .= 'From: no-reply@www.make-them-think.org';
+      $msg = "<p>Click on the link below to confirm your email address for Red Ink!</p>";
+      $msg .= "<p><a href='$confirm_url'>$confirm_url</a></p>";
+      mail(stripslashes($user_data['email']),$subject,$msg,$headers);
       return true;
     } 
+
+  /* PARAMS: $user_id - user id to activate
+   * DESCRP: Activate the user's account.
+   */
+  function activate($user_id) {
+    $query = "UPDATE public.user SET verified='TRUE' WHERE id = '$user_id'";
+    $this->db->query($query);
+    redirect(site_url('login',array('msg'=>'<p class="success">Your account has been activated.</p>')));
+  }
 
   /* PARAMS: $user_data - array of user data to update
    * DESCRP: Update's the user's account profile
