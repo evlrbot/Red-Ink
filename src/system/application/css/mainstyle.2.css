@@ -16,7 +16,7 @@ a:hover { font-style:italic; }
 .nav #sponsors img { width:170px; display:block; margin:0px 0px 20px 0px; border:0px solid red; }
 .nav #sponsors h1 { font-size:12px; margin:0px;  }
 
-.error { text-align:center; color:red; font-weight:normal; }
+.error { text-align:center; color:white; font-weight:bold; background-color:red; }
 .success { text-algin:center; font-weight:bold; }
 
 #bigform { margin:0px auto 0px auto; text-align:center; font-size:1.0em; }

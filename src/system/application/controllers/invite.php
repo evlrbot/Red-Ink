@@ -24,33 +24,31 @@ class Invite extends Controller{
   }
   
   function index($modid) {
-    $mod=$this->module->get_module($modid);
-    $data['mod_info']=array('name'=>$mod['name'],'description'=>$mod['description'],'pre_message'=>'Join Red Ink and use the '.$mod['name'].' module; '.$mod['description']);
+    $data['module'] = $this->module->get_module($modid);
     $this->load->view('templates/invite',$data);
   } 
 
  function validate() {
-	$profile=$this->user->get_profile($_SESSION['userid']);
-    	$this->load->library('form_validation');
-	$this->load->helper('url');
-    	$rules= array(
-		array('field'=>'sender', 'label'=>'Name', 'rules'=>'required'),
-		array('field'=>'email','label'=>'Email', 'rules'=> 'required')
-		);
-	$this->form_validation->set_rules($rules);
-	// FORM DOES NOT VALIDATE, RELOAD VIEW
-	if ($this->form_validation->run()==FALSE){
-   	  $this->load->view('templates/invite');
- 	 }
-	// FORM VALIDATION SUCCESSFUL
-	else {
-
-	$this->load->model('invitation');
-	$this->invitation->sendMail($_POST['email'],$_POST['message'], $_POST['sender'],$_POST['pre_message'],$profile['email']);
-	
-	}	
- }
-
+   $this->load->helper('url');     
+   $profile=$this->user->get_profile($_SESSION['userid']);
+   $this->load->library('form_validation');
+   $rules= array(
+		 array('field'=>'sender', 'label'=>'Name', 'rules'=>'required'),
+		 array('field'=>'email','label'=>'Email', 'rules'=> 'required')
+		 );
+   $this->form_validation->set_rules($rules);
+   // FORM DOES NOT VALIDATE, RELOAD VIEW
+   if($this->form_validation->run()==FALSE) {
+     $data['module'] = $this->module->get_module($this->input->post('module_id'));
+     $this->load->view('templates/invite',$data);
+   }
+   // FORM VALIDATION SUCCESSFUL
+   else {
+     $this->load->model('invitation');
+     $this->invitation->sendMail($_POST['email'],$_POST['message'], $_POST['sender'],$_POST['pre_message'],$profile['email']);
+   }
+ }	
+ 
 /* function get_mod($mod_id) {
    $modules=$this->module->get_modules();
    foreach ($modules as $data) {

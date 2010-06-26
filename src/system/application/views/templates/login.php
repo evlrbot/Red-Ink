@@ -10,7 +10,7 @@
 <?=form_submit(array('value'=>'Login','id'=>'submit'));?>
 <?=br();?>
 <?=isset($msg) ? $msg : '';?>
-<p>If you don't have a login, you may sign-up for one <a href="/registerusercheck">here</a>.
+<p>If you don't have a login, you may sign-up for one <a href="/SignUp">here</a>.
 <?=form_close();?>
 
 <div id='secured'>

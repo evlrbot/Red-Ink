@@ -1,5 +1,5 @@
 <div id='body'>
-<?= form_open(site_url('registerusercheck'),array('id'=>'bigform','class'=>'login')); ?>
+<?= form_open(site_url("SignUp/index/$id"),array('id'=>'bigform','class'=>'login')); ?>
 <p><?= form_label('E-Mail','email'); ?></p>
 <?= form_error('email'); ?>
 <?= form_input(array('id'=>'email','name'=>'email')); ?>

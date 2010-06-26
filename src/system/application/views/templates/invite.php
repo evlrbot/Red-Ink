@@ -1,15 +1,17 @@
+<title>Red Ink Invite</title>
 <div id='body'>
-<?=form_open('invite/validate', array('id'=>'mailform', 'class'=>'invite'));?>
-<?=form_label('<p>Enter the name you want your friends to see:</p>', 'sender');?>
+<?=form_open('invite/validate', array('id'=>'mailform', 'class'=>'invite', 'method'=>'post'));?>
+<?=form_label('<p>* Your name:</p>', 'sender');?>
 <?=form_error('sender');?>
 <?=form_input(array('id'=>'sender', 'name'=>'sender', 'value'=>''));?>
-<?=form_label('<p>Please list email addresses separated by an empty space:</p>', 'email');?>
+<?=form_label('<p>Enter e-mail addresses to invite, separated by spaces:</p>', 'email');?>
 <?=form_error('email');?>
 <?=form_input(array('id'=>'email', 'name'=>'email', 'value'=>'','size'=>'75'));?>
-<?=form_label('<p>Message Preview:</p>', 'message');?>
-<?=form_textarea(array('id'=>'pre_message', 'name'=>'pre_message','readonly'=>'true','rows'=>'3','cols'=>'55','value'=>$mod_info['pre_message']));?>
-<?=form_label("<p><em>You may add a personal message below</em></p>",'_filler');?>
+<?=form_label('<p>Invite Message:</p>', 'message');?>
+<p>{Insert Your Name Here} has invited you to join the Red Ink Campain:</p><p><b><?=$module['name']?> ~ <?=$module['description']?></b></p>
+<?=form_label("<p>Add a personal message:</p>",'_filler');?>
 <?=form_textarea(array('id'=>'message', 'name'=>'message','value'=>'','rows'=>'7','cols'=>'55'));?>
+<?=form_hidden(array('module_id'=>"$module[id]"));?>
 <?=br();?>
 <?=br();?>
 <?=form_submit(array('value'=>'Invite', 'id'=>'submit'));?>
