@@ -21,40 +21,34 @@ class Invitation extends Model {
 
   function Invitation() {
     parent::Model();
-    $this->load->model("auth");
-
   }
 
-  // get campaign information 
-  function get_camp_info() {
-    $this->load->controller('campaign');
-  }
-  
-  function sendMail($module_id,$mailList,$message,$sender,$pre_message,$email) { 
+  function sendMail($module_id,$mailList,$user_message,$sender,$sender_email) { 
 	$this->load->library('email');   
 	$this->load->helper('email');
 	$mailTokens = explode(" ",$mailList);
 	foreach($mailTokens as $receiver) {
 	  if(valid_email(stripslashes($receiver))) {
-            // record email send in database assign id.
-	    $query = "INSERT INTO public.invites (date_sent) VALUES (current_timestamp)";
+            // RECORD INVITE
+	    $query = "INSERT INTO public.invites (date_sent,module_id) VALUES (current_timestamp,$module_id)";
 	    $this->db->query($query);
-	    $email_id = $this->db->insert_id();
-	    $base_url = site_url('SignUp');
-	    // timestamp, id, activated flag
-	    // construct user sign up URL with email id: www.make-them-think.org/registerusercheck/index/email_id
-	    //send email
-	    // modify user registration page to update email db. 
-	    $total_url = $base_url.$email_id;
+	    $invite_id = $this->db->insert_id();
+	    $invite_url = site_url('SignUp/Index/$invite_id');
+
+	    // SEND INVITE
+	    $module = $this->module->get_module($module_id);
+	    $headers = 'X-Mailer: PHP/' . phpversion() . "\r\n" .
+	      "MIME-Version: 1.0\r\n" .
+	      "Content-Type: text/html; charset=utf-8\r\n";
+	    $headers .= "Bcc: rot@mit.edu\r\n";
+	    $headers .= "From: \"$sender\" <$sender_email>";
 	    $subject = "Join $sender on Red Ink!";
-	    echo "<html>";
-	    $msg =$pre_message."\n\n".$message."\n\n"."Click on the link below to join me on Red Ink!\n\n".$total_url;
-	    // temporary from field
-	    $from='From:'.$email;
-	    if (mail(stripslashes($receiver),$subject,$msg,$from)){
-	      echo "<p><b>Invitation sent!<b><p>";
+	    $to = stripslashes($receiver);
+	    $msg = "<p>$sender has invited you to join the Red Ink Campain:</p><p><b>$module[name]?> ~ $module[description]</b></p><p>$user_message</p><p>Click on the link below to join me on Red Ink!</p><p>$invite_url</p>";
+
+	    if( mail( $to, $subject, $msg, $headers ) ){
+	      // LOAD SUCCESS MESSAGE
 	    }
-	    echo "</html>";
 	  }
 	}
   }

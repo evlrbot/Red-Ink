@@ -45,18 +45,8 @@ class Invite extends Controller{
    // FORM VALIDATION SUCCESSFUL
    else {
      $this->load->model('invitation');
-     $this->invitation->sendMail($_POST['email'],$_POST['message'], $_POST['sender'],$_POST['pre_message'],$profile['email']);
-   }
- }	
- 
-/* function get_mod($mod_id) {
-   $modules=$this->module->get_modules();
-   foreach ($modules as $data) {
-     if ($data[id]==$mod_id) 
-         return $data;
+     $this->invitation->sendMail($_POST['module_id'],$_POST['email'],$_POST['message'], $_POST['sender'],$profile['email']);
    }
  }
-*/
-
 }
 
