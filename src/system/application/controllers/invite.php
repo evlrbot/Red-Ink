@@ -21,6 +21,7 @@ class Invite extends Controller{
   
   function Invite() {
     parent::Controller();
+    $this->auth->access() ? "" : redirect(site_url('login'));
   }
   
   function index($modid) {
@@ -30,7 +31,7 @@ class Invite extends Controller{
 
  function validate() {
    $this->load->helper('url');     
-   $profile=$this->user->get_profile($_SESSION['userid']);
+   $profile = $this->user->get_profile($_SESSION['userid']);
    $this->load->library('form_validation');
    $rules= array(
 		 array('field'=>'sender', 'label'=>'Name', 'rules'=>'required'),

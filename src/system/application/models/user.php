@@ -95,8 +95,7 @@ class User extends Model {
    */
   function account_check($email) {    
     $query = "SELECT * FROM public.user WHERE email='$email' LIMIT 1";
-    $result = $this->db->query($query);  
-    echo $result->num_rows();
+    $result = $this->db->query($query);
     return $result->num_rows();
   }
   

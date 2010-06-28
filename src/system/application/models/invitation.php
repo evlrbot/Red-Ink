@@ -30,10 +30,10 @@ class Invitation extends Model {
 	foreach($mailTokens as $receiver) {
 	  if(valid_email(stripslashes($receiver))) {
             // RECORD INVITE
-	    $query = "INSERT INTO public.invites (date_sent,module_id) VALUES (current_timestamp,$module_id)";
+	    $query = "INSERT INTO public.invite (date_sent,module_id) VALUES (current_timestamp,$module_id)";
 	    $this->db->query($query);
 	    $invite_id = $this->db->insert_id();
-	    $invite_url = site_url('SignUp/Index/$invite_id');
+	    $invite_url = site_url("SignUp/Index/$invite_id");
 
 	    // SEND INVITE
 	    $module = $this->module->get_module($module_id);
@@ -44,7 +44,7 @@ class Invitation extends Model {
 	    $headers .= "From: \"$sender\" <$sender_email>";
 	    $subject = "Join $sender on Red Ink!";
 	    $to = stripslashes($receiver);
-	    $msg = "<p>$sender has invited you to join the Red Ink Campain:</p><p><b>$module[name]?> ~ $module[description]</b></p><p>$user_message</p><p>Click on the link below to join me on Red Ink!</p><p>$invite_url</p>";
+	    $msg = "<p>$sender has invited you to join the Red Ink Campaign:</p><p><b>$module[name] ~ $module[description]</b></p><pre>$user_message</pre><p>Click on the link below to join me on Red Ink!</p><p>$invite_url</p>";
 
 	    if( mail( $to, $subject, $msg, $headers ) ){
 	      // LOAD SUCCESS MESSAGE

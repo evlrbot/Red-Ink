@@ -55,7 +55,7 @@ class SignUp extends Controller {
       // IF THE USER WAS INVITED THROUGH THE INVITATION SYSTEM THEN UDPATE THOSE STATS
       if($invite_id) {
 	$user_id =  $this->db->insert_id();
-	$query = "UPDATE public.invite WHERE id=$invite_id SET (date_activated, user_id) VALUES (current_timestamp, $user_id)"; 
+	$query = "UPDATE public.invite SET date_activated=current_timestamp, user_id=$user_id WHERE id=$invite_id "; 
 	$this->db->query($query);
       }
 
