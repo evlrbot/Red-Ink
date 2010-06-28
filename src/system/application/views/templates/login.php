@@ -17,8 +17,6 @@
 <h1>Secured by:</h1>
 <span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=nZ6MWfESQf31oQXrm38WlnZIYIhdpQKDS8pcZgY8EPjz8tlTEVrNWs"></script></span>
 
-<span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=nZ6MWfESQf31oQXrm38WlnZIYIhdpQKDS8pcZgY8EPjz8tlTEVrNWs"></script><br/><a style="font-family: arial; font-size: 9px" href="http://www.godaddy.com/ssl/ssl-certificates.aspx" target="_blank">Secure Sites</a></span>
-
 </div>
 
 </div>
