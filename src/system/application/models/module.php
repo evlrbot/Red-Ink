@@ -229,7 +229,6 @@ class Module extends Model {
     // get average spend/visit
 
     // GET MODULE DATA
-    echo "<p>$modid</p>";
     $data['module'] = $this->get_module($modid);
 
     // GET INDIVIDUAL MEMBER DATA
