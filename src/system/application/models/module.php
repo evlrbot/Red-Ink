@@ -48,13 +48,51 @@ class Module extends Model {
   }
 
   /* PARAMS: $modid - module to update
+   * DESCRP: 
+   */
+  function load_options($module_id) {
+    $query = "SELECT t2.id, t2.name, t2.input_type, t2.value, t2.default_values FROM public.module AS t1, public.option AS t2, public.module_option AS t3 WHERE t1.id = t3.module_id AND t2.id = t3.option_id AND t1.id = $module_id";
+    $result = $this->db->query($query);
+    $option = $result->result_array();    
+    foreach($option AS $opt) {
+      switch($opt['input_type']) {
+      case 'select':
+	$default_values = explode(',',$opt['default_values']);
+	$values = array();
+	foreach($default_values AS $df) {
+	  list($key,$value) = explode('=>',$df);
+	  $values[$key] = $value;
+	}
+	echo "<div class='module_option'><p>$opt[name]</p>\n<p><select name='$opt[input_type]_$opt[id]'>";
+	foreach($values as $key=>$value) {
+	  $selected = $opt['value'] == $value ? "selected" : "";
+	  echo "<option value='$value'$selected>$key</option>\n";
+	}
+	echo "</select></p>\n</div>\n";
+	break;
+      default:
+	break;
+      }
+    }
+  }
+
+  /* PARAMS: $modid - module to update
    *         $data - array of data to update
    * DESCRP: update the module with the data
    */
   function update_module($modid,$data) {
     // UPDATE MODULE DATA
     $module['name'] = $data['name'];
+    unset($data['name']);
     $module['description'] = $data['description'];
+    unset($data['description']);
+
+    // SET OPTIONS
+    foreach($data AS $key=>$value) {
+        $opt = explode($key); 
+	$this->option->set($opt[0],$opt[1],$value);
+     }
+
     $module['period'] = $data['period'];
     $module['frequency'] = $data['frequency'];
     $module['stacked'] = isset($data['stacked']) ? "true" : "false";
