@@ -134,15 +134,6 @@ class Module extends Model {
     $this->db->query($q);
   }
 
- /* Load invitation popup
-    Params: $site_url - invitation view page
- */
-  function invite_popup($site_url) {
-
-
-
- }
-
   
 /********************************************************************************
  *                               ACCESSOR METHODS
@@ -221,17 +212,12 @@ class Module extends Model {
    * DESCRP: load the template for the visualization.
    */  
   function load($modid, $embed=0) {
-    // get average spend
-    // get individual total spend
-    // get individual average spend
-    // get total visits
-    // get total individual visits
-    // get average spend/visit
-
     // GET MODULE DATA
     $data['module'] = $this->get_module($modid);
-
-    // GET INDIVIDUAL MEMBER DATA
+    
+    // $module->set_values($module->get_data());
+    
+    // GET MODULE USERS
     $member_ids = $this->module->get_users($modid);
     $data['members'] = array();
     foreach($member_ids AS $mid) {
@@ -243,7 +229,7 @@ class Module extends Model {
 
     // GET TIME SERIES DATA FOR ALL MEMBERS
     $time_series = $this->get_dataset_results($modid,0,$data['module']['period'],$data['module']['frequency']);
-
+    
     // GET TOTAL AMOUNT SPENT BY ALL MEMBERS
     $data['total_spend'] = 0;
     $visits = 0;
