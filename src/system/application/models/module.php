@@ -24,6 +24,7 @@ class Module extends Model {
   function Module() {
     parent::Model();
     $this->load->model('filter');
+    $this->load->model('option');
   }
 
 /********************************************************************************
@@ -48,62 +49,30 @@ class Module extends Model {
   }
 
   /* PARAMS: $modid - module to update
-   * DESCRP: 
-   */
-  function load_options($module_id) {
-    $query = "SELECT t2.id, t2.name, t2.input_type, t2.value, t2.default_values FROM public.module AS t1, public.option AS t2, public.module_option AS t3 WHERE t1.id = t3.module_id AND t2.id = t3.option_id AND t1.id = $module_id";
-    $result = $this->db->query($query);
-    $option = $result->result_array();    
-    foreach($option AS $opt) {
-      switch($opt['input_type']) {
-      case 'select':
-	$default_values = explode(',',$opt['default_values']);
-	$values = array();
-	foreach($default_values AS $df) {
-	  list($key,$value) = explode('=>',$df);
-	  $values[$key] = $value;
-	}
-	echo "<div class='module_option'><p>$opt[name]</p>\n<p><select name='$opt[input_type]_$opt[id]'>";
-	foreach($values as $key=>$value) {
-	  $selected = $opt['value'] == $value ? "selected" : "";
-	  echo "<option value='$value'$selected>$key</option>\n";
-	}
-	echo "</select></p>\n</div>\n";
-	break;
-      default:
-	break;
-      }
-    }
-  }
-
-  /* PARAMS: $modid - module to update
    *         $data - array of data to update
    * DESCRP: update the module with the data
    */
   function update_module($modid,$data) {
-    // UPDATE MODULE DATA
+    // SET MODULE INFO
     $module['name'] = $data['name'];
     unset($data['name']);
     $module['description'] = $data['description'];
-    unset($data['description']);
-
-    // SET OPTIONS
-    foreach($data AS $key=>$value) {
-        $opt = explode($key); 
-	$this->option->set($opt[0],$opt[1],$value);
-     }
-
-    $module['period'] = $data['period'];
-    $module['frequency'] = $data['frequency'];
-    $module['stacked'] = isset($data['stacked']) ? "true" : "false";
-    $module['public'] = isset($data['public']) ? "true" : "false";
     $values = array();
+    unset($data['description']);
     foreach($module AS $key=>$value) {
       array_push($values,"$key=".$this->db->escape($module[$key]));
     }
     $values = implode(", ",$values);
     $query = "UPDATE public.module SET $values WHERE id=$modid";
     $this->db->query($query);
+
+    // SET MODULE'S OPTIONS
+    foreach($data AS $key=>$value) {
+      $opt = explode('_',$key); 
+      if(!is_numeric($opt[0])) {
+	$this->option->set($opt[0],$opt[1],$value);
+      }
+    }
 
     // UPDATE FILTER DATA
     foreach($this->module->get_filters($modid) as $d) {      
@@ -176,6 +145,42 @@ class Module extends Model {
 /********************************************************************************
  *                               ACCESSOR METHODS
  ********************************************************************************/
+  /* PARAMS: $modid - module to lookup
+   * DESCRP: returns array of option data available to the given module
+   */
+  function get_options($module_id) {
+    $query = "SELECT t2.id, t2.name, t2.input_type, t2.value, t2.default_values FROM public.module AS t1, public.option AS t2, public.module_option AS t3 WHERE t1.id = t3.module_id AND t2.id = t3.option_id AND t1.id = $module_id";
+    $result = $this->db->query($query);
+    return $result->result_array();  
+  }
+
+  /* PARAMS: $modid - module to update
+   * DESCRP: print out html input forms for the modules options
+   */
+  function load_options($module_id) {
+    $option = $this->get_options($module_id);    
+    foreach($option AS $opt) {
+      switch($opt['input_type']) {
+      case 'select':
+	$default_values = explode(',',$opt['default_values']);
+	$values = array();
+	foreach($default_values AS $df) {
+	  list($key,$value) = explode('=>',$df);
+	  $values[$key] = $value;
+	}
+	echo "<div class='module_option'><p>$opt[name]</p>\n<p><select name='$opt[input_type]_$opt[id]'>";
+	foreach($values as $key=>$value) {
+	  $selected = $opt['value'] == $value ? "selected" : "";
+	  echo "<option value='$value'$selected>$key</option>\n";
+	}
+	echo "</select></p>\n</div>\n";
+	break;
+      default:
+	break;
+      }
+    }
+  }
+
   /* PARAMS: void
    * DESCRP: return list of all modules except sample module id 1
    */
@@ -253,8 +258,13 @@ class Module extends Model {
     // GET MODULE DATA
     $data['module'] = $this->get_module($modid);
     
-    // $module->set_values($module->get_data());
-    
+    // GET MODULE OPTIONS
+    $data['options'] = array();
+    $options = $this->get_options($modid);
+    foreach($options AS $opt) {
+      $data['options'][$opt['name']] = $opt['value'];
+    }
+
     // GET MODULE USERS
     $member_ids = $this->module->get_users($modid);
     $data['members'] = array();
@@ -262,11 +272,20 @@ class Module extends Model {
       array_push($data['members'],$this->user->get_profile($mid));
     }
 
+    // GET MODULE DATA
+    // $modname = $data['module']['module_name']
+    // $data['data'] = $this->modname->get_data($data['options']);
+
+    // LOAD MODULE VIEW
+    // $this->$modname->load_view();
+
+
+
     // GET TOTAL NUMBER OF MEMBERS
     $data['num_members'] = count($data['members']);       
 
     // GET TIME SERIES DATA FOR ALL MEMBERS
-    $time_series = $this->get_dataset_results($modid,0,$data['module']['period'],$data['module']['frequency']);
+    $time_series = $this->get_dataset_results($modid,0,$data['options']['Period'],$data['options']['Frequency']);
     
     // GET TOTAL AMOUNT SPENT BY ALL MEMBERS
     $data['total_spend'] = 0;
@@ -282,8 +301,8 @@ class Module extends Model {
 
     // GET THE AVERAGE SPEND PER INTERVAL
     $interval = 0;
-    $period = $data['module']['period'];
-    switch($data['module']['frequency']) {
+    $period = $data['options']['Period'];
+    switch($data['options']['Frequency']) {
     case 'day':
       $interval = $period * 30;
       break;
@@ -305,7 +324,7 @@ class Module extends Model {
     $userid = isset($_SESSION['userid']) ? $_SESSION['userid'] : 0;
     if($this->has_user($data['module']['id'],$userid)) {
       // GET TIME SERIES DATA FOR USER ONLY
-      $time_series_user = $this->get_dataset_results($modid,$_SESSION['userid'],$data['module']['period'],$data['module']['frequency']);
+      $time_series_user = $this->get_dataset_results($modid,$_SESSION['userid'],$data['options']['Period'],$data['options']['Frequency']);
       // GET TOTAL AMOUNT SPENT BY USER ONLY
       $data['my_spend'] = 0;
       foreach($time_series_user AS $ds) {

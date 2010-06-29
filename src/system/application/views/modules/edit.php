@@ -1,4 +1,4 @@
-<?= form_open(site_url("campaign/edit/$module[id]"),array('id'=>'bigform')); ?>
+<?= form_open(site_url("campaign/edit/$module[id]"),array('id'=>'bigform')); ?>
 
 <h1>Edit Campaign <a href='<?=site_url().'campaign/index'?>' class='small'>back</a></h1>
 <p><?= form_label('Name','name'); ?></p>
@@ -12,32 +12,7 @@
 <?php
 $this->module->load($module['id']);  // LOAD VISUALIZATION
 $this->module->load_options($module['id']);  // LOAD OPTIONS
-
-
-
-echo "<table id='list' border='0' cellpadding='10' cellspacing='2'><thead><tr><td>Period</td><td>Frequency</td><td>Stacked</td><td>Public</td></tr></thead>";
-echo "<tbody><tr><td><select name='select_2'>";
-$periods = array('24 Months'=>'24','12 Months'=>'12', '6 Months'=>'6', '3 Months'=>'3');
-foreach($periods as $key=>$value) {
-  $selected = $module['period'] == $value ? "selected" : "";
-  echo "<option value='$value'$selected>$key</option>\n";
-}
-echo "</select></td>\n";
-echo "<td><select name='select_1'>";
-$frequency = array('Month'=>'month', 'Week'=>'week', 'Day'=>'day');
-foreach($frequency as $key=>$value) {
-  $selected = $module['frequency'] == $value ? "selected" : "";
-  echo "<option value='$value' $selected>$key</option>\n";
-}
-echo "</select></td>\n";
-$selected = $module['stacked'] == 't' ? " checked" : "";
-echo "<td><input type='checkbox' name='stacked' value='checked'$selected></td>\n";
-$selected = $module['public'] == 't' ? " checked" : "";
-echo "<td><input type='checkbox' name='public' value='checked'$selected></td>\n";
-echo "</tr></tbody></table>\n";
 ?>
-<!-- STOP PERIOD / FREQUENCY / STACKED -->
-
 <!-- START FILTERS -->
 <?php
 echo "<table id='list' border='0' cellpadding='10' cellspacing='2'>\n";
