@@ -11,7 +11,8 @@
 <!-- START PERIOD / FREQUENCY / STACKED -->
 <?php
 $this->module->load($module['id']);  // LOAD VISUALIZATION
-$this->module->load_options($module['id']);  // LOAD OPTIONS
+$this->load->model($module['module'],'viz_module');
+$this->viz_module->load_options($module['id']);  // LOAD OPTIONS
 ?>
 <!-- START FILTERS -->
 <?php
