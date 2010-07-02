@@ -27,6 +27,17 @@ class Module extends Model {
     $this->load->model('option');
   }
 
+  /* PARAMS: $modid - module id
+   *         $embed - embed flag
+   * DESCRP: load the template for the visualization.
+   */  
+  function load($modid, $embed=0) {
+    // GET MODULE DATA
+    $data['module'] = $this->get_module($modid);
+    $this->load->model($data['module']['module'],'viz_module');
+    $this->viz_module->load($data);
+  }
+
 /********************************************************************************
  *                                WRITE METHODS
  ********************************************************************************/
@@ -141,6 +152,24 @@ class Module extends Model {
     $this->db->query($q);
   }
 
+  /* PARAMS: $module_id - id of the module
+   *         $filter_id - id of the filter
+   * DESCRP: make the filter available to the module
+   */
+  function add_filter($module_id,$filter_id) {
+    $query = "INSERT INTO public.module_filter (module_id,filter_id) VALUES ($module_id,$filter_id)";
+    $this->db->query($query);
+  }  
+
+  /* PARAMS: $module_id - id of the module
+   *         $filter_id - id of the filter
+   * DESCRP: remove the filter from the module
+   */
+  function remove_filter($module_id,$filter_id) {
+    $query = "DELETE FROM public.module_filter WHERE module_id=$module_id AND filter_id=$filter_id";
+    $this->db->query($query);
+  }  
+
   
 /********************************************************************************
  *                               ACCESSOR METHODS
@@ -152,33 +181,6 @@ class Module extends Model {
     $query = "SELECT t2.id, t2.name, t2.input_type, t2.value, t2.default_values FROM public.module AS t1, public.option AS t2, public.module_option AS t3 WHERE t1.id = t3.module_id AND t2.id = t3.option_id AND t1.id = $module_id";
     $result = $this->db->query($query);
     return $result->result_array();  
-  }
-
-  /* PARAMS: $modid - module to update
-   * DESCRP: print out html input forms for the modules options
-   */
-  function load_options($module_id) {
-    $option = $this->get_options($module_id);    
-    foreach($option AS $opt) {
-      switch($opt['input_type']) {
-      case 'select':
-	$default_values = explode(',',$opt['default_values']);
-	$values = array();
-	foreach($default_values AS $df) {
-	  list($key,$value) = explode('=>',$df);
-	  $values[$key] = $value;
-	}
-	echo "<div class='module_option'><p>$opt[name]</p>\n<p><select name='$opt[input_type]_$opt[id]'>";
-	foreach($values as $key=>$value) {
-	  $selected = $opt['value'] == $value ? "selected" : "";
-	  echo "<option value='$value'$selected>$key</option>\n";
-	}
-	echo "</select></p>\n</div>\n";
-	break;
-      default:
-	break;
-      }
-    }
   }
 
   /* PARAMS: void
@@ -199,24 +201,6 @@ class Module extends Model {
     return $result->row_array();
   }
  
-  /* PARAMS: $module_id - id of the module
-   *         $filter_id - id of the filter
-   * DESCRP: make the filter available to the module
-   */
-  function add_filter($module_id,$filter_id) {
-    $query = "INSERT INTO public.module_filter (module_id,filter_id) VALUES ($module_id,$filter_id)";
-    $this->db->query($query);
-  }  
-
-  /* PARAMS: $module_id - id of the module
-   *         $filter_id - id of the filter
-   * DESCRP: remove the filter from the module
-   */
-  function remove_filter($module_id,$filter_id) {
-    $query = "DELETE FROM public.module_filter WHERE module_id=$module_id AND filter_id=$filter_id";
-    $this->db->query($query);
-  }  
-
   /* PARAMS: $modid - id of the module to lookup
    * DESCRP: return array of filters for this module
    */
@@ -247,215 +231,7 @@ class Module extends Model {
     $query = "SELECT count(userid) AS is_member FROM public.user_module WHERE modid = $module_id AND userid = $user_id";
     $result = $this->db->query($query);
     $result = $result->row_array();
-    return $result['is_member']
-;
+    return $result['is_member'];
   }
 
-  /* PARAMS: $modid - module id
-   * DESCRP: load the template for the visualization.
-   */  
-  function load($modid, $embed=0) {
-    // GET MODULE DATA
-    $data['module'] = $this->get_module($modid);
-    
-    // GET MODULE OPTIONS
-    $data['options'] = array();
-    $options = $this->get_options($modid);
-    foreach($options AS $opt) {
-      $data['options'][$opt['name']] = $opt['value'];
-    }
-
-    // GET MODULE USERS
-    $member_ids = $this->module->get_users($modid);
-    $data['members'] = array();
-    foreach($member_ids AS $mid) {
-      array_push($data['members'],$this->user->get_profile($mid));
-    }
-
-    // GET MODULE DATA
-    // $modname = $data['module']['module_name']
-    // $data['data'] = $this->modname->get_data($data['options']);
-
-    // LOAD MODULE VIEW
-    // $this->$modname->load_view();
-
-
-
-    // GET TOTAL NUMBER OF MEMBERS
-    $data['num_members'] = count($data['members']);       
-
-    // GET TIME SERIES DATA FOR ALL MEMBERS
-    $time_series = $this->get_dataset_results($modid,0,$data['options']['Period'],$data['options']['Frequency']);
-    
-    // GET TOTAL AMOUNT SPENT BY ALL MEMBERS
-    $data['total_spend'] = 0;
-    $visits = 0;
-    foreach($time_series AS $ds) {
-      foreach($ds['data'] AS $d) {
-	$data['total_spend'] += $d['value'];
-	if($d['value']) {
-	  $visits++;
-	}
-      }
-    }
-
-    // GET THE AVERAGE SPEND PER INTERVAL
-    $interval = 0;
-    $period = $data['options']['Period'];
-    switch($data['options']['Frequency']) {
-    case 'day':
-      $interval = $period * 30;
-      break;
-    case 'week':
-      $interval = ($period * 30) / 7;
-      break;
-    case 'month':
-      $interval = $period;
-      break;
-    default:
-    }
-    $data['avg_spend_per_interval'] = round($data['total_spend'] / $interval, 2);
-    if($visits) { 
-      $data['avg_spend_per_visit'] = round($data['total_spend'] / $visits, 2); 
-    }
-    else {
-      $data['avg_spend_per_visit'] = 0;
-    }
-    $userid = isset($_SESSION['userid']) ? $_SESSION['userid'] : 0;
-    if($this->has_user($data['module']['id'],$userid)) {
-      // GET TIME SERIES DATA FOR USER ONLY
-      $time_series_user = $this->get_dataset_results($modid,$_SESSION['userid'],$data['options']['Period'],$data['options']['Frequency']);
-      // GET TOTAL AMOUNT SPENT BY USER ONLY
-      $data['my_spend'] = 0;
-      foreach($time_series_user AS $ds) {
-	foreach($ds['data'] AS $d) {
-	  $data['my_spend'] += $d['value'];	   
-	}
-      }
-    }
-
-    $data['filters'] = $this->get_filters($modid); 
-    $data['json'] = $this->format_json($time_series);
-    $this->load->view("modules/area_chart", $data);
-  }
-  
-  /* PARAMS: $modid - id of the module
-   *         $userid - id of the user to lookup
-   *         $period - number used to determine the number of months to look back at
-   *         $frequency - the rate at which transactions should be folded up, i.e. monthly, daily, yearly, etc...
-   * DESCRP: constructs a query using the filters associated with a vis and the vis settings for period and frequency of aggregation.
-   * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
-   */ 
-  function get_dataset_results($module_id, $userid=0, $period='12', $frequency='month') {
-    // DISCARD INACTIVE FILTERS
-    $filters = array();
-    foreach($this->get_filters($module_id) AS $filter) {
-      if($filter['active'] == 't') {
-	array_push($filters,$filter);
-      }      
-    }
-
-    $results = array(); // ONE INDEX OF TIME SERIES DATA PER FILTER
-    foreach($filters AS $ds) {                   
-      // CONSTRUCT SELECT STATEMENT
-      $query = "SELECT date_part('epoch', date_trunc('$frequency',created))*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction ";
-
-      // APPEND PERIOD AND FREQUENCY PARAMS
-      $query .= "WHERE (created > current_date - interval '$period months')";
-
-      // CONTSRUCT MEMO STRING SQL FROM THE ASSOCIATED DATASETS
-      $memos = $this->filter->get_memos($ds['filter_id']);
-      $tmp = array();
-      foreach($memos AS $m) {
-	$m['memo'] = $this->db->escape("%$m[memo]%");
-	array_push($tmp,"memo ILIKE $m[memo] OR merchant ILIKE $m[memo]");
-      }
-      $memos = implode(' OR ',$tmp);
-      $query .= !empty($memos) ? " AND ($memos) " : '';
-
-      // LIMIT USERS TO LOOK AT
-      if(!$userid) {
-	$q = array();
-	foreach($this->get_users($module_id) AS $id) {
-	  array_push($q,"userid=$id");
-	}
-	$users = implode(' OR ',$q);
-      }
-      else {
-	$users = "userid=$userid";
-      }
-      $query .= $users ? " AND ($users) " : "";
-
-      // AGGREGATE BY...
-      $query .= "GROUP BY date_part('epoch', date_trunc('$frequency',created))*1000 ORDER BY label ASC";
-      //echo "<p>$query</p>";
-      $result = $this->db->query($query);
-
-      // PREPARE RETURN RESULTS
-      $results[$ds['name']]['data'] = $result->result_array();
-      $results[$ds['name']]['active'] = $ds['active'];
-      $results[$ds['name']]['color'] = $ds['color'];
-    }    
-
-    // STUFF RESULTS WITH EMPTY VALUES FOR NULL SETS
-    $offsets = array();
-    $interval = 0;
-    switch($frequency) {
-    case 'day':
-      $interval = $period * 30;
-      break;
-    case 'week':
-      $interval = ($period * 30) / 7;
-      break;
-    case 'month':
-      $interval = $period;
-      break;
-    default:
-    }
-
-    for($i=$interval;$i>=0;$i--) {
-      $query = "SELECT date_part('epoch',date_trunc('$frequency',current_date - interval '$i $frequency'))*1000 AS offset";
-      $r = $this->db->query($query);
-      $r = $r->row_array();
-      array_push($offsets,$r['offset']);
-    }
-    foreach(array_keys($results) AS $filter) { // filters
-      $tmp = array();
-      foreach($results[$filter]['data'] AS $d) { // time series data points
-	$tmp[$d['label']] = $d['value'];
-      }
-      foreach($offsets AS $offset) {
-	if(!isset($tmp[$offset])) {
-	  $tmp[$offset] = 0;
-	}
-      }
-      ksort($tmp);
-      $tmp2 = array();
-      foreach($tmp AS $label=>$value) {
-	array_push($tmp2,array('label'=>$label,'value'=>$value));	
-      }
-      $results[$filter]['data'] = $tmp2;
-    }
-    return $results;
-  }
-
-  /* PARAMS: $data - serialized data from the query
-   *         $data_sets - dataset meta data
-   * DESCRP: returns json object of serialized data
-   */
-  function format_json($data) {  
-    $tmp = array();
-    foreach($data AS $key=>$value) {
-      $color = $value['color'];
-      $key = addslashes($key);
-      $tmp2 = array();
-      $j=0;
-      foreach($value['data'] AS $d) {
-	$tmp2[$j] = "[$d[label],$d[value]]";
-	$j++;
-      }
-      array_push($tmp,"{label:'$key',color:'$color', data:[".implode(',',$tmp2)."]}");
-    }    
-    return $json = "[".implode(',',$tmp)."]";
-  }
 }
