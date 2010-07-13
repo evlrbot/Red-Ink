@@ -34,8 +34,8 @@ class Module extends Model {
   function load($modid, $embed=0) {
     // GET MODULE DATA
     $data['module'] = $this->get_module($modid);
-    $this->load->model($data['module']['module'],'viz_module');
-    $this->viz_module->load($data);
+    $viz_module = $this->load->model($data['module']['module']);
+    $viz_module->load($data);
   }
 
 /********************************************************************************
@@ -178,7 +178,7 @@ class Module extends Model {
    * DESCRP: returns array of option data available to the given module
    */
   function get_options($module_id) {
-    $query = "SELECT t2.id, t2.name, t2.input_type, t2.value, t2.default_values FROM public.module AS t1, public.option AS t2, public.module_option AS t3 WHERE t1.id = t3.module_id AND t2.id = t3.option_id AND t1.id = $module_id";
+    $query = "SELECT t2.input_type, t2.default_values, t3.value, t3.name, t3.id AS id FROM public.module AS t1, public.option AS t2, public.module_option AS t3 WHERE t1.id = t3.module_id AND t2.id = t3.option_id AND t1.id = $module_id";
     $result = $this->db->query($query);
     return $result->result_array();  
   }

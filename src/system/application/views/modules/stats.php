@@ -2,11 +2,17 @@
 <tr>
 <td>
 <h1>Module</h1>
+<?php
+$options = $this->module->get_options($module['id']);
+foreach($options AS $opt) {
+  $module['options'][$opt['name']] = $opt['value'];
+}
+?>
 <p><b><?=$module['name']?>: </b><em><?=$module['description']?></em></p>
-<p>Period: <b><?=$module['period']?> Months</b> </p>
+   <p>Period: <b><?=$module['options']['Period']?> Months</b> </p>
 <p>Interval: <b> 
 <?php
-   switch($module['frequency']) {
+   switch($module['options']['Frequency']) {
    case 'day':
    echo "Daily";
    break;

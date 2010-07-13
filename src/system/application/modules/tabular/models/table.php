@@ -25,7 +25,7 @@ class Table extends model {
   } 
   
   function load($data) {
-    $query = "SELECT * FROM transaction WHERE userid = $_SESSION[userid] ORDER BY created DESC LIMIT 10";
+    $query = "SELECT * FROM transaction WHERE userid = $_SESSION[userid] ORDER BY created DESC LIMIT 30";
     $result = $this->db->query($query);
     $data['transactions'] = $result->result_array();
     $this->load->view("tabular/table", $data);
