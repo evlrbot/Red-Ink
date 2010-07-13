@@ -23,18 +23,34 @@ class Table extends model {
     parent::model();
     $this->load->model('option');
   } 
- 
-// modid is id of module user wants to see transactions for 
+  
   function load($data,$modid=0) {
-    if (4444=00) 
+    if ($modid==0){
+    $userids = $_SESSION['userid']; 
+    }
+     else{
     $userids = $this->module->get_users($modid);
-    else 
-    $userids = $_SESSION[userid];
-    $query = "SELECT * FROM transaction WHERE userid = $userids ORDER BY created DESC LIMIT 30";
+    $query_string=$this->statement($userids);
+    }
+    $query = "SELECT * FROM transaction WHERE userid = $query_string ORDER BY created DESC LIMIT 30";
+   // $query = "SELECT * FROM transaction WHERE modid = $modid ORDER BY created DESC LIMIT 30";
     $result = $this->db->query($query);
     $data['transactions'] = $result->result_array();
     $this->load->view("tabular/table", $data);
   }
+  
+  // make, format string to insert into query
+  function statement($userids) {
+    $query_string="";
+    foreach ($userids AS $userid) {
+      if ($userid==$_SESSION['userid'])
+      $query_string.$userid;
+      else
+       $query_string." OR userid = ".$userid;
+    }  
+     return $query_string;
+  }
+
 }
 
 
