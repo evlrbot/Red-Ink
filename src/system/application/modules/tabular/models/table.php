@@ -25,15 +25,14 @@ class Table extends model {
   } 
   
   function load($data,$modid=33) {
-    if ($modid==0){
-     $userids = $_SESSION['userid']; 
+    if ($modid==0){ 
+    $query = "SELECT * FROM transaction WHERE userid = $_SESSION[userid] ORDER BY created DESC LIMIT 30";
     }
     else{
-     $userids = $this->module->get_users($modid);
+ //    $userids = $this->module->get_users($modid);
      $filters=$this->module->get_filters($modid);
-    }
-    foreach($filters AS $ds) {                    
-     $query = "SELECT * FROM transaction WHERE userid = $userids ORDER BY created DESC LIMIT 30";
+     foreach($filters AS $ds) {                    
+     $query = "SELECT * FROM transaction WHERE";
      $memos = $this->filter->get_memos($ds['filter_id']);
      $tmp = array();
      foreach($memos AS $m) {
@@ -41,12 +40,12 @@ class Table extends model {
 	array_push($tmp,"memo ILIKE $m[memo] OR merchant ILIKE $m[memo]");
       }
      $memos = implode(' OR ',$tmp);
-     $query .= !empty($memos) ? " AND ($memos) " : '';
+     $query .= !empty($memos) ? " ($memos) " : '';
+     $query .= "ORDER BY created DESC LIMIT 30";
     }
-   
+   }
  // $query = "SELECT * FROM transaction WHERE modid = $modid ORDER BY created DESC LIMIT 30";
     $result = $this->db->query($query);
-    echo $result;
     $data['transactions'] = $result->result_array();
     $this->load->view("tabular/table", $data);
   }
