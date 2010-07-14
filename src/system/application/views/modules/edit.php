@@ -8,6 +8,7 @@
 <p><?= form_label('Description','description'); ?></p>
 <?= form_error('description'); ?>
 <?= form_textarea(array('id'=>'description','name'=>'description','cols'=>37,'rows'=>2, 'value'=>"$module[description]")); ?>
+<p><?= form_radio(array('name'=>'table_view','id'=>'table_view','value'=>'yes','checked'=>FALSE));?> Table View</p>
 <!-- START PERIOD / FREQUENCY / STACKED -->
 <?php
 $this->module->load($module['id']);  // LOAD VISUALIZATION

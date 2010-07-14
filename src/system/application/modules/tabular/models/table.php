@@ -24,7 +24,7 @@ class Table extends model {
     $this->load->model('option');
   } 
   
-  function load($data,$modid=33) {
+  function load($data,$modid=0) {
     if ($modid==0){ 
     $query = "SELECT * FROM transaction WHERE userid = $_SESSION[userid] ORDER BY created DESC LIMIT 30";
     }

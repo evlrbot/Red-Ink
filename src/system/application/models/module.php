@@ -65,8 +65,12 @@ class Module extends Model {
    */
   function update_module($modid,$data) {
     // SET MODULE INFO
+    if (isset($_POST['table_view'])) {
+    }
+    else {
     $module['name'] = $data['name'];
     unset($data['name']);
+    unset($data['table_view']);
     $module['description'] = $data['description'];
     $values = array();
     unset($data['description']);
@@ -79,10 +83,13 @@ class Module extends Model {
 
     // SET MODULE'S OPTIONS
     foreach($data AS $key=>$value) {
+      if ($key='table_view') {}
+      else{
       $opt = explode('_',$key); 
       if(!is_numeric($opt[0])) {
 	$this->option->set($opt[0],$opt[1],$value);
-      }
+      } 
+     }
     }
 
     // UPDATE FILTER DATA
@@ -94,6 +101,7 @@ class Module extends Model {
     }    
     redirect(site_url("campaign/edit/$modid"));
   }
+ }
 
   /* PARAMS: $modid - module to delete
    * DESCRP: remove referrences to this module
