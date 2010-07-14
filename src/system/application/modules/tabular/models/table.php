@@ -26,38 +26,32 @@ class Table extends model {
   
   function load($data,$modid=33) {
     if ($modid==0){
-    $userids = $_SESSION['userid']; 
+     $userids = $_SESSION['userid']; 
     }
-     else{
-    $userids = $this->module->get_users($modid);
-    $filters=$this->module->get_filters($modid);
+    else{
+     $userids = $this->module->get_users($modid);
+     $filters=$this->module->get_filters($modid);
     }
-     $frequency = 'day';
-     $period = 3;
-  foreach($filters AS $ds) {                   
-      // CONSTRUCT SELECT STATEMENT
-      $query = "SELECT date_part('epoch', date_trunc('$frequency',created))*1000 AS label, abs(round(sum(amount)/100.0,2)) AS value FROM public.transaction ";
-
-      // APPEND PERIOD AND FREQUENCY PARAMS
-      $query .= "WHERE (created > current_date - interval '$period months')";
-
-      // CONTSRUCT MEMO STRING SQL FROM THE ASSOCIATED DATASETS
-      $memos = $this->filter->get_memos($ds['filter_id']);
-      $tmp = array();
-      foreach($memos AS $m) {
+    foreach($filters AS $ds) {                    
+     $query = "SELECT * FROM transaction WHERE userid = $userids ORDER BY created DESC LIMIT 30";
+     $memos = $this->filter->get_memos($ds['filter_id']);
+     $tmp = array();
+     foreach($memos AS $m) {
 	$m['memo'] = $this->db->escape("%$m[memo]%");
 	array_push($tmp,"memo ILIKE $m[memo] OR merchant ILIKE $m[memo]");
       }
      $memos = implode(' OR ',$tmp);
      $query .= !empty($memos) ? " AND ($memos) " : '';
-     $query .= "GROUP BY date_part('epoch', date_trunc('$frequency',created))*1000 ORDER BY label ASC";
-     $result = $this->db->query($query);
-     $data['transactions'] = $result->result_array();
-     $this->load->view("tabular/table", $data);
-   }
+    }
+   
+ // $query = "SELECT * FROM transaction WHERE modid = $modid ORDER BY created DESC LIMIT 30";
+    $result = $this->db->query($query);
+    echo $result;
+    $data['transactions'] = $result->result_array();
+    $this->load->view("tabular/table", $data);
   }
+ }
 
-}
 
 
 
