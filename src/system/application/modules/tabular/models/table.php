@@ -41,7 +41,7 @@ class Table extends model {
       }
      $memos = implode(' OR ',$tmp);
      $query .= !empty($memos) ? " ($memos) " : '';
-     $query .= "ORDER BY created DESC LIMIT 30";
+     $query .= "ORDER BY created DESC LIMIT 50";
     }
    }
  // $query = "SELECT * FROM transaction WHERE modid = $modid ORDER BY created DESC LIMIT 30";
