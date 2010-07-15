@@ -42,8 +42,15 @@ class Table extends model {
   }
   
   function get_data($data) {
+    // CHECK TO SEE IF OTHER MODULE IS PASSING ID TO LOAD FILTERS
     // DISCARD INACTIVE FILTERS
     $filters = array();
+    if (isset($data['other_id'])) {
+      foreach($this->module->get_filters($data['other_id']) AS $filter) {
+        if($filter['active'] == 't')
+        array_push($filters, $filter);
+      }
+    }
     foreach($this->module->get_filters($data['module']['id']) AS $filter) {
       if($filter['active'] == 't') {
 	array_push($filters,$filter);
@@ -100,8 +107,8 @@ class Table extends model {
       
       // PREPARE RETURN RESULTS
       $results['user_only']['data'] = $result->result_array();
-      $results['user_only']['active'] = $ds['active'];
-      $results['user_only']['color'] = $ds['color'];
+      $results['user_only']['active'] = '';
+      $results['user_only']['color'] = '';
     }
     return $results;
   }

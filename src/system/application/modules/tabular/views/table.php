@@ -1,6 +1,6 @@
 <div id="module">
 <script type="text/javascript">
-  var bgcolor="99FF66";
+  var bgcolor="99FFCC";
   var chgcolor="#CC00FF";
   function change(thing){
     thing.style.backgroundColor = chgcolor;
@@ -24,9 +24,8 @@ $i=0;
   $created = $td['created'];
   $memo = $td['memo'];
   $merchant = $td['merchant'];
-  $num_users= $td['userid'];
 
-  if ($num_users==1) {
+  if ($td['userid']==$_SESSION['userid']) {
     echo "<tr class='$rowstyle' onmouseout='changeback(this);' onmouseover='change(this);'><td>$created</td><td>\$$amount&nbsp;</td><td>$memo&nbsp;</td><td>$merchant</td></tr>\n";
   }
   else
