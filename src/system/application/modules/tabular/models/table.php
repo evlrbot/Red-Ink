@@ -24,33 +24,90 @@ class Table extends model {
     $this->load->model('option');
   } 
   
-  function load($data,$modid=36) {
-    if ($modid==36){ 
-    $query = "SELECT * FROM transaction WHERE userid = $_SESSION[userid] ORDER BY created DESC LIMIT 30";
+  function load($data) {
+    // option for determining to show only the user's data or all data. 
+    // if fitlers are present use them, if not show all unfiltered transactions
+
+    // GET MODULE OPTIONS
+    $data['options'] = array();
+    $options = $this->module->get_options($data['module']['id']);
+    foreach($options AS $opt) {
+      $data['options'][$opt['name']] = $opt['value'];
     }
-    else{
- //    $userids = $this->module->get_users($modid);
-     $filters=$this->module->get_filters($modid);
-     foreach($filters AS $ds) {                    
-     $query = "SELECT * FROM transaction WHERE";
-     $memos = $this->filter->get_memos($ds['filter_id']);
-     $tmp = array();
-     foreach($memos AS $m) {
-        print_r($tmp);
-	$m['memo'] = $this->db->escape("%$m[memo]%");
-	array_push($tmp,"memo ILIKE $m[memo] OR merchant ILIKE $m[memo]");
-      }
-     $memos = implode(' OR ',$tmp);
-     $query .= !empty($memos) ? " ($memos) " : '';
-     $query .= "ORDER BY created DESC LIMIT 50";
-    }
-   }
- // $query = "SELECT * FROM transaction WHERE modid = $modid ORDER BY created DESC LIMIT 30";
-    $result = $this->db->query($query);
-    $data['other_id'] = $modid;
-    $data['transactions'] = $result->result_array();
+
+    // ONLY GET USER'S TRANSACTIONS
+    $data['members'] = $_SESSION['userid'];
+    $data['transactions'] = $this->get_data($data);
+    print_r($data);
     $this->load->view("tabular/table", $data);
   }
+  
+  function get_data($data) {
+    // DISCARD INACTIVE FILTERS
+    $filters = array();
+    foreach($this->module->get_filters($data['module']['id']) AS $filter) {
+      if($filter['active'] == 't') {
+	array_push($filters,$filter);
+      }      
+    }
+
+    $period = $data['options']['Period'];
+
+    $results = array(); // ONE INDEX OF TIME SERIES DATA PER FILTER
+    if(count($filters)) {
+      foreach($filters AS $ds) {                   
+	// CONSTRUCT SELECT STATEMENT
+	$query = "SELECT *, abs(round(amount/100.0,2)) AS value FROM public.transaction ";
+	
+	// APPEND PERIOD PARAM
+	$query .= "WHERE (created > current_date - interval '$period months')";
+	
+	// CONTSRUCT MEMO STRING SQL FROM THE ASSOCIATED DATASETS
+	$memos = $this->filter->get_memos($ds['filter_id']);
+	$tmp = array();
+	foreach($memos AS $m) {
+	  $m['memo'] = $this->db->escape("%$m[memo]%");
+	  array_push($tmp,"memo ILIKE $m[memo] OR merchant ILIKE $m[memo]");
+	}
+	$memos = implode(' OR ',$tmp);
+	$query .= !empty($memos) ? " AND ($memos) " : '';
+	
+	// LIMIT USERS TO LOOK AT
+	$query .= " AND (userid=$data[members]) ";
+	
+	// AGGREGATE BY...
+	echo $query .= "ORDER BY created ASC";
+	$result = $this->db->query($query);
+	
+	// PREPARE RETURN RESULTS
+	$results[$ds['name']]['data'] = $result->result_array();
+	$results[$ds['name']]['active'] = $ds['active'];
+	$results[$ds['name']]['color'] = $ds['color'];
+      }
+    }
+    else {
+      // CONSTRUCT SELECT STATEMENT
+      $query = "SELECT *, abs(round(amount/100.0,2)) AS value FROM public.transaction ";
+      
+      // APPEND PERIOD PARAM
+      $query .= "WHERE (created > current_date - interval '$period months')";
+      
+      // LIMIT USERS TO LOOK AT
+      $query .= " AND (userid=$data[members]) ";
+      
+      // AGGREGATE BY...
+      echo $query .= "ORDER BY created ASC";
+      $result = $this->db->query($query);
+      
+      // PREPARE RETURN RESULTS
+      $results['user_only']['data'] = $result->result_array();
+      $results['user_only']['active'] = $ds['active'];
+      $results['user_only']['color'] = $ds['color'];
+    }
+    return $results;
+  }
+  
+  function load_options() {}
  }
 
 

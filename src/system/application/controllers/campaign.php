@@ -58,29 +58,17 @@ class Campaign extends Controller {
 
   function edit($modid) {
     if($_SERVER['REQUEST_METHOD'] == "POST") {   
-      // if radio button clicked, load table view.
-      if (isset($_POST['table_view'])) {
-        $this->load->view('site/head');
-        $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
-        $this->load->view('site/body_start');
-        $this->module->load(36,'', $modid);
-        $this->load->view('site/body_stop');
-        $this->load->view('site/foot');
-        }
-      else{
       $this->module->update_module($modid,$_POST);
-      }
     }
     else {
-    $this->load->view('site/head');
-    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
-    $this->load->view('site/body_start');
-    $data['filters'] = $this->module->get_filters($modid);
-    $data['module'] = $this->module->get_module($modid);
-    $data['modid'] = $modid;
-    $this->load->view('modules/edit',$data);
-    $this->load->view('site/body_stop');
-    $this->load->view('site/foot');
+      $this->load->view('site/head');
+      $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+      $this->load->view('site/body_start');
+      $data['filters'] = $this->module->get_filters($modid);
+      $data['module'] = $this->module->get_module($modid);
+      $this->load->view('modules/edit',$data);
+      $this->load->view('site/body_stop');
+      $this->load->view('site/foot');
     }
   }
   

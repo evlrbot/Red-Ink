@@ -194,7 +194,6 @@ class Flodel extends Model {
 
       // AGGREGATE BY...
       $query .= "GROUP BY date_part('epoch', date_trunc('$frequency',created))*1000 ORDER BY label ASC";
-      //echo "<p>$query</p>";
       $result = $this->db->query($query);
 
       // PREPARE RETURN RESULTS

@@ -21,18 +21,13 @@ foreach ($transactions AS $t) {
  $rowstyle = ($i++%2==0) ? "row1" : "row2";
   $t["amount"] = $t["amount"]/100;
   if ($t['userid']==$_SESSION['userid']) {
-  echo "<tr class='$rowstyle' onmouseout='changeback(this);' onmouseover='change(this);'><td>$t[created]</td><td>\$$t[amount]&nbsp;</td><td>$t[memo]&nbsp;</td><td>$t[merchant]</td></tr>\n";
+    echo "<tr class='$rowstyle' onmouseout='changeback(this);' onmouseover='change(this);'><td>$t[created]</td><td>\$$t[amount]&nbsp;</td><td>$t[memo]&nbsp;</td><td>$t[merchant]</td></tr>\n";
   }
   else
-  echo "<tr class='$rowstyle'><td>$t[created]</td><td>\$$t[amount]&nbsp;</td><td>$t[memo]&nbsp;</td><td>$t[merchant]</td></tr>\n";
+    echo "<tr class='$rowstyle'><td>$t[created]</td><td>\$$t[amount]&nbsp;</td><td>$t[memo]&nbsp;</td><td>$t[merchant]</td></tr>\n";
   }
  }
 ?>
-</tbody></table>
-<?php 
-if (isset($other_id)) {
-$link="http://dev.make-them-think.org/campaign/edit/".$other_id;
-echo "<p style='color:darkred'><a href=$link><<--- Graph View</a></p>";
-}
-?>
+</tbody>
+</table>
 </div>

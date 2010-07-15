@@ -31,13 +31,10 @@ class Module extends Model {
    *         $embed - embed flag
    * DESCRP: load the template for the visualization.
    */  
-  function load($modid, $embed=0 ,$info=0) {
+  function load($modid,$embed=0) {
     // GET MODULE DATA
     $data['module'] = $this->get_module($modid);
     $viz_module = $this->load->model($data['module']['module']);
-    if ($info!=0)
-    $viz_module->load($data,$info);
-    else
     $viz_module->load($data);
   } 
 
