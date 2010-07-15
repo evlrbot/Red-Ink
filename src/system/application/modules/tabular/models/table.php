@@ -38,7 +38,6 @@ class Table extends model {
     // ONLY GET USER'S TRANSACTIONS
     $data['members'] = $_SESSION['userid'];
     $data['transactions'] = $this->get_data($data);
-    print_r($data);
     $this->load->view("tabular/table", $data);
   }
   
@@ -76,7 +75,7 @@ class Table extends model {
 	$query .= " AND (userid=$data[members]) ";
 	
 	// AGGREGATE BY...
-	echo $query .= "ORDER BY created ASC";
+	$query .= "ORDER BY created ASC";
 	$result = $this->db->query($query);
 	
 	// PREPARE RETURN RESULTS
@@ -96,7 +95,7 @@ class Table extends model {
       $query .= " AND (userid=$data[members]) ";
       
       // AGGREGATE BY...
-      echo $query .= "ORDER BY created ASC";
+      $query .= "ORDER BY created ASC";
       $result = $this->db->query($query);
       
       // PREPARE RETURN RESULTS
