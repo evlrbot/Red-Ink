@@ -29,4 +29,10 @@ foreach ($transactions AS $t) {
  }
 ?>
 </tbody></table>
+<?php 
+if (isset($other_id)) {
+$link="http://dev.make-them-think.org/campaign/edit/".$other_id;
+echo "<p style='color:darkred'><a href=$link><<--- Graph View</a></p>";
+}
+?>
 </div>

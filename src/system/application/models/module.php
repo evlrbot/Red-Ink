@@ -31,12 +31,15 @@ class Module extends Model {
    *         $embed - embed flag
    * DESCRP: load the template for the visualization.
    */  
-  function load($modid, $embed=0) {
+  function load($modid, $embed=0 ,$info=0) {
     // GET MODULE DATA
     $data['module'] = $this->get_module($modid);
     $viz_module = $this->load->model($data['module']['module']);
+    if ($info!=0)
+    $viz_module->load($data,$info);
+    else
     $viz_module->load($data);
-  }
+  } 
 
 /********************************************************************************
  *                                WRITE METHODS
@@ -65,9 +68,6 @@ class Module extends Model {
    */
   function update_module($modid,$data) {
     // SET MODULE INFO
-    if (isset($_POST['table_view'])) {
-    }
-    else {
     $module['name'] = $data['name'];
     unset($data['name']);
     unset($data['table_view']);
@@ -101,7 +101,6 @@ class Module extends Model {
     }    
     redirect(site_url("campaign/edit/$modid"));
   }
- }
 
   /* PARAMS: $modid - module to delete
    * DESCRP: remove referrences to this module

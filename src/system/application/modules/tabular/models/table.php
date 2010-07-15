@@ -24,8 +24,8 @@ class Table extends model {
     $this->load->model('option');
   } 
   
-  function load($data,$modid=0) {
-    if ($modid==0){ 
+  function load($data,$modid=36) {
+    if ($modid==36){ 
     $query = "SELECT * FROM transaction WHERE userid = $_SESSION[userid] ORDER BY created DESC LIMIT 30";
     }
     else{
@@ -36,6 +36,7 @@ class Table extends model {
      $memos = $this->filter->get_memos($ds['filter_id']);
      $tmp = array();
      foreach($memos AS $m) {
+        print_r($tmp);
 	$m['memo'] = $this->db->escape("%$m[memo]%");
 	array_push($tmp,"memo ILIKE $m[memo] OR merchant ILIKE $m[memo]");
       }
@@ -46,6 +47,7 @@ class Table extends model {
    }
  // $query = "SELECT * FROM transaction WHERE modid = $modid ORDER BY created DESC LIMIT 30";
     $result = $this->db->query($query);
+    $data['other_id'] = $modid;
     $data['transactions'] = $result->result_array();
     $this->load->view("tabular/table", $data);
   }
