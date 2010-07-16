@@ -45,7 +45,7 @@ class Table extends model {
     // CHECK TO SEE IF OTHER MODULE IS PASSING ID TO LOAD FILTERS
     // DISCARD INACTIVE FILTERS
     $filters = array();
-    if (isset($data['other_id'])) {
+    if (isset($data['parent_module_id'])) {
       foreach($this->module->get_filters($data['other_id']) AS $filter) {
         if($filter['active'] == 't')
         array_push($filters, $filter);
