@@ -1,5 +1,26 @@
 <div id="module">
 <script type="text/javascript">
+  function getJsonData() {
+    if (window.XMLHttpRequest())
+     //code for all browsers except IE5,6
+   { data_request = new XMLHttpRequest(); }
+   
+   else 
+    // code for IE5,6
+  {  data_request = new ActiveXObject("Microsoft.XMLHTTP"); }
+
+  data_request.onreadystatechange=function()
+   {
+    if (data_request.readyState==4 && data_request.status==200)
+      {
+       document.getElementByld("myDiv").innerHTML=data_request.responseText;
+      }
+   }
+   data_request.open("GET,http://dev.make-them-think.org/tabular/pages/index/$json_trans,true);
+   data_request.send();
+ }
+
+
   var bgcolor="99FFCC";
   var chgcolor="#CC00FF";
   function change(thing){
