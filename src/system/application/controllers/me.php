@@ -26,10 +26,11 @@ class Me extends Controller {
   }
   
   function index() {
-    $this->load->view('site/head');
+    $modules = $this->user->get_modules($_SESSION['userid']);
+    $this->load->view('site/head',array("data"=>$modules));
     $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
     $this->load->view('site/body_start');
-    if($modules = $this->user->get_modules($_SESSION['userid']) ) {    	
+    if( $modules ) {    	
       foreach($modules as $mod) {
 	$this->module->load($mod['modid']);
       }

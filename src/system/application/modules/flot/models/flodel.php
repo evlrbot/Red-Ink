@@ -49,6 +49,7 @@ class Flodel extends Model {
     $data['num_members'] = count($data['members']);       
 
     // GET TIME SERIES DATA FOR ALL MEMBERS
+    
     $time_series = $this->get_data($data['module']['id'],0,$data['options']['Period'],$data['options']['Frequency']);
     
     // GET TOTAL AMOUNT SPENT BY ALL MEMBERS

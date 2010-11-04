@@ -30,5 +30,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <script language="javascript">
 $(document).ready(function(){});
 </script>
+<script type="text/javascript">
+var widgets = new Array(
+<?php
+$tmp = array();
+foreach($data as $d) {
+   array_push($tmp,$d['modid']);
+}
+echo implode(",",$tmp);
+?>
+);
+
+function prev(id) {
+  id = widgets.indexOf(id);
+  prev_id = id - 1;
+  if(prev_id < 0) {
+    prev_id = widgets.length - 1;
+  }
+  $('#module-'+widgets[id]).hide('fast');
+  $('#module-'+widgets[prev_id]).show('fast');
+}
+
+function next(id) {
+  id = widgets.indexOf(id);
+  next_id = id + 1;
+  if(next_id == widgets.length ) {
+    next_id = 0;
+  }
+  $('#module-'+widgets[id]).hide('fast');
+  $('#module-'+widgets[next_id]).show('fast');
+}
+
+$(document).ready(function() {
+  // HIDE DIV
+<?php
+foreach($data as $d) {
+   echo "$('#module-$d[modid]').hide();\n";
+} 
+?>
+$('#module-<?=$data[0]['modid']?>').show();
+});
+</script>
 </head>
 <body>

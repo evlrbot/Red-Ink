@@ -1,5 +1,7 @@
-<div id="module">
-<div id="<?=$module['id']?>" class="vis"></div>
+<div class="module" id="module-<?=$module['id']?>">
+<a href='#' onclick='next(<?=$module['id']?>)'>Next</a>
+<a href='#' onclick='prev(<?=$module['id']?>)'>Back</a>
+<div id="vis-<?=$module['id']?>" class="vis"></div>
 <? include('stats.php'); ?>
 </div>
 
@@ -13,10 +15,10 @@ $(function () {
       grid: { clickable:true, hoverable:true, autoHighlight:true }
    };
    var data = <?php echo $json ?>;  
-   $.plot($("#<?=$module['id'] ?>"), data, options);
+   $.plot($("#vis-<?=$module['id'] ?>"), data, options);
 
    // BIND INTERACTIVITY FUNCTIONS
-   $("#<?=$module['id']?>").bind("plotclick", function (event, pos, item) {
+   $("#vis-<?=$module['id']?>").bind("plotclick", function (event, pos, item) {
        //alert("You clicked at " + pos.x + ", " + pos.y);
        if (item) {
 	highlight(item.series, item.datapoint);
