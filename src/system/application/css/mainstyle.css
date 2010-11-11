@@ -1,46 +1,64 @@
-body { font-family: Arial; font-size:18px; margin:0px; padding:0px; }
-a { color:#4680FF; text-decoration:none; }
-a:hover { background-color:#4680FF; color:white; }
-.error { text-align:center; color:red; font-weight:normal; }
-.success { text-algin:center; font-weight:bold; }
-#rendertime { position:absolute; bottom:10px; right:10px; font-size:0.7em; }
-#login { padding-top:100px; }
-h2 { font-weight:normal; font-size:1.2em; }
+body { margin:0px; background-color:#F5F5F5; font-family:Georgia,sans-serif; font-size:14px; vertical-align:top; }
+h1 { font-weight:normal; color:#9d1f14; font-style:italic; margin-top:50px;}
+h2,h3,h4 { font-weight:normal; color:#9d1f14; border-bottom:1px solid #9d1f14; }
+h2 { font-size:1.2em; }
+a { color:#9d1f14; text-decoration:none; }
+a:hover { font-style:italic; }
 
-#bigform { width:700px; margin:0px auto 0px auto; text-align:center;}
+.nav { vertical-align:top; width:100%; font-size:1.5em; background-image:url('/system/application/img/red_bkg.jpg'); height:57px; }
+.nav li { list-style-type:none; margin:5px 0px; color:#9d1f14; }
+.nav a { color:#9d1f14; text-decoration:none; }
+.nav a:hover { font-style:italic; }
+.nav .login { border:dashed 1px #9d1f14; border-left:0px; border-right:0px; margin:20px 0px; padding:5px 0px; display:block; width:51%; text-align:center; }
+.nav ul ul { padding:0px; }
+.nav ul ul li { font-size:0.7em; list-style-type:square; list-style-position:inside; margin:0px; padding:0px; }
+.nav #sponsors,
+.nav #secured  { padding-left:40px; }
+.nav #sponsors img { width:170px;  display:block; margin:0px 0px 20px 0px; border:0px solid red; }
+.nav #sponsors h1,
+.nav #secured h1 { font-size:12px; margin:0px; }
+
+.error { text-align:center; color:white; background-color:#9D1F14; font-weight:normal; font-size:1.5em; }
+.success { text-algin:center; font-weight:bold; color:white; background-color:#6fb33d; font-size:1.5em; }
+
+#bigform { margin:0px auto 0px auto; text-align:center; font-size:1.0em; }
 #bigform label { clear:right; display:block; }
-#bigform input { font-size:1.5em; margin:15px 10px; text-align:center; }
-#bigform textarea { font-size:1.5em; font-family:inherit; }
+#bigform input { font-size:1.5em; margin:15px 10px; text-align:center; color:#000; font-family:inherit; }
+#bigform textarea { font-size:1.5em; color:#000; font-family:inherit; }
 #bigform select { font-size:1.5em; padding:0px 25px; }
 #bigform p { margin:0px; }
 #bigform p em { font-weight:bold; }
 #bigform tfoot td { text-align:center; }
 #bigform.login { margin-top:300px; }
 
-#site_nav { margin-bottom:20px; padding:5px; border-bottom:1px solid #AAA; text-align:left; }
-#site_nav em { font-style:normal; font-weight:bold; }
-#site_nav .logout { float:right; }
-#site_nav .sitelinks a { margin:0px 10px; }
+#body { width:800px; border:0px solid black; }
+#body h1 { color:#9D1F14; text-align:center; margin:25px; }
+#body h3 { margin:60px 0px 0px 0px; }
+#body object, 
+#body embed { margin:25px auto; }
+#body h1 a.small { font-size:14px; vertical-align:middle; }
+#body h1 a.small:hover { color:white; background-color:#9d1f14; }
+#body #secured { text-align:center; }
+#body #modulelist em { font-weight:bold;  }
+#body #modulelist li { margin:15px 0px; }
+#body .module { }
+#body .module .vis { width:90%; height:350px; margin:20px auto; }
+#body .module #stats { width:100%; }
+#body .module #stats p { margin:5px 0px; }
+#body .module #stats b { margin:0px; margin-right:0px; }
+#body .module #stats td { vertical-align:top; width:33%; }
+#body .module #stats ol { margin:0px; padding:0px; }
+#body .module #stats li { list-style-position:inside; }
+#body .module #stats h1 { color:black; font-size:1.0em; margin:0px 0px 5px 0px; font-weight:normal; border-bottom:1px solid black; }
 
-#user_nav { margin:0px 0px 0px 0px; padding:0px; width:210px; border: 0px solid black; float: left; height: 600px; }
-#user_nav a:hover { background-color:white; color:#0E2964; }
-#user_nav em {  font-style:italic; font-weight:normal; color:#999; }
-#user_nav ul { padding-left:10px; margin-bottom:20px; }
-#user_nav li { list-style-type:none; margin:5px 0px; }
-#user_nav > li { font-weight:bold; margin:0px 0px 0px 0px; background-color:#4680FF; color:white; text-align:right; padding:0px 10px; font-size:1.1em; }
+#body .module_option { float:left; border:0px solid red; margin:10px 10px; }
+#body .module_option p:first-child { font-weight:bold; font-size:1.0em; }
 
-#user_body { width:700px; margin:10px 100px 200px 230px; border:0px solid black; }
-#user_body h1 {  color:#4680FF; text-align:center; }
-#user_body h3 { border:0px solid blue; margin:60px 0px 0px 0px; }
-#user_body object, 
-#user_body embed { margin:25px auto; }
-#user_body #module { border:text-align:center;}
-#user_body #modulelist em { font-weight:bold;  }
-#user_body #modulelist li { margin:15px 0px; }
-#user_body h1 a.small { font-size:14px; vertical-align:middle; }
-#user_body .vis { width:90%; height:350px; margin:0px auto; }
-
-#body { width:800px; border:px solid black; position:absolute; left:300px; top:100px; }
+#body #module #tabular { border:0px solid black; width:100%; margin:10px; }
+#body #module #tabular thead { font-weight:bold; text-align:center; }
+#body #module #tabular .row1 { background-color:#e6f5d5; }
+#body #module #tabular .row2 { background-color:white; }
+#body #module #tabular td { padding:5px; }
 
 table#list { margin:0px auto; }
 table#list thead { font-weight:bold; text-align:center; }
@@ -52,8 +70,19 @@ ul#list em { font-weight:bold; }
 
 #individual_transactions { margin:0px auto; }
 
-#bizlist li { margin: 10px 0px; }
-#bizlist li a { margin:0px 15px 0px 0px; }
+#filter_list li { margin: 10px 20px; display:block; float:left;}
+#filter_list li em { font-weight:bold; }
+#filter_list li a { margin:0px 15px 0px 0px; }
 
 #viz_stacked {margin-left:120px;}
 #viz_stacked input {margin:20px;}
+
+/* WIKI */
+#wikicmds { text-align:right; }
+#wikicmds li { display:inline; list-style-type:none; }
+#wikicmds a { text-decoration:none; color:#9d1f14; }
+
+.body { vertical-align:top; }
+.body p { margin:20px 0px; }
+.body ul {  padding:0px; }
+.body li { list-style-position:inside; }

@@ -17,10 +17,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html>
 <head>
-<title><?php echo isset($webpagename) ? $webpagename : "Red Ink ~ Open Source Consumer Analytics for People and Communities";?></title>
+<title><?php echo isset($webpagename) ? $webpagename : "Red Ink ~ Where money talks";?></title>
 <link rel="shortcut icon" href="http://www.make-them-think.org/img/redink.ico.png" />
 <style type="text/css" media="all">
-@import url("http://www.make-them-think.org/mainstyle.css");
+@import url("/system/application/css/mainstyle.css");
 </style>
 <script language="javascript" src="http://www.make-them-think.org/lib.js"></script>
 <script language="javascript" src="/system/application/js/jquery-1.3.2.min.js" ></script>
