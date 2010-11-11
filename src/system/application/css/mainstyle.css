@@ -7,6 +7,7 @@ a:hover { font-style:italic; }
 
 .nav { vertical-align:top; width:100%; font-size:1.5em; background-image:url('/system/application/img/red_bkg.jpg'); height:57px; }
 .nav li { list-style-type:none; margin:5px 0px; color:#9d1f14; }
+.nav img {  border:0px; }
 .nav a { color:#9d1f14; text-decoration:none; }
 .nav a:hover { font-style:italic; }
 .nav .login { border:dashed 1px #9d1f14; border-left:0px; border-right:0px; margin:20px 0px; padding:5px 0px; display:block; width:51%; text-align:center; }
@@ -19,7 +20,7 @@ a:hover { font-style:italic; }
 .nav #secured h1 { font-size:12px; margin:0px; }
 
 .error { text-align:center; color:white; background-color:#9D1F14; font-weight:normal; font-size:1.5em; }
-.success { text-algin:center; font-weight:bold; color:white; background-color:#6fb33d; font-size:1.5em; }
+.success { text-align:center; font-weight:bold; color:white; background-color:#6fb33d; font-size:1.5em; }
 
 #bigform { margin:0px auto 0px auto; text-align:center; font-size:1.0em; }
 #bigform label { clear:right; display:block; }
@@ -31,7 +32,7 @@ a:hover { font-style:italic; }
 #bigform tfoot td { text-align:center; }
 #bigform.login { margin-top:300px; }
 
-#body { width:800px; border:0px solid black; }
+#body { width:1000px; border:0px solid black; margin:0px auto; }
 #body h1 { color:#9D1F14; text-align:center; margin:25px; }
 #body h3 { margin:60px 0px 0px 0px; }
 #body object, 

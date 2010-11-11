@@ -27,9 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <script language="javascript" src="/system/application/js/jquery.flot.js" ></script>
 <script language="javascript" src="/system/application/js/jquery.flot.stack.js" ></script>
 <script language="javascript" src="/system/application/js/jquery.form.js" ></script>
-<script language="javascript">
-$(document).ready(function(){});
-</script>
 <script type="text/javascript">
 var widgets = new Array(
 <?php
