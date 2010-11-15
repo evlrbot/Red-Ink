@@ -33,6 +33,7 @@ class Me extends Controller {
     if( $modules ) {    	
       foreach($modules as $mod) {
 	$this->module->load($mod['modid']);
+	echo "Hello";
       }
     }
     else {
