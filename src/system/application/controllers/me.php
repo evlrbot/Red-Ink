@@ -30,7 +30,6 @@ class Me extends Controller {
     $this->load->view('site/head',array("data"=>$modules));
     $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
     $this->load->view('site/body_start');
-    echo 'hello';
     if( $modules ) {    	
       foreach($modules as $mod) 
       {
