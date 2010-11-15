@@ -1,9 +1,8 @@
-<ul class='divider'>
-<li><a href='/me'>My Dashboard</a></li>
-<li><a href='/me/account'>My Account</a></li>
-<li><a href='/filters/'>Filters</a></li>
-<li><a href='/campaign/index'>Campaigns</a></li>
-<ul>
+<a href='/me'>My Dashboard</a></li>
+<a href='/me/account'>My Account</a></li>
+<a href='/filters/'>Filters</a></li>
+<a href='/campaign/index'>Campaigns</a></li>
+
 <?php
 foreach($modules AS $mod) {
    if(isset($mod['id']) ) {

@@ -15,18 +15,19 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<html>
-<head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 <title><?php echo isset($webpagename) ? $webpagename : "Red Ink ~ Where money talks";?></title>
+<meta name="description" content="Red Ink" />
 <link rel="shortcut icon" href="http://www.make-them-think.org/img/redink.ico.png" />
-<style type="text/css" media="all">
-@import url("/system/application/css/mainstyle.css");
-</style>
-<script language="javascript" src="http://www.make-them-think.org/lib.js"></script>
-<script language="javascript" src="/system/application/js/jquery-1.3.2.min.js" ></script>
-<script language="javascript" src="/system/application/js/jquery.flot.js" ></script>
-<script language="javascript" src="/system/application/js/jquery.flot.stack.js" ></script>
-<script language="javascript" src="/system/application/js/jquery.form.js" ></script>
+<link rel="stylesheet" type="text/css" href="/system/application/css/mainstyle.css" />
+<script type="text/javascript" src="http://www.make-them-think.org/lib.js"></script>
+<script type="text/javascript" src="/system/application/js/jquery-1.3.2.min.js" ></script>
+<script type="text/javascript" src="/system/application/js/jquery.flot.js" ></script>
+<script type="text/javascript" src="/system/application/js/jquery.flot.stack.js" ></script>
+<script type="text/javascript" src="/system/application/js/jquery.form.js" ></script>
 <script type="text/javascript">
 var widgets = new Array(
 <?php
@@ -46,6 +47,7 @@ function prev(id) {
   }
   $('#module-'+widgets[id]).hide('fast');
   $('#module-'+widgets[prev_id]).show('fast');
+  $.plot($("#vis-"+id)).draw();
 }
 
 function next(id) {
@@ -58,8 +60,8 @@ function next(id) {
   $('#module-'+widgets[next_id]).show('fast');
 }
 
-$(document).ready(function() {
-  // HIDE DIV
+$(window).load(function() {
+// HIDE WIDGETS
 <?php
 foreach($data as $d) {
    echo "$('#module-$d[modid]').hide();\n";
