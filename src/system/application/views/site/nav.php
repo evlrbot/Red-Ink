@@ -10,12 +10,12 @@ $(document).ready(function() {
 <div class="nav">
 <div style="width:1000px; margin:0px auto; text-align:right;">
 <img src="/system/application/img/nav/redink_logo.jpg" alt="Red Ink" style="float:left;"/>
+<a href='/main'><img src="/system/application/img/nav/about_1.jpg" alt="About" class="rollover"/></a>
 <a href='#'><img src="/system/application/img/nav/blog_1.jpg" alt="Blog" class="rollover"/></a>
-<a href='#'><img src="/system/application/img/nav/download_1.jpg" alt="Download" class="rollover"/></a>
-<a href='#'><img src="/system/application/img/nav/documentation_1.jpg" alt="Documentation" class="rollover"/></a>
-<a href='#'><img src="/system/application/img/nav/contact_1.jpg" alt="Contact" class="rollover"/></a>
+<a href='#'><img src="/system/application/img/nav/development_1.jpg" alt="Development" class="rollover"/></a>
+<a href='#'><img src="/system/application/img/nav/privacy_1.jpg" alt="Privacy" class="rollover"/></a>
 <img src="/system/application/img/nav/divider.jpg"/>
-<a href='/logout'><img src="/system/application/img/nav/logout_1.jpg" class="rollover"/></a>
+<a href='/<?= $this->auth->access() ? 'logout':'login';?>'><img src="/system/application/img/nav/<?= $this->auth->access() ? 'logout_1.jpg':'login_1.jpg';?>" class="rollover"/></a>
 </div>
 
 </div>
