@@ -402,7 +402,7 @@ border-bottom: 1px solid #70241a;
 /* Introduction */
 #introduction {
 	clear: both;
-	height: 250px;
+	height: 630px;
 	width: 100%;
 	margin: 0;
 	padding: 2em 0;
@@ -415,6 +415,7 @@ border-bottom: 1px solid #70241a;
 	column-gap: 40px;
 }
 
+#introduction li { margin:15px 0px; }
 #introduction h2 {
 	margin-top: .25em;
 	-webkit-column-span: all;
@@ -422,7 +423,9 @@ border-bottom: 1px solid #70241a;
     column-span: all;
 }
 
-#introduction p { font-family:Arial; }
+#introduction p,
+#introduction li { font-family:Arial; }
+#introduction ul { padding:0px; list-style-type:none; }
 
 /* Get Started */
 #get-started {

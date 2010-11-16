@@ -12,8 +12,8 @@ $(document).ready(function() {
 <img src="/system/application/img/nav/redink_logo.jpg" alt="Red Ink" style="float:left;"/>
 <a href='/main'><img src="/system/application/img/nav/about_1.jpg" alt="About" class="rollover"/></a>
 <a href='#'><img src="/system/application/img/nav/blog_1.jpg" alt="Blog" class="rollover"/></a>
-<a href='#'><img src="/system/application/img/nav/development_1.jpg" alt="Development" class="rollover"/></a>
-<a href='#'><img src="/system/application/img/nav/privacy_1.jpg" alt="Privacy" class="rollover"/></a>
+<a href='/main/development'><img src="/system/application/img/nav/development_1.jpg" alt="Development" class="rollover"/></a>
+<a href='/main/privacy'><img src="/system/application/img/nav/privacy_1.jpg" alt="Privacy" class="rollover"/></a>
 <img src="/system/application/img/nav/divider.jpg"/>
 <a href='/<?= $this->auth->access() ? 'logout':'login';?>'><img src="/system/application/img/nav/<?= $this->auth->access() ? 'logout_1.jpg':'login_1.jpg';?>" class="rollover"/></a>
 </div>
