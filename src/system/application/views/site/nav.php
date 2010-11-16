@@ -15,7 +15,7 @@ $(document).ready(function() {
 <a href='#'><img src="/system/application/img/nav/documentation_1.jpg" alt="Documentation" class="rollover"/></a>
 <a href='#'><img src="/system/application/img/nav/contact_1.jpg" alt="Contact" class="rollover"/></a>
 <img src="/system/application/img/nav/divider.jpg"/>
-<a href='#'><img src="/system/application/img/nav/logout_1.jpg" class="rollover"/></a>
+<a href='/logout'><img src="/system/application/img/nav/logout_1.jpg" class="rollover"/></a>
 </div>
 
 </div>
@@ -24,9 +24,14 @@ $(document).ready(function() {
 <?php if( $this->auth->access() ) { ?>
 <!-- START SUB NAV -->
 <div id="subnav">
-<p><?=$email?></p>
+<p>Welcome, <?=$email?></p>
 <div class='rule'>&nbsp;</div>
-<a href="#"><img src="/system/application/img/subnav/dashboard_1.jpg" class="rollover"/></a>
+<ul>
+<li><a href="/me"><img src="/system/application/img/subnav/linechart.png"/>Dashboard</a></li>
+<li><a href="/campaign"><img src="/system/application/img/subnav/tags.png"/>Campaigns</a></li>
+<li><a href="#"><img src="/system/application/img/subnav/shoebox.png"/>Shoeboxes</a></li>
+<li><a href="/me/account"><img src="/system/application/img/subnav/gear.png"/>Settings</a></li>
+</ul>
 </div>
 <!-- END SUB NAV -->
 <?php } ?>

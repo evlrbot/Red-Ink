@@ -15,9 +15,9 @@
 <li>
 <h4>Sponsors</h4>
 <ul>
-<li><a href="#">MIT Center for Future Civic Media</a></li>
-<li><a href="#">John S. &amp; James L. Knight Foundation</a></li>
-<li><a href="#">MIT Media Lab</a></li>                
+<li><a href="http://media.mit.edu">MIT Media Lab</a></li>                
+<li><a href="http://civic.mit.edu">Center for Future Civic Media</a></li>
+<li><a href="http://knightfoundation.org/">Knight Foundation</a></li>
 </ul>
 </li>
 </ul>    

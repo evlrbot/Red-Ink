@@ -39,26 +39,37 @@ echo implode(",",$tmp);
 ?>
 );
 
+var current_module = 0;
+
+function goto(id) {
+  index = widgets.indexOf(id);
+  $('#module-'+current_module).hide();
+  $('#module-'+id).show();
+  current_module = id;
+}
+
 function prev(id) {
-  id = widgets.indexOf(id);
-  prev_id = id - 1;
+  index = widgets.indexOf(id);
+  prev_id = index - 1;
   if(prev_id < 0) {
     prev_id = widgets.length - 1;
   }
-  $('#module-'+widgets[id]).hide('fast');
-  $('#module-'+widgets[prev_id]).show('fast');
-  $.plot($("#vis-"+id)).draw();
+  $('#module-'+current_module).hide();
+  $('#module-'+widgets[prev_id]).show();
+  current_module = widgets[prev_id];
 }
 
 function next(id) {
-  id = widgets.indexOf(id);
-  next_id = id + 1;
+  index = widgets.indexOf(id);
+  next_id = index + 1;
   if(next_id == widgets.length ) {
     next_id = 0;
   }
-  $('#module-'+widgets[id]).hide('fast');
-  $('#module-'+widgets[next_id]).show('fast');
+  $('#module-'+current_module).hide();
+  $('#module-'+widgets[next_id]).show();
+  current_module = widgets[next_id];
 }
+
 
 $(window).load(function() {
 // HIDE WIDGETS
@@ -68,6 +79,7 @@ foreach($data as $d) {
 } 
 ?>
 $('#module-<?=$data[0]['modid']?>').show();
+current_module = widgets[0];
 });
 </script>
 </head>
