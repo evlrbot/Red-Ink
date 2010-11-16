@@ -36,7 +36,7 @@
 <p>Virtual and geographic communities of financial data sharers can form on Red Ink to create new sources of information for self-knowledge and understanding of complex personal, community, economic, environmental, and civic concerns and how to better coordinate their solutions.</p>
 <p>Red Ink posits that just like volunteering time or donating money, personal financial data is itself an asset that people can share to gain group leverage. Further, in the hands of everyday people, the data and tools of corporate scale consumer analysis will be reborn to serve larger and more personally meaningful goals.</p>  
 <p>Red Ink is a research project of the MIT/Knight Center for Future Civic Media at the MIT Media Lab.</p>      
-<a class="action-button" id="get-started" href="#">Get Started &raquo;</a>
+<a class="action-button" id="get-started" href="http://dev.make-them-think.org/SignUp">Get Started &raquo;</a>
 </div>
           
 </div>
