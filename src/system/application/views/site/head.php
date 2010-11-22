@@ -28,6 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <script type="text/javascript" src="/system/application/js/jquery.flot.js" ></script>
 <script type="text/javascript" src="/system/application/js/jquery.flot.stack.js" ></script>
 <script type="text/javascript" src="/system/application/js/jquery.form.js" ></script>
+<script type="text/javascript" src="/system/application/js/jquery.roundabout.min.js" ></script>
 <script type="text/javascript">
 var widgets = new Array(
 <?php
@@ -70,7 +71,7 @@ function next(id) {
   current_module = widgets[next_id];
 }
 
-$(document).ready(function() {
+$(window).load(function() {
       $('user_modules_carousel').roundabout({
          shape: 'lazySusan'
       });
