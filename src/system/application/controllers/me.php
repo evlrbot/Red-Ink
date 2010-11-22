@@ -34,6 +34,7 @@ class Me extends Controller {
       foreach($modules as $mod) {
 	$this->module->load($mod['modid']);
       }
+			$this->load->view('modules/user_list_carousel',array("modules"=>$modules));
       $this->load->view('modules/user_list',array("modules"=>$modules));
     }
     else {

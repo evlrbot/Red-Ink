@@ -70,6 +70,12 @@ function next(id) {
   current_module = widgets[next_id];
 }
 
+$(document).ready(function() {
+      $('user_modules_carousel').roundabout({
+         shape: 'lazySusan'
+      });
+   });
+
 
 $(window).load(function() {
 // HIDE WIDGETS
