@@ -71,9 +71,11 @@ function next(id) {
   current_module = widgets[next_id];
 }
 
-$(window).load(function() {
-      $('user_modules_carousel').roundabout({
-         shape: 'lazySusan'
+$(document).ready(function() {
+      $('ul#user_modules_carousel').roundabout({
+				 childSelector: 'li',
+         shape: 'lazySusan',
+				 reflect: true
       });
    });
 
