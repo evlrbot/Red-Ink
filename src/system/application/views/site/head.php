@@ -21,9 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 <title><?php echo isset($webpagename) ? $webpagename : "Red Ink ~ Where money talks";?></title>
 <meta name="description" content="Red Ink" />
-<link rel="shortcut icon" href="http://www.make-them-think.org/img/redink.ico.png" />
+<link rel="shortcut icon" href="/system/application/img/redink.ico.png" />
 <link rel="stylesheet" type="text/css" href="/system/application/css/mainstyle.css" />
-<script type="text/javascript" src="http://www.make-them-think.org/lib.js"></script>
 <script type="text/javascript" src="/system/application/js/jquery-1.3.2.min.js" ></script>
 <script type="text/javascript" src="/system/application/js/jquery.flot.js" ></script>
 <script type="text/javascript" src="/system/application/js/jquery.flot.stack.js" ></script>

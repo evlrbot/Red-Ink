@@ -41,5 +41,7 @@
 </div>
 <!-- END SUB FOOT -->
 
+<span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=G4UQbvhIZiZTX1SSgnLJ0rLnoycCBCzCVIQ3wTK3p2tqy8BtZj7etcALg"></script><br/><a style="font-family: arial; font-size: 9px" href="http://www.godaddy.com" target="_blank">GoDaddy</a></span>
+
 </body>
 </html>
