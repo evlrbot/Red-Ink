@@ -1,7 +1,7 @@
 <div id="main-content" class="intro-page">
 <div id="splash">
 <div id="splash-head">
-<img src="http://dev.make-them-think.org/system/application/img/redink-logo-large.png" alt="Red Ink"/>
+<img src="/system/application/img/redink-logo-large.png" alt="Red Ink"/>
 <h2>Where Money Talks</h2>
 <h3>"Share, aggregate, analyze, visualize, and publish financial data as an individuals and interest groups."</h3>
 </div>
