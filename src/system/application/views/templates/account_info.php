@@ -34,6 +34,7 @@
 
 <p><?= form_submit(array('id'=>'submit','value'=>'Update')); ?></p>
 
+<!--
 <h1>Wesabe Account</h1>
 <p><?= form_label('Login','wesabe_login'); ?></p>
 <?= form_error('wesabe_login'); ?>
@@ -44,5 +45,5 @@
 <?= form_password(array('id'=>'wesabe_password','name'=>'wesabe_password','value'=>$wesabe_password)); ?>
 
 <p><?= form_submit(array('id'=>'submit','value'=>'Update')); ?></p>
-
+-->
 <?= form_close(); ?>

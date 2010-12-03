@@ -1,8 +1,9 @@
-body { margin:0px; background-color:#F5F5F5; font-family:Georgia,sans-serif; font-size:14px; vertical-align:top; }
+body { margin:0px; background-color:#F5F5F5; font-family:Lucida Sans Unicode, Lucida Grande, sans-serif; font-size:14px; vertical-align:top; }
 /*body { margin:0px; background-color:#000; font-family:Georgia,sans-serif; font-size:14px; vertical-align:top; }*/
-h1 { font-weight:normal; color:#9d1f14; font-style:italic; margin-top:50px;}
+h1 { color:#9d1f14; margin-top:50px;}
 h2,h3,h4 { font-weight:normal; color:#9d1f14; border-bottom:1px solid #9d1f14; }
 h2 { color: #474747; font-weight: normal; margin: 1.25em 0; font-size: 1.8em; font-style:italic; border:0px; }
+a { color:#9d1f14; }
 
 a.attention-button { -webkit-transition-property: background-color, box-shadow; -webkit-transition-duration: .3s;padding: .6em 1.75em;border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; color: #fff; text-decoration: none;font-size: .85em; }                 
 a.attention-button:hover, 
@@ -47,6 +48,7 @@ ul#user_modules_carousel { margin:25px 0px 0px 125px; width:530px; height:50px; 
 #bigform label { clear:right; display:block; }
 #bigform input { font-size:1.5em; margin:15px 10px; text-align:center; color:#000; font-family:inherit; }
 #bigform textarea { font-size:1.5em; color:#000; font-family:inherit; }
+
 #bigform select { font-size:1.5em; padding:0px 25px; }
 #bigform p { margin:0px; }
 #bigform p em { font-weight:bold; }
@@ -63,8 +65,14 @@ ul#user_modules_carousel { margin:25px 0px 0px 125px; width:530px; height:50px; 
 #body #secured { text-align:center; }
 
 #body #modulelist em { font-weight:bold; font-size:1.3em; }
-#body #modulelist li { margin:15px 0px; float:left; width:250px; border:1px solid #CCC; background-color:#DDD; -moz-border-radius:5px;list-style-type:none; margin:10px; padding:10px; height:150px; }
-#modulelist p { font-family:Arial;  }
+#body ul#modulelist { border:0px solid black; padding:0px; font-size:18px; }
+#body #modulelist li { margin:10px 0px; -moz-border-radius:5px;list-style-type:none; padding:0px; }
+#modulelist h1 { font-weight:bold; text-align:left; margin:10px 0px; font-size:1.5em; font-style:normal; }
+#modulelist .description { background-color:#DEDEDE; -moz-border-radius:5px; -webkit-border-radius:5px; padding:10px; position:relative; }
+#modulelist .description:after { content:""; display:block; position:absolute; top:-19px; left:50px; width:0; height:0; border-width: 0px 0px 20px 20px; border-style:solid; border-color:#DEDEDE transparent; }
+#modulelist .actions {text-align:right;  }
+#modulelist .actions a { padding-right:10px; }
+#modulelist a:hover { text-decoration:none;  }
 
 #body .module {  }
 #body .module .vis { width:100%; height:300px; margin:20px auto; }
