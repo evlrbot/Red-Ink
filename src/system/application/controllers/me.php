@@ -30,12 +30,12 @@ class Me extends Controller {
     $this->load->view('site/head',array("data"=>$modules));
     $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
     $this->load->view('site/body_start');
+    $this->load->view('modules/user_list_carousel',array("modules"=>$modules));
     if( $modules ) {    	
       foreach($modules as $mod) {
 	$this->module->load($mod['modid']);
       }
-			$this->load->view('modules/user_list_carousel',array("modules"=>$modules));
-			//      $this->load->view('modules/user_list',array("modules"=>$modules));
+      // $this->load->view('modules/user_list',array("modules"=>$modules));
     }
     else {
       $this->load->view('modules/welcome_message');

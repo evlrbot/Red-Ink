@@ -1,14 +1,14 @@
 <div class="module" id="module-<?=$module['id']?>">
-<div id="vis-<?=$module['id']?>" class="vis"></div>
-<? //include('stats.php'); ?>
 
 <!-- START MODULE NAV -->
 <div class="module_nav">
-<a class='back' href='#' onclick='prev(<?=$module['id']?>)'><img src="/system/application/img/subnav/squiggle2.png" alt="squiggle"/>Back</a>
-<a class='next' href='#' onclick='next(<?=$module['id']?>)'>Next <img src="/system/application/img/subnav/squiggle.png" alt="squiggle"/></a>
+<a class='back' href='#' onclick='prev(<?=$module['id']?>)'>Back</a>
+<a class='next' href='#' onclick='next(<?=$module['id']?>)'>Next</a>
 </div>
 <!-- END MODULE NAV -->
 
+<div id="vis-<?=$module['id']?>" class="vis"></div>
+<? //include('stats.php'); ?>
 </div>
 <script id="source" language="javascript" type="text/javascript">
 $(function () {
