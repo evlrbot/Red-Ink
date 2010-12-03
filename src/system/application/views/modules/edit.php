@@ -9,9 +9,11 @@
 <?= form_error('description'); ?>
 <?= form_textarea(array('id'=>'description','name'=>'description','cols'=>37,'rows'=>2, 'value'=>"$module[description]")); ?>
 
-<!-- START PERIOD / FREQUENCY / STACKED -->
+<div class="view">
+<? $this->module->load($module['id']);  // LOAD VISUALIZATION ?>
+</div>
+
 <?php
-$this->module->load($module['id']);  // LOAD VISUALIZATION
 $this->load->model($module['module'],'viz_module');
 $this->viz_module->load_options($module['id']);  // LOAD OPTIONS
 ?>
