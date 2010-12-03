@@ -41,8 +41,8 @@ a.attention-button:active {
 .success { text-align:center; font-weight:bold; color:white; background-color:#6fb33d; font-size:1.5em; }
 
 ul#user_modules_carousel { margin:25px 0px 0px 125px; width:530px; height:50px; border:0px solid black; padding:0px; }
-#user_modules_carousel li { float:left; list-style:none; margin:0px; padding:10px; width:175px; -moz-border-radius:5px; border:1px solid #999; background-color:#DDD; overflow:hidden; font-size:1.8em;   -webkit-border-radius:5px; }
-#user_modules_carousel li img { width:15px; vertical-align:middle; padding-right:5px; }
+#user_modules_carousel li { float:left; list-style:none; margin:0px; padding:10px; width:175px; -moz-border-radius:5px; border:1px solid #999; background-color:#DDD; overflow:hidden; font-size:1.8em;   -webkit-border-radius:5px; line-height:1.0em; }
+#user_modules_carousel li img { width:20px; vertical-align:middle; padding-right:5px; }
 
 #bigform { margin:0px auto 0px auto; text-align:center; font-size:1.0em; }
 #bigform label { clear:right; display:block; }
@@ -76,19 +76,24 @@ ul#user_modules_carousel { margin:25px 0px 0px 125px; width:530px; height:50px; 
 
 #body .module {  }
 #body .module .vis { width:100%; height:300px; margin:20px auto; }
-#body .module #stats { width:100%; }
-#body .module #stats p { margin:5px 0px; }
-#body .module #stats b { margin:0px; margin-right:0px; }
-#body .module #stats td { vertical-align:top; width:33%; }
-#body .module #stats ol { margin:0px; padding:0px; }
-#body .module #stats li { list-style-position:inside; }
-#body .module #stats h1 { color:black; font-size:1.0em; margin:0px 0px 5px 0px; font-weight:normal; border-bottom:1px solid black; }
+
 .module_nav { height:90px; border:0px solid black; margin-top:-50px; font-size:2.0em;}
 .module_nav a { margin:10px; font-size:1.2em; text-decoration:none; color:#333; -moz-border-radius:5px; -webkit-border-radius:5px; }
 .module_nav a:hover { background-color:#DEDEDE; }
 .module_nav .back { float:left; }
 .module_nav .next { float:right; }
 .module_nav img { vertical-align:middle; border:0px; }
+
+.module_subnav { text-align:center; border:1px solid #999; background-color:#DEDEDE; padding:10px; margin:0px; -moz-border-radius-topleft:15px; -webkit-border-top-left-radius:15px; -moz-border-radius-topright:15px; -webkit-border-top-right-radius:15px; }
+.module_subnav li { display:inline; list-style-type:none;  }
+.module_subnav a { margin:0px 20px; padding:5px 10px; -moz-border-radius:5px; -webkit-border-radius:5px; background-color:#DEDEDE; color:#666; border:1px solid #DEDEDE; text-decoration:none; }
+.module_subnav a:hover { font-style:normal; background-color:#C5C5C5;-moz-border-radius:5px; border:1px solid #666; }
+.module_subnav a img { vertical-align:middle; padding:5px; border:0px; width:20px; } 
+
+.module #members,
+.module #stats,
+.module #options,
+.module #details { border:1px solid #999; padding:10px; border-top:0px; }
 
 #body .module_option { float:left; border:0px solid red; margin:10px 10px; }
 #body .module_option p:first-child { font-weight:bold; font-size:1.0em; }

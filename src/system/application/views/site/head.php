@@ -40,6 +40,7 @@ echo implode(",",$tmp);
 );
 
 var current_module = 0;
+var current_option = "details";
 
 function goto(id) {
   index = widgets.indexOf(id);
@@ -70,6 +71,12 @@ function next(id) {
   current_module = widgets[next_id];
 }
 
+function goto_option(new_option) {
+  $('#module-'+current_module+' #'+current_option).hide();
+  $('#module-'+current_module+' #'+new_option).show();
+  current_option = new_option;
+}
+
 $(document).ready(function() {
       $('ul#user_modules_carousel').roundabout({
 				 childSelector: 'li',
@@ -84,6 +91,9 @@ $(window).load(function() {
 <?php
 foreach($data as $d) {
    echo "$('#module-$d[modid]').hide();\n";
+   echo "$('#module-$d[modid] #members').hide();\n";
+   echo "$('#module-$d[modid] #options').hide();\n";
+   echo "$('#module-$d[modid] #stats').hide();\n";
 } 
 ?>
 $('#module-<?=$data[0]['modid']?>').show();

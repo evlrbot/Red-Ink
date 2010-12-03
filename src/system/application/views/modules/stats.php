@@ -1,4 +1,4 @@
-<table id="stats" cellpadding='10' cellspacing='0'>
+<table id="stats-<?=$module['id']?>" cellpadding='10' cellspacing='0' border="1">
 <tr>
 <td>
 <h1>Module</h1>
@@ -8,7 +8,7 @@ foreach($options AS $opt) {
   $module['options'][$opt['name']] = $opt['value'];
 }
 ?>
-<p><b><?=$module['name']?>: </b><em><?=$module['description']?></em></p>
+<p><b><?=$module['name']?>:</b><?=$module['description']?></p>
    <p>Period: <b><?=$module['options']['Period']?> Months</b> </p>
 <p>Interval: <b> 
 <?php
