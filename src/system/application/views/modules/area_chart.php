@@ -7,18 +7,25 @@
 </div>
 <!-- END MODULE NAV -->
 
+<!-- START VIS -->
 <div id="vis-<?=$module['id']?>" class="vis"></div>
+<!-- END VIS -->
 
+<!-- START SUB NAV -->
 <ul class="module_subnav">
-<li><a href='#' onclick='goto_option("members")'><img src="/system/application/img/subnav/group.png"/>Members</a></li>
-<li><a href='#' onclick='goto_option("details")'><img src="/system/application/img/subnav/magnify.png"/>Details</a></li>
-<li><a href='#' onclick='goto_option("options")'><img src="/system/application/img/subnav/gear.png"/>Options</a></li>
-<li><a href='#' onclick='goto_option("stats")'><img src="/system/application/img/subnav/linechart.png"/>Stats</a></li>
+<li><a href='#' onclick='return goto_option("members")'><img src="/system/application/img/subnav/group.png"/>Members</a></li>
+<li><a href='#' onclick='return goto_option("details")'><img src="/system/application/img/subnav/magnify.png"/>Details</a></li>
+<li><a href='#' onclick='return goto_option("options")'><img src="/system/application/img/subnav/gear.png"/>Options</a></li>
+<li><a href='#' onclick='return goto_option("stats")'><img src="/system/application/img/subnav/linechart.png"/>Stats</a></li>
+<li><a href='#' onclick='return goto_option("share")'><img src="/system/application/img/subnav/linechart.png"/>Share</a></li>
 </ul>
-<div id="members"><p><b>Members:</b> <?=$num_members?></p></div>
-<div id="details"><p><b><?=$module['name']?>: </b><?=$module['description']?></p></div>
-<div id="options"><p><b>Options:</b> User settings for a campaign go here.</p></div>
-<div id="stats">
+<!-- END SUB NAV -->
+
+<!-- START OPTIONS -->
+<div class="option members"><p><b>Members:</b> <?=$num_members?></p></div>
+<div class="option details"><p><b><?=$module['name']?>: </b><?=$module['description']?></p></div>
+<div class="option options"><p><b>Options:</b> User settings for a campaign go here.</p></div>
+<div class="option stats">
 <p><b>Stats:</b><br/>
 <b>Our Total:</b> $<?=$total_spend?></b><br/>
 <b>My Total:</b> $$my_spend<br/>
@@ -26,8 +33,25 @@
 <b>Avg/Interval:</b> $<?=$avg_spend_per_interval?></b><br/>
 <b>Avg/User:</b> $<?= ($total_spend && $num_members) ? round(($total_spend/$num_members),2) : 0; ?></p>
 </div>
+<div class="option share">
+<p>E-mail to a friend:</p>
+<form><input type="button" onClick="invite_popup()" value="Invite Friends"></form>
+
+<p>Embed Code:</p>
+<textarea cols="80" rows="2">
+<iframe src="<?=site_url("embed/index/$module[id]");?>" width="100%" height="500px"></iframe>
+</textarea>
+
+<p>Embed Preview:</p>
+<iframe src="<?=site_url("embed/index/$module[id]");?>" width="100%" height="500px"></iframe>
+</div>
+<!-- END OPTIONS -->
 
 </div>
+<!-- END OPTIONS -->
+
+</div>
+<!-- END MODULE -->
 
 <script id="source" language="javascript" type="text/javascript">
 $(function () {
@@ -40,58 +64,5 @@ $(function () {
    };
    var data = <?php echo $json ?>;  
    $.plot($("#vis-<?=$module['id'] ?>"), data, options);
-
-   // BIND INTERACTIVITY FUNCTIONS
-   $("#vis-<?=$module['id']?>").bind("plotclick", function (event, pos, item) {
-       //alert("You clicked at " + pos.x + ", " + pos.y);
-       if (item) {
-	highlight(item.series, item.datapoint);
-       }
-     });
-   
-   //tooltip function
-   function showTooltip(x, y, contents, areAbsoluteXY) {
-     var rootElt = 'body';
-     $('<div id="tooltip" class="tooltip-with-bg">' + contents + '</div>').css( {
-       position: 'absolute',
-	   display: 'none',
-	   'z-index':'1010',
-	   top: y,
-	   left: x
-	   }).prependTo(rootElt).show();
-   }
-                
-   //add tooltip event
-   $("#placeholder").bind("plothover", function (event, pos, item) {
-       alert("h3llo");
-       /*
-       if (item) {
-	 if (previousPoint != item.datapoint) {
-	   previousPoint = item.datapoint;
-
-	   //delete previous tooltip
-	   $('.tooltip-with-bg').remove();
-
-	   var x = item.datapoint[0];
-
-	   //All the bars concerning a same x value must display a tooltip with this value and not the shifted value
-	   if(item.series.bars.order){
-	     for(var i=0; i < item.series.data.length; i++){
-	       if(item.series.data[i][3] == item.datapoint[0])
-		 x = item.series.data[i][0];
-	     }
-	   }
-
-	   var y = item.datapoint[1];
-
-	   showTooltip(item.pageX+5, item.pageY+5,x + " = " + y);
-
-	 }
-       }
-       else {
-	 $('.tooltip-with-bg').remove();
-	 previousPoint = null;
-       }*/
-     });
 });
 </script>

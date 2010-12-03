@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<title><?php echo isset($webpagename) ? $webpagename : "Red Ink ~ Where money talks";?></title>
+<title><?php echo isset($webpagename) ? $webpagename : "Red Ink - Where Money Talks";?></title>
 <meta name="description" content="Red Ink" />
 <link rel="shortcut icon" href="/system/application/img/redink.ico.png" />
 <link rel="stylesheet" type="text/css" href="/system/application/css/mainstyle.css" />
@@ -72,9 +72,10 @@ function next(id) {
 }
 
 function goto_option(new_option) {
-  $('#module-'+current_module+' #'+current_option).hide();
-  $('#module-'+current_module+' #'+new_option).show();
+  $('#module-'+current_module+' .option.'+current_option).hide();
+  $('#module-'+current_module+' .option.'+new_option).show();
   current_option = new_option;
+  return false;
 }
 
 $(document).ready(function() {
@@ -91,9 +92,10 @@ $(window).load(function() {
 <?php
 foreach($data as $d) {
    echo "$('#module-$d[modid]').hide();\n";
-   echo "$('#module-$d[modid] #members').hide();\n";
-   echo "$('#module-$d[modid] #options').hide();\n";
-   echo "$('#module-$d[modid] #stats').hide();\n";
+   echo "$('#module-$d[modid] .option.options').hide();\n";
+   echo "$('#module-$d[modid] .option.members').hide();\n";
+   echo "$('#module-$d[modid] .option.stats').hide();\n";
+   echo "$('#module-$d[modid] .option.share').hide();\n";
 } 
 ?>
 $('#module-<?=$data[0]['modid']?>').show();

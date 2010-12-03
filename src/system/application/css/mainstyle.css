@@ -64,9 +64,9 @@ ul#user_modules_carousel { margin:25px 0px 0px 125px; width:530px; height:50px; 
 #body h1 a.small:hover { color:white; background-color:#9d1f14; }
 #body #secured { text-align:center; }
 
-#body #modulelist em { font-weight:bold; font-size:1.3em; }
-#body ul#modulelist { border:0px solid black; padding:0px; font-size:18px; }
-#body #modulelist li { margin:10px 0px; -moz-border-radius:5px;list-style-type:none; padding:0px; }
+#modulelist em { font-weight:bold; font-size:1.3em; }
+ul#modulelist { border:0px solid black; padding:0px; font-size:18px; }
+#modulelist li { margin:10px 0px; -moz-border-radius:5px;list-style-type:none; padding:0px; }
 #modulelist h1 { font-weight:bold; text-align:left; margin:10px 0px; font-size:1.5em; font-style:normal; }
 #modulelist .description { background-color:#DEDEDE; -moz-border-radius:5px; -webkit-border-radius:5px; padding:10px; position:relative; }
 #modulelist .description:after { content:""; display:block; position:absolute; top:-19px; left:50px; width:0; height:0; border-width: 0px 0px 20px 20px; border-style:solid; border-color:#DEDEDE transparent; }
@@ -74,8 +74,7 @@ ul#user_modules_carousel { margin:25px 0px 0px 125px; width:530px; height:50px; 
 #modulelist .actions a { padding-right:10px; }
 #modulelist a:hover { text-decoration:none;  }
 
-#body .module {  }
-#body .module .vis { width:100%; height:300px; margin:20px auto; }
+.module .vis { width:100%; height:300px; margin:20px auto; }
 
 .module_nav { height:90px; border:0px solid black; margin-top:-50px; font-size:2.0em;}
 .module_nav a { margin:10px; font-size:1.2em; text-decoration:none; color:#333; -moz-border-radius:5px; -webkit-border-radius:5px; }
@@ -90,10 +89,9 @@ ul#user_modules_carousel { margin:25px 0px 0px 125px; width:530px; height:50px; 
 .module_subnav a:hover { font-style:normal; background-color:#C5C5C5;-moz-border-radius:5px; border:1px solid #666; }
 .module_subnav a img { vertical-align:middle; padding:5px; border:0px; width:20px; } 
 
-.module #members,
-.module #stats,
-.module #options,
-.module #details { border:1px solid #999; padding:10px; border-top:0px; }
+.module .option { border:1px solid #999; padding:10px; border-top:0px; }
+.module .option iframe { border:0px;  }
+
 
 #body .module_option { float:left; border:0px solid red; margin:10px 10px; }
 #body .module_option p:first-child { font-weight:bold; font-size:1.0em; }
@@ -113,151 +111,10 @@ ul#user_modules_carousel { margin:25px 0px 0px 125px; width:530px; height:50px; 
 #user_modules li a{ font-size:1.2em;}
 
 /* Footer -------------------------*/
-#footer { margin: 10em 0 0; width: 100%; display:none; }          
-
-/* Resources Bar */
-#resources { 
-             clear: both;
-             margin: 10em 0 0;
-             width: 100%;
-             min-height: 275px;
-             background-image: -moz-linear-gradient(100% 100% 90deg, #851809, #741408);
-             background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#741408), to(#851809));
-             border-top: 1px solid #262626;
-             border-bottom: 1px solid #262626;
-             }
-/* Resources Panels */
-#resources ul { 
-                list-style-type: none;
-                height: 245px;
-                width: 960px;
-                margin: 30px auto;
-                }   
-
-#resources ul li { 
-                   position: relative;
-                   width: 230px;
-                   height: 215px;
-                   float: left;
-                   margin: 0 15px;
-                   padding: 15px 25px;
-                   border-radius: 5px;
-                   -moz-border-radius: 5px;
-                   background-color: #872c20;
-                   border: 1px solid #70241a;
-                   font-family:Arial;
-                   }   
-
-#resources h4 { 
-                font-style: italic;
-                font-size: 1.25em;
-                color: #fff;
-                margin: 0 0 .3em;
-                padding-bottom: .5em;
-                border-bottom: 1px dotted #a6a6a6;
-                font-family:Georgia;
-                }
-
-#resources h5 { 
-                font-size: .9em;
-                margin: .9em 0 .8em;
-                color: #fff;
-                font-weight:normal;
-                }
-
-#resources p { 
-               color: #a6a6a6;
-               font-size: .9em;
-               line-height:1.5em;
-               }
-
-/* Resource Panel Nested List */
-#resources ul li ul { 
-                      
-                      padding: 0;
-                      width: 250px;
-                      color: #F0F;
-                      float: none;
-                      margin: 0;
-                      padding: .5em 0;
-                      height: auto;
-                      width: 230px;
-                      border: none;
-                      }                      
-
-#resources ul li ul li { 
-float: none;
-margin: 0;
-padding: .5em 0;
-height: auto;
-width: 230px;
-border: none;
-border-bottom: 1px solid #70241a;
-}
-/* Resources Panel Nested Links */
-#resources ul li ul li a:link, #resources ul li ul li a:visited { 
-                                                                  -webkit-transition-property: color;
-                                                                  -webkit-transition-duration: .3s;
-                                                                  color: #a6a6a6;
-                                                                  text-decoration: none;
-                                                                  }                                            
-
-#resources ul li ul li a:hover, #resources ul li ul li a:active { 
-                                                                  -webkit-transition-property: color;
-                                                                  -webkit-transition-duration: .3s;
-                                                                  color: #fff;
-                                                                  }
-
-#resources a.attention-button { 
-                                position: absolute;
-                                bottom: 25px;
-                                right: 25px;
-                                }
-
-/* Copyright Bar */
-#copyright { 
-             clear: both;
-             margin: 0 auto;
-             padding: 1.9em 0;
-             width: 960px;
-             font-size: .8em;
-             background: url(../images/logos/red-ink-logo-red.png) no-repeat;
-             }
-
-#copyright span { 
-                       margin-left: 150px;
-                  }
-
-#copyright ul { 
-                list-style-type: none;
-                float: right;
-                margin: 0 1.5em 0 0;
-                padding: 0;
-                }
-
-#copyright ul li { 
-                   float: left;
-                   margin: 0;
-                   }   
-
-#copyright ul li a:link, #copyright ul li a:visited { 
-                                                      -webkit-transition-property: background-color, color;
-                                                      -webkit-transition-duration: .3s;
-                                                      font-size: 1.2em;
-                                                      color: #404040;
-                                                      text-decoration: none;
-                                                      margin: 0;
-                                                      padding: .5em 1.2em;
-                                                      border-radius: 5px;
-                                                      -moz-border-radius: 5px;
-                                                      }                                   
-
-#copyright ul li a:hover, #copyright ul li a:active { 
-                                                      -webkit-transition-property: background-color, color;
-                                                      -webkit-transition-duration: .3s;
-                                                      background-color: #a6a6a6;
-                                                      color: #fff;
-                                                      }
+#footer { width:800px; margin:50px auto 10px auto; border:0px solid black; }          
+#footer p { border:0px solid black; text-align:right; position:relative; }
+#footer p img { position:absolute; left:0px; top:-10px; }
+#footer p a { margin:0px 0px 0px 15px; }
 
 /* Home Page Specific Styling -----*/
 .intro-page { background: #f5f5f5 url(/system/application/img/backgrounds/ink-splash-small.png) no-repeat left top; border:0px solid red;}
@@ -409,3 +266,5 @@ a#get-started { text-decoration:none; }
 a#get-started:hover { font-style:normal; }
 
 
+.embed { margin:0px; padding:0px; }
+.embed .module_nav { display:none; }

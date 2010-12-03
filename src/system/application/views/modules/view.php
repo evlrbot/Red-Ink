@@ -12,11 +12,3 @@ window.open("http://dev.make-them-think.org/invite/index/<?=$module['id']?>","In
 
 <h1><?=$module['name']?> <a href="/campaign/edit/<?=$module['id']?>" class="small">edit</a></h1>
 <?php $this->module->load($module['id']);?>
-
-
-<!--invitation button  -->
-
-<form>
-<input type="button" onClick="invite_popup()" value="Invite Friends">
-</form>
-</body>
