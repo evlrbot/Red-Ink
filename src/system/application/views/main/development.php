@@ -1,12 +1,4 @@
-<div id="main-content" class="intro-page">
-<div id="splash">
-<div id="splash-head">
-<img src="/system/application/img/redink-logo-large.png" alt="Red Ink"/>
-<h2>Where Money Talks</h2>
-<h3>"Share, aggregate, analyze, visualize, and publish financial data as an individuals and interest groups."</h3>
-</div>
-</div>
-        
+<div id="main-content">
 <div id="introduction">
 <h2>About the Development</h2>
 <p>Red Ink is Free and Open Source software distributed under the Affero General Public License, which is an official GNU license for web services.</p>

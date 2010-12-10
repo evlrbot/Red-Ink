@@ -18,9 +18,9 @@ a.attention-button:active {
 }
 
 #nav { width:800px; background-image:url('/system/application/img/red_bkg.jpg'); color:#FFF; text-align:right; margin:10px auto 0px auto; padding:0px; -moz-border-radius-topleft:15px; -webkit-border-top-left-radius:15px; -moz-border-radius-topright:15px; -webkit-border-top-right-radius:15px; }
-#nav .logo { float:left; margin:11px 0px 0px 15px; }
+#nav .logo { float:left; margin:6px 0px 0px 15px; }
 #nav ul { margin:0px; padding:15px; }
-#nav li { display:inline-block; font-size:18px; }
+#nav li { display:inline-block; font-size:14px; }
 #nav li { display:inline}
 #nav a { vertical-align:middle; color:#FFF; text-decoration:none; font-family:Lucida Sans Unicode, Lucida Grande, sans-serif; border:0px solid black; padding:5px 15px; }
 #nav a:hover { background-color:#661207; -moz-border-radius:5px; -webkit-border-radius:5px; }
@@ -118,16 +118,11 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
 #user_modules li img{ vertical-align:middle; padding:5px; }
 #user_modules li a{ font-size:1.2em;}
 
-/* Footer -------------------------*/
 #footer { width:800px; margin:50px auto 10px auto; border:0px solid black; }          
 #footer p { border:0px solid black; text-align:right; position:relative; }
 #footer p img { position:absolute; left:0px; top:-10px; }
 #footer p a { margin:0px 0px 0px 15px; }
 
-/* Home Page Specific Styling -----*/
-.intro-page { background: #f5f5f5 url(/system/application/img/backgrounds/ink-splash-small.png) no-repeat left top; border:0px solid red;}
-
-/* Splash Welcome */
 #splash {
 	width: 800px;
 	margin: 0px;
@@ -135,13 +130,7 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
 	border-bottom: 0px solid #a6a6a6;
 }
 
-#splash-head {
-	width: 300px;
-	float: left;
-	margin-left: 450px;
-        margin-top: 100px;
-        text-align:center;
-}
+#splash-head { text-align:center; padding:50px 0px;}
 
 #splash-head h3 { color:#AAA; border:0px; }
 

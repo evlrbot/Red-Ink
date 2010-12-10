@@ -45,6 +45,15 @@ class Main extends Controller {
     $this->load->view('site/body_stop');
     $this->load->view('site/foot');
   }
+
+  function help() {
+    $this->load->view('site/head');
+    $this->load->view('site/nav');
+    $this->load->view('site/body_start');
+    $this->load->view('main/help');
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
+  }
  
   function development() {
     $this->load->view('site/head');

@@ -13,7 +13,7 @@ $(document).ready(function() {
 <li><a href='/main'>About</a></li>
 <li><a href='#'>Blog</a></li>
 <li><a href='/main/development'>Development</a></li>
-<li><a href='/main/privacy'>Privacy</a></li>
+<li><a href='/main/help'>Help</a></li>
 |
 <li><a href='/<?= $this->auth->access() ? 'logout':'login';?>'><?= $this->auth->access() ? 'Logout':'Login';?></a></li>
 </ul>
