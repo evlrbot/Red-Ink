@@ -120,7 +120,7 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
 
 #footer { width:800px; margin:50px auto 10px auto; border:0px solid black; }          
 #footer p { border:0px solid black; text-align:right; position:relative; }
-#footer p img { position:absolute; left:0px; top:-10px; }
+#footer p img { position:absolute; left:40px; top:-10px; }
 #footer p a { margin:0px 0px 0px 15px; }
 
 #splash {
