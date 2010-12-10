@@ -1,5 +1,5 @@
 <div id="body">
-   <?=form_open('login',array('id'=>'bigform','class'=>'login','method'=>'post'));?>
+<?=form_open('login',array('id'=>'bigform','class'=>'login','method'=>'post'));?>
 <?=form_label('<p>Username</p>','username');?>
 <?= form_error('username'); ?>
 <?=form_input(array('id'=>'username','name'=>'username','value'=>''));?>
@@ -12,11 +12,6 @@
 <?=isset($msg) ? $msg : '';?>
 <p>If you don't have a login, you may sign-up for one <a href="/SignUp">here</a>.
 <?=form_close();?>
-
-<div id='secured'>
-<h1>Secured by:</h1>
-<span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=nZ6MWfESQf31oQXrm38WlnZIYIhdpQKDS8pcZgY8EPjz8tlTEVrNWs"></script></span>
-
 </div>
 
 </div>

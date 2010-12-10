@@ -45,10 +45,10 @@ ul#user_modules_carousel { margin:25px 0px 0px 125px; width:530px; height:50px; 
 #user_modules_carousel li { float:left; list-style:none; margin:0px; padding:10px; width:175px; -moz-border-radius:5px; border:1px solid #999; background-color:#DDD; overflow:hidden; font-size:1.8em;   -webkit-border-radius:5px; line-height:1.0em; }
 #user_modules_carousel li img { width:20px; vertical-align:middle; padding-right:5px; }
 
-#bigform { margin:0px auto 0px auto; text-align:center; font-size:1.0em; }
+#bigform { margin:0px auto 50px auto; text-align:center; font-size:1.0em; }
 #bigform label { clear:right; display:block; }
-#bigform input { font-size:1.5em; margin:15px 10px; text-align:center; color:#000; font-family:inherit; }
-#bigform textarea { font-size:1.5em; color:#000; font-family:inherit; }
+#bigform input { font-size:1.5em; margin:15px 10px; text-align:center; color:#000; }
+#bigform textarea { font-size:1.5em; color:#000;  }
 
 #bigform select { font-size:1.5em; padding:0px 25px; }
 #bigform p { margin:0px; }
@@ -130,7 +130,7 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
 	border-bottom: 0px solid #a6a6a6;
 }
 
-#splash-head { text-align:center; padding:50px 0px;}
+#splash-head { text-align:center; padding:50px 0px 90px 0px;}
 
 #splash-head h3 { color:#AAA; border:0px; }
 
@@ -179,52 +179,6 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
 	background-position: 0 .5em;
 }
 
-/* Screenshots */
-#screenshots {
-	height: 15em;
-	width: 45%;
-	margin: 0;
-	padding: 2em 0;
-	float: left;
-	margin-left: 0px;
-}
-
-#screenshots ul {
-	list-style-type: none;
-        padding:0px;
-}
-
-#screenshots ul li {
-	float: left;
-	margin: 0 5px;
-	padding: 10px;
-	-webkit-transition-property: background-color, border-color;
-	-webkit-transition-duration: .3s;
-	background: #ccc;
-	border: 1px solid #a6a6a6;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	width: 75px;
-	height: 75px;
-}
-
-#screenshots img { width:75px; height:75px; border:0px; }
-
-#screenshots ul li:hover {
-	-webkit-transition-property: background-color, border-color;
-	-webkit-transition-duration: .3s;
-	background-color: #c4c4c4;
-	border-color: #262626;
-}
-
-.bottom-border {
-	clear: both;
-	height: 1px;
-	border-bottom: 1px solid #fcfcfc;
-	margin-bottom: 1px;
-}
-
-/* Introduction */
 #introduction {
 	clear: both;
 	width: 100%;
@@ -247,8 +201,6 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
     column-span: all;
 }
 
-#introduction p,
-#introduction li { font-family:Arial; }
 #introduction ul { padding:0px; list-style-type:none; }
 
 /* Get Started */
