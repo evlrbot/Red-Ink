@@ -5,6 +5,7 @@ h2,h3,h4 { font-weight:normal; color:#9d1f14; border-bottom:1px solid #9d1f14; }
 h2 { color: #474747; font-weight: normal; margin: 1.25em 0; font-size: 1.8em; font-style:italic; border:0px; }
 a { color:#9d1f14; }
 
+ol li { margin:15px 0px; }
 a.attention-button { -webkit-transition-property: background-color, box-shadow; -webkit-transition-duration: .3s;padding: .6em 1.75em;border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; color: #fff; text-decoration: none;font-size: .85em; }                 
 a.attention-button:hover, 
 a.attention-button:active { 
