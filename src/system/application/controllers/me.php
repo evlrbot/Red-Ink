@@ -60,6 +60,11 @@ class Me extends Controller {
     $this->load->view('site/foot');
   }
 
+  function delete_account() {
+    $this->user->delete_account($_SESSION['userid']);
+    redirect(site_url('main/about');
+  }
+
   function account_update() {
     if($_SERVER['REQUEST_METHOD']=="POST") {
       // VALIDATE SUBMITTED DATA

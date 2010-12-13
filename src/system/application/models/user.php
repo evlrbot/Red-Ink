@@ -177,4 +177,16 @@ class User extends Model {
     }
     return $this->db->query($query);
   }
+
+  /* PARAMS: $id - id of the user to delete
+   * DESCRP: removes all account data for the given user id.
+   */
+  function delete_account($id) {
+    $query = "DELETE FROM public.user_module WHERE userid='$id'";
+    $result = $this->db->query($query);
+    $query = "UPDATE public.user SET active = true WHERE userid='$id'";
+    $result = $this->db->query($query);
+  }
+
+
 }

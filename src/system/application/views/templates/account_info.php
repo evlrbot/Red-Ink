@@ -19,7 +19,7 @@
 
 <p><?= form_label('Last Name','lname'); ?></p>
 <?= form_error('lname'); ?>
- <?= form_input(array('id'=>'lname','name'=>'lname','value'=>"$lname")); ?>
+<?= form_input(array('id'=>'lname','name'=>'lname','value'=>"$lname")); ?>
 
 <p><?= form_submit(array('id'=>'submit','value'=>'Update')); ?></p>
 
@@ -46,4 +46,14 @@
 
 <p><?= form_submit(array('id'=>'submit','value'=>'Update')); ?></p>
 -->
+
+<?= form_close(); ?>
+
+<h1>Delete Account</h1>
+<p>
+
+<?= form_open(site_url('me/delete_account'),array('id'=>'bigform')); ?>
+<p>
+<?= form_submit(array('id'=>'delete_account','value'=>'Delete Account')); ?>
+</p>
 <?= form_close(); ?>
