@@ -184,7 +184,7 @@ class User extends Model {
   function delete_account($id) {
     $query = "DELETE FROM public.user_module WHERE userid='$id'";
     $result = $this->db->query($query);
-    $query = "UPDATE public.user SET active = true WHERE userid='$id'";
+    $query = "UPDATE public.user SET active = true WHERE id='$id'";
     $result = $this->db->query($query);
   }
 

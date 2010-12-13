@@ -1,6 +1,6 @@
 <div id="main-content">
-<div id="introduction">
 <h2>Your account has been terminated</h2>
-   <p>We have disabled your login, removed you from all campaigns you were a party to, and completely purged all of your transactions from our databse. You are no longer</p>
-</div>
+<p>Red Ink has disabled your login. Removed you from all campaigns you were a member of. Completely purged all of your transactions from our records. It is as if you were never here.</p>
+
+<p>Thanks for checking us out!</p>
 </div>
