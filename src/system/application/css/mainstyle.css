@@ -199,15 +199,9 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
 #introduction ul { padding:0px; list-style-type:none; }
 
 /* Get Started */
-#get-started {
-	float: right;
-        padding:10px;
-        -moz-border-radius:10px;
-        background-color:#353535;
-               color:#FFF;
-}
+#get-started {float: right; padding:10px; -moz-border-radius:10px; -webkit-border-radius:10px; background-color:#353535; color:#FFF; margin-left:5px; }
 a#get-started { text-decoration:none; }
-a#get-started:hover { font-style:normal; }
+a#get-started:hover { font-style:italic; }
 
 
 .embed { margin:0px; padding:0px; }

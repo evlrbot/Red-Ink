@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <meta name="description" content="Red Ink" />
 <link rel="shortcut icon" href="/system/application/img/redink.ico.png" />
 <link rel="stylesheet" type="text/css" href="/system/application/css/mainstyle.css" />
+<script type="text/javascript" src="/system/application/js/lib.js" ></script>
 <script type="text/javascript" src="/system/application/js/jquery-1.3.2.min.js" ></script>
 <script type="text/javascript" src="/system/application/js/jquery.flot.js" ></script>
 <script type="text/javascript" src="/system/application/js/jquery.flot.stack.js" ></script>

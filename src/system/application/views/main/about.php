@@ -15,6 +15,7 @@
 <p>Red Ink posits that just like volunteering time or donating money, personal financial data is itself an asset that people can share to gain group leverage. Further, in the hands of everyday people, the data and tools of corporate scale consumer analysis will be reborn to serve larger and more personally meaningful goals.</p>  
 <p>Red Ink is a research project of the MIT/Knight Center for Future Civic Media at the MIT Media Lab.</p>      
 <a class="action-button" id="get-started" href="<?=site_url('SignUp')?>">Get Started &raquo;</a>
+<a class="action-button" id="get-started" href="#" onclick="popup('https://redink.media.mit.edu/wiki/subscribe.php');">E-Mail List &raquo;</a>
 </div>
           
 </div>
