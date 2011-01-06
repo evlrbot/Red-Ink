@@ -11,7 +11,7 @@ $(document).ready(function() {
 <img src="/system/application/img/nav/red-ink-logo-white.png" alt="Red Ink" class='logo'/>
 <ul>
 <li><a href='/main'>About</a></li>
-<li><a href='#'>Blog</a></li>
+<li><a href='/wiki/Blog/Index'>Blog</a></li>
 <li><a href='/main/development'>Development</a></li>
 <li><a href='/main/help'>Help</a></li>
 |

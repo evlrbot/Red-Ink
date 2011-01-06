@@ -2,16 +2,21 @@
 <div id="introduction">
 <h2>About the Development</h2>
 <p>Red Ink is Free and Open Source software distributed under the Affero General Public License, which is an official GNU license for web services.</p>
+
+<h2>Source Code</h2>
+<p>Our most recent source code release is available for download, hacking, development, and otherwise at the Center for Future Civic Media's CodeBaseHQ repository:</p>
+<p><a href="https://c4fcm.codebasehq.com/redink/aao/tree/head" target="_blank">https://c4fcm.codebasehq.com/redink/aao/tree/head</a></p>
+
 <h2>Current Team Members</h2>
 <p>
 <ul>
 <li>Ryan O'Toole<br/>
-Lead Engineer<br/>
+Project Lead<br/>
 rot@mit.edu<br/>
-http://media.mit.edu/~rot</li>
+<a href='http://media.mit.edu/~rot' target='_blank'>http://media.mit.edu/~rot</a></li>
 <li>Kwadwo Nyarko<br/>
 Web Development Intern<br/>
-kwadwon@mit.edu</li>
+</li>
 <li>Drew Frisk<br/>
 Web Development<br/>
 </li>
@@ -35,18 +40,16 @@ Community Outreach Coordinator</li>
 <ul>
 <li>Mike Norman<br/>
 Strategy & Community Development<br/>
-mnorman@mit.edu
+<a href="http://www.sochange.com" target="_blank">http://www.sochange.com</a>
 </li>
 <li>
 Britton O'Toole<br/>
 Web Engineer<br/>
-cerebrit@gmail.com<br/>
-http://www.brittonotoole.com
+<a href="http://www.brittonotoole.com" target="_blank">http://www.brittonotoole.com</a>
 </li>
 <li>
 Melva James<br/>
 Web Development Intern<br/>
-melva.james@gmail.com 
 </li>
 </ul>
 <h2>Project Advisors</h2>

@@ -195,13 +195,7 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
 }
 
 #introduction li { margin:15px 0px; }
-#introduction h2 {
-	margin-top: .25em;
-	-webkit-column-span: all;
-    -moz-column-span: all;
-    column-span: all;
-}
-
+#introduction h2 { margin-bottom:0.25em; -webkit-column-span: all; -moz-column-span: all; column-span: all; }
 #introduction ul { padding:0px; list-style-type:none; }
 
 /* Get Started */
@@ -222,3 +216,5 @@ a#get-started:hover { font-style:normal; }
 .embed .module_subnav,\
 .embed .option.share { display:none; }
 .embed .option.details { border-top:1px solid #999; }
+.embed .unauthorized { text-align:center; border:2px dashed #9d1f14; }
+.embed .unauthorized img { border:0px; }
