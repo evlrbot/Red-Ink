@@ -1,18 +1,23 @@
 <div id="main-content" class="intro-page">
 <div id="splash">
 <div id="splash-head">
-<img src="http://dev.make-them-think.org/system/application/img/redink-logo-large.png" alt="Red Ink"/>
+<img src="/system/application/img/redink-logo-large.png" alt="Red Ink"/>
 <h2>Where Money Talks</h2>
 <h3>"Share, aggregate, analyze, visualize, and publish financial data as an individuals and interest groups."</h3>
 </div>
 </div>
         
 <div id="introduction">
-<h2>An Introduction to the Idea</h2>
-<p>Red Ink is an open source social-financial web-service that enables people to share, aggregate, analyze, visualize and publish their financial transactions as individuals and ad-hoc groups.</p>
-<p>Virtual and geographic communities of financial data sharers can form on Red Ink to create new sources of information for self-knowledge and understanding of complex personal, community, economic, environmental, and civic concerns and how to better coordinate their solutions.</p>
-<p>Red Ink posits that just like volunteering time or donating money, personal financial data is itself an asset that people can share to gain group leverage. Further, in the hands of everyday people, the data and tools of corporate scale consumer analysis will be reborn to serve larger and more personally meaningful goals.</p>  
-<p>Red Ink is a research project of the MIT/Knight Center for Future Civic Media at the MIT Media Lab.</p>      
+<h2>A brief statement about your privacy</h2>
+<p>Red Ink believes in your privacy. Your data is yours to share or not share. To own. To control. To delete.</p>
+<p>Red Ink believes in your privacy. Your data is yours to share or not share. To own. To control. To delete.</p>
+<p>Red Ink believes in your privacy. Your data is yours to share or not share. To own. To control. To delete.</p>
+<p>Red Ink believes in your privacy. Your data is yours to share or not share. To own. To control. To delete.</p>
+<p>Red Ink believes in your privacy. Your data is yours to share or not share. To own. To control. To delete.</p>
+<p>Red Ink believes in your privacy. Your data is yours to share or not share. To own. To control. To delete.</p>
+
+<span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=G4UQbvhIZiZTX1SSgnLJ0rLnoycCBCzCVIQ3wTK3p2tqy8BtZj7etcALg"></script></span>
+
 <a class="action-button" id="get-started" href="http://dev.make-them-think.org/SignUp">Get Started &raquo;</a>
 </div>
           

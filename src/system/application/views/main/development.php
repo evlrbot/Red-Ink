@@ -5,7 +5,7 @@
 
 <h2>Source Code</h2>
 <p>Our most recent source code release is available for download, hacking, development, and otherwise at the Center for Future Civic Media's CodeBaseHQ repository:</p>
-<p><a href="https://c4fcm.codebasehq.com/redink/aao/tree/head" target="_blank">https://c4fcm.codebasehq.com/redink/aao/tree/head</a></p>
+<p><a href="https://github.com/evlrbot/Red-Ink" target="_blank">https://github.com/evlrbot/Red-Ink</a></p>
 
 <h2>Current Team Members</h2>
 <p>

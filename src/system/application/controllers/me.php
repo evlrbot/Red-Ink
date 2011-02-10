@@ -60,6 +60,17 @@ class Me extends Controller {
     $this->load->view('site/foot');
   }
 
+  function shoeboxes() {
+    $user_data = $this->user->get_account($_SESSION['userid']);
+    $apis = $this->api->list_apis();
+    $this->load->view('site/head');
+    $this->load->view('site/nav',$this->user->get_account($_SESSION['userid']));
+    $this->load->view('site/body_start');
+    $this->load->view('templates/shoeboxes',$user_data);
+    $this->load->view('site/body_stop');
+    $this->load->view('site/foot');
+  }
+
   function delete_account() {
     $this->user->delete_account($_SESSION['userid']);
     redirect(site_url('main/account_deleted'));

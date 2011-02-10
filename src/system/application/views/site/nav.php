@@ -13,7 +13,7 @@ $(document).ready(function() {
 <li><a href='/main'>About</a></li>
 <li><a href='/wiki/Blog/Index'>Blog</a></li>
 <li><a href='/main/development'>Development</a></li>
-<li><a href='/main/help'>Help</a></li>
+<li><a href='/main/privacy'>Privacy 2</a></li>
 |
 <li><a href='/<?= $this->auth->access() ? 'logout':'login';?>'><?= $this->auth->access() ? 'Logout':'Login';?></a></li>
 </ul>
@@ -26,7 +26,7 @@ $(document).ready(function() {
 <ul>
 <li><a href="/me"><img src="/system/application/img/subnav/linechart.png"/>Dashboard</a></li>
 <li><a href="/campaign"><img src="/system/application/img/subnav/tags.png"/>Campaigns</a></li>
-<li><a href="#"><img src="/system/application/img/subnav/shoebox.png"/>Shoeboxes</a></li>
+<li><a href="/me/shoeboxes"><img src="/system/application/img/subnav/shoebox.png"/>Shoeboxes</a></li>
 <li><a href="/me/account"><img src="/system/application/img/subnav/gear.png"/>Settings</a></li>
 </ul>
 </div>
