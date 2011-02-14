@@ -105,7 +105,8 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
 #body .module_option { float:left; border:0px solid red; margin:10px 10px; }
 #body .module_option p:first-child { font-weight:bold; font-size:1.0em; }
 
-#filter_list li { margin: 10px 20px; display:block; float:left;}
+#filter_list:after {visibility: hidden;display: block;font-size: 0;line-height: 0;content: " ";clear: both;height: 0; width: 0; }
+#filter_list li { margin: 10px 10px; padding:5px; display:block; float:left; background-color:#FFF; border:2px solid #CCC; width:200px; -webkit-border-radius:15px; -moz-border-radius:15px; }
 #filter_list li em { font-weight:bold; }
 #filter_list li a { margin:0px 15px 0px 0px; }
 

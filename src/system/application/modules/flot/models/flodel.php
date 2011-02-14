@@ -34,10 +34,11 @@ class Flodel extends Model {
     // GET MODULE OPTIONS
     $data['options'] = array();
     $options = $this->module->get_options($data['module']['id']);
+    //print_r($options);
     foreach($options AS $opt) {
       $data['options'][$opt['name']] = $opt['value'];
     }
-
+    //print_r($data);
     // GET MODULE USERS
     $member_ids = $this->module->get_users($data['module']['id']);
     $data['members'] = array();
@@ -48,8 +49,7 @@ class Flodel extends Model {
     // GET TOTAL NUMBER OF MEMBERS
     $data['num_members'] = count($data['members']);       
 
-    // GET TIME SERIES DATA FOR ALL MEMBERS
-    
+    // GET TIME SERIES DATA FOR ALL MEMBERS    
     $time_series = $this->get_data($data['module']['id'],0,$data['options']['Period'],$data['options']['Frequency']);
     
     // GET TOTAL AMOUNT SPENT BY ALL MEMBERS
@@ -153,7 +153,7 @@ class Flodel extends Model {
    * DESCRP: constructs a query using the filters associated with a vis and the vis settings for period and frequency of aggregation.
    * RETURN: array(array()) of results data keyed by dataset title and user or module level aggregation
    */ 
-  function get_data($module_id, $userid=0, $period='12', $frequency='month') {
+  function get_data($module_id, $userid=0, $period, $frequency) {
     // DISCARD INACTIVE FILTERS
     $filters = array();
     foreach($this->module->get_filters($module_id) AS $filter) {

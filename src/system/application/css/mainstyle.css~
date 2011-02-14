@@ -130,6 +130,10 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
 	padding: 0px 0px 0px 0px;
 	border-bottom: 0px solid #a6a6a6;
 }
+#splash h1.tagline { color:black; }
+#splash h1.tagline span { color:#9D1F14; }
+#splash li { font-size:1.5em; }
+#splash li img { vertical-align:middle; }
 
 #splash-head { text-align:center; padding:50px 0px 90px 0px;}
 
@@ -182,16 +186,15 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
 
 #introduction {
 	clear: both;
-	width: 100%;
 	margin: 0;
-	padding: 2em 0;
-	border-top: 0px solid #a6a6a6;	
+	padding: 2em 30px;
+	border: 0px solid #a6a6a6;	
 	-moz-column-count: 2;
-	-moz-column-gap: 20px;
+	-moz-column-gap: 50px;
 	-webkit-column-count: 2;
-	-webkit-column-gap: 40px;
+	-webkit-column-gap: 50px;
 	column-count: 2;
-	column-gap: 40px;
+	column-gap: 50px;
 }
 
 #introduction li { margin:15px 0px; }
