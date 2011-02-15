@@ -1,19 +1,41 @@
-<div id="main-content">
+<link rel="stylesheet" type="text/css" href="/system/application/js/shadowbox-3.0.3/shadowbox.css">
+<script type="text/javascript" src="/system/application/js/shadowbox-3.0.3/shadowbox.js"></script>
+<script type="text/javascript">
+Shadowbox.init();
+</script>
 
-<div class="bottom-border"></div> 
-</div>  
 <div id="introduction">
 <div id="splash-head">
 <img src="/system/application/img/redink-logo-large.png" alt="Red Ink"/>
 <h2>Where Money Talks</h2>
-<h3>"Share, aggregate, analyze, visualize, and publish financial data as individuals and interest groups."</h3>
+<h3>"Tools for leveraging the social web into personal financial power."</h3>
 </div>
 
-<h2>An Introduction to the Idea</h2>
-<p>Red Ink is an open source social-financial web-service that enables people to share, aggregate, analyze, visualize and publish their financial transactions as individuals and ad-hoc groups.</p>
-<p>Virtual and geographic communities of financial data sharers can form on Red Ink to create new sources of information for self-knowledge and understanding of complex personal, community, economic, environmental, and civic concerns and how to better coordinate their solutions.</p>
-<p>Red Ink posits that just like volunteering time or donating money, personal financial data is itself an asset that people can share to gain group leverage. Further, in the hands of everyday people, the data and tools of corporate scale consumer analysis will be reborn to serve larger and more personally meaningful goals.</p>  
-<p>Red Ink is a research project of the MIT/Knight Center for Future Civic Media at the MIT Media Lab.</p>      
+<ul id="tour">
+<li><a href="/system/application/img/screenshots/gas.png" rel="shadowbox"><img src="/system/application/img/screenshots/gas_sm.png"></a>Energy Consumption</li>
+<li><a href="/system/application/img/screenshots/lunch.png" rel="shadowbox"><img src="/system/application/img/screenshots/lunch_sm.png"></a>Lunch Money</li>
+<li><a href="/wiki/uploads/Blog/wheredoyougo.png" rel="shadowbox"><img src="/wiki/uploads/Blog/wheredoyougo.png"></a>Transaction Mapping</li>
+<!--<li><a href="/system/application/img/screenshots/piggy.jpg" rel="shadowbox"><img src="/system/application/img/screenshots/piggy.jpg"></a>Peer Budgeting</li>-->
+<li class="empty"></li>
+<li class="empty"></li>
+<li class="empty"></li>
+<li class="empty"></li>
+<li class="empty"></li>
+<li class="empty"></li>
+</ul>
+
+<h2>Introducing Red Ink</h2>
+<p>Red Ink is a personal finance social network, built as a Free and Open Source Software project.</p>
+<p>Red Ink apps leverage the collective financial information of their participants to help them make more informed and better financial decisions.</p>
+<ul>
+<li>Would you like to track your energy consumption compared to your friends?</li>
+<li>Measure if you are over paying or spending compared to others</li>
+<li>See how and where money flows through your community?</li>
+<li>Measure economic trends across local or national groups?</li>
+<li>Or just get deals and recommendations based your actual consumption?</li>
+</ul>
+<p>These are just a few of the ideas posited by the Red Ink platform as we try to re-invent personal finance.</p>
+<p>Red Ink is a research project of the Center for Future Civic Media at the MIT Media Lab.</p>      
 <a class="action-button" id="get-started" href="<?=site_url('SignUp')?>">Get Started &raquo;</a>
 <a class="action-button" id="get-started" href="#" onclick="popup('https://redink.media.mit.edu/wiki/subscribe.php');">E-Mail List &raquo;</a>
 </div>

@@ -4,7 +4,7 @@
 <p>Red Ink is Free and Open Source software distributed under the Affero General Public License, which is an official GNU license for web services.</p>
 
 <h2>Source Code</h2>
-<p>Our most recent source code release is available for download, hacking, development, and otherwise at the Center for Future Civic Media's CodeBaseHQ repository:</p>
+<p>Our source code is publicly hosted on GitHub and is available for download, hacking, development, and otherwise:</p>
 <p><a href="https://github.com/evlrbot/Red-Ink" target="_blank">https://github.com/evlrbot/Red-Ink</a></p>
 
 <h2>Current Team Members</h2>
@@ -14,24 +14,6 @@
 Project Lead<br/>
 rot@mit.edu<br/>
 <a href='http://media.mit.edu/~rot' target='_blank'>http://media.mit.edu/~rot</a></li>
-<li>Kwadwo Nyarko<br/>
-Web Development Intern<br/>
-</li>
-<li>Drew Frisk<br/>
-Web Development<br/>
-</li>
-<li>Scott Gerstl<br/>
-Web Development
-</li>
-<li>Eric Semling<br/>
-Web Design
-</li>
-<li>Spencer Schill<br/>
-App Architect
-</li>
-<li>Pat Daus<br/>
-Motion Graphics
-</li>
 <li>Regan St. Pierre<br/>
 Community Outreach Coordinator</li>
 </ul>
@@ -50,6 +32,24 @@ Web Engineer<br/>
 <li>
 Melva James<br/>
 Web Development Intern<br/>
+</li>
+<li>Kwadwo Nyarko<br/>
+Web Development Intern<br/>
+</li>
+<li>Drew Frisk<br/>
+Web Development<br/>
+</li>
+<li>Scott Gerstl<br/>
+Web Development
+</li>
+<li>Eric Semling<br/>
+Web Design
+</li>
+<li>Spencer Schill<br/>
+App Architect
+</li>
+<li>Pat Daus<br/>
+Motion Graphics
 </li>
 </ul>
 <h2>Project Advisors</h2>
