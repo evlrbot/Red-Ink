@@ -40,13 +40,9 @@ class Table extends model {
     $data['transactions'] = $this->get_data($data);
 
     $data['json_trans'] = json_encode($data['transactions']);
-    $this->load->view('tabular/json_page',$data);
+    //$this->load->view('tabular/json_page',$data);
 
-//    $this->load->view("tabular/table", $data);
-
-//   LOAD PAGES CLASS TO FORMAT TRANSACTIONS DATA INTO JSON
-//     $this->load->module("tabular/pages");
-//     $this->pages->index($data);
+    $this->load->view("tabular/table", $data);
   }
   
   function get_data($data) {

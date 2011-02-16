@@ -198,3 +198,8 @@ a#get-started:hover { font-style:italic; }
 .embed .option.details { border-top:1px solid #999; }
 .embed .unauthorized { text-align:center; border:2px dashed #9d1f14; }
 .embed .unauthorized img { border:0px; }
+
+
+#container #tabular { border:0px solid red; overflow:hidden; height:800px; }
+#tabular .row1{ background-color:#FFF; }
+#tabluar .row2 

@@ -179,7 +179,10 @@ hr { border:0px; border-top:1px solid black; margin-bottom:25px; }
 #introduction ul { padding:0px 20px; list-style-type:circle; }
 #introduction li { margin:0px; padding:0px; }
 
-#tour li { float:left; margin:10px; padding:0px; width:75px; height:75px; border:0px solid red; list-style-type:none; }
+#tour li { float:left; margin:10px; padding:0px; width:75px; border:0px solid red; list-style-type:none; text-align:center; font-size:0.9em; color:#999; }
+#tour li.empty { height:75px; }
+#tour img { border:1px solid #ccc; width:75px; }
+#tour:after {visibility: hidden;display: block;font-size: 0;line-height: 0;content: " ";clear: both;height: 0; width: 0; }
 
 /* Get Started */
 #get-started {float: right; padding:10px; -moz-border-radius:10px; -webkit-border-radius:10px; background-color:#353535; color:#FFF; margin-left:5px; }
